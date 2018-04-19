@@ -1,4 +1,6 @@
 import math
+from scipy import sparse
+import numpy as np
 
 #-------------------------------------------------------------------------
 #------------------------------ Parameters -------------------------------
@@ -283,6 +285,8 @@ for mylevel in range(levelmax+1,levelmin,-1):
                 xref.append(x0+xx0+i*hx) ## -- periodic pattern!
                 yref.append(y0+yy0+i*hx) ## -- periodic pattern!
             [YY,XX]=np.meshgrid(yref,xref)
+            Npatterns = Npatterns+1
+            #XXref[Npatterns] = 0
     
     
     
