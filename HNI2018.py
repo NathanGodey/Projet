@@ -194,12 +194,12 @@ for mylevel in range(levelmax+1,levelmin,-1):
     NB3: "cell" #(modulo(nx,Nx)+(ny-1)*Nx) bottom left vertex at ((nx-1)*hx,(ny-1)*hy)
     """
     
-    Ncell = 0 ## -- number of cells = size(codim0,1)
-    codim0 = [] ## -- each row stores the (x,y) coordinates of the cells centers    
+    Ncell = 0 ## number of cells = size(codim0,1)
+    codim0 = [] ## each row stores the (x,y) coordinates of the cells centers    
                  ## i.e. v1_x,v1_y,v2_x,v2_y with [v1,v2] oriented from  
                  ## bottom to top (vertical edges) or left to right (horizontal edges)
     
-    Ncellmasked = 0 ## -- number of masked cells = size(codim0masked,1)
+    Ncellmasked = 0 ## number of masked cells = size(codim0masked,1)
     codim0masked = []
     
     """
@@ -228,7 +228,7 @@ for mylevel in range(levelmax+1,levelmin,-1):
     neighbours = 4 ## -- uniform here (except at boundaries: we artificially put -1)
     
     diffusion = diffusion/volume
-    source = source/volume
+    
     source = source/volume ## CHECK
     
     fboundary = []
@@ -241,7 +241,40 @@ for mylevel in range(levelmax+1,levelmin,-1):
         periodic.append([])
         antiperiodic.append([])
     
-    exec(mygeofile)
+    #------------ geo_square -----------------------------------------------
+    ny = 1 ## we go columnwise over all rows starting from "bottom"
+    while ny<=Ny:
+        nx = 1
+        while nx<=Nx:
+            Ncell = Ncell+1 ## add a new cell labelled Ncell // (ny-1)*Nx+nx
+            xx = x0+(nx-1)*hx
+            yy = y0+(ny-1)*hy
+            codim0 = np.concatenate((codim0,[xx,yy]+[0 for i in range(6)])) ## add a new cell center to list
+            diffusion[Ncell,Ncell] = 0
+            if(not onedy):
+                diffusion[Ncell,Ncell] += 2
+                if nx==1:
+                    Nface += 1 ## add a new  VERTICAL face labelled Nface
+                    codim1 = np.concatenate((codim1,[xx-hx/2,yy-hy/2,xx-hx/2,yy-hy/2]))
+                    ##  -- tangent to interf of length E (scalar coeff 2|c_ij| of flux) --
+                    ex = codim1[Nface,3]-codim1[Nface,1] ## >0 (horizontal edge), or 0
+                    ey = codim1[Nface,4]-codim1[Nface,2] ## >0 (vertical edge), or 0
+                    if ex<0 or ey<0:
+                        print("Warning")
+                    E = math.sqrt(ex**2+ey**2)
+                    Nx = ey/E
+                    Ny = ex/E
+                    codim0to1E = [codim0to1E,E]
+                    codim0to1NX = [codim0to1E,NX]
+                    codim0to1NY = [codim0to1NY,NY]
+                    ## -- normal to interf i->j = A->B (flux sign: left/right Riemann)
+                    
+                    codim0to1A = [codim0to1A, -(Nghost+1)]
+                    codim0to1B = [codim0to1B, Ncell]
+
+                    Nghost += 1
+                    
+    #########----------------------------------------------------------------
     
     print(Ncell,"Number of cells")
     print(Nface,"Number of faces")
