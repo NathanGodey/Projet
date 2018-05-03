@@ -2,7 +2,7 @@
 
 """
 Marche bien concernant le calcul de codim0, codim1, codim0to1A, et codim0to1B (cf. code).
-Le code calcul plein d'autres trucs potentiellement inutiles
+Le code calcule plein d'autres trucs potentiellement inutiles
 """
 
 import math
