@@ -1,3 +1,17 @@
 import numpy as np
-from matplotlib import pyplot as plt
+import matplotlib.pyplot as plt
 
+
+nbParticles=100
+class particle:
+    x=0
+    y=0
+    vx=0
+    vy=0
+    def __init__(self):
+        self.x=self.y=0
+        
+#Particles=nbParticles*[particle()]
+p=particle()
+p.x=p.y=0.5
+p.vx=p.vy=0
