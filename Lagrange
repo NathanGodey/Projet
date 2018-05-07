@@ -15,3 +15,6 @@ class particle:
 p=particle()
 p.x=p.y=0.5
 p.vx=p.vy=0
+
+def norme(v):
+    return np.sqrt(v[0]**2+v[1]**2)
