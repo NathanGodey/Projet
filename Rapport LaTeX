@@ -1,0 +1,176 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[francais]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts,dsfont}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{multicol}
+\title{\textbf{Méthodes de réduction du modèle appliquées à l'équation du transport} }
+
+\author{}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\section{Introduction}
+
+\section{Méthode des volumes finis}
+Considérons l'équation de transport suivante en dimension $d>0$ :
+\begin{equation}
+\frac{\partial c}{\partial t} + u \cdot \bigtriangledown c = f
+\label{1}
+\end{equation}
+où pour $T \in \mathbb{R}^*_+$ et $a<b$ dans $\mathbb{R}$
+\begin{multicols}{3}
+La concentration : 
+\begin{align*}
+  c : [0,T]\times [a,b]^d &\longrightarrow [0,1] \\
+   (t,x) &\longmapsto c(t,x)
+\end{align*}
+
+La vitesse de transport :
+\begin{align*}
+  u : [0,T]\times [a,b]^d &\longrightarrow \mathbb{R}^d \\
+   (t,x) &\longmapsto u(t,x)
+\end{align*}
+
+La source :
+\begin{align*}
+  f : [0,T]\times [a,b]^d &\longrightarrow \mathbb{R} \\
+   (t,x) &\longmapsto f(t,x)
+\end{align*}
+
+\end{multicols}
+\subsection{En 1D}
+en 1D l'équation (\ref{1}) devient :
+\begin{equation}
+\frac{\partial c}{\partial t} + u  \frac{\partial c}{\partial x} = f
+\label{2}
+\end{equation}
+
+\subsubsection{Maillage}
+On discrétise $[a,b]$ en utilisant la suite $(x_i)_{i=1}^{N_x}$ vérifiant : 
+\begin{equation*}
+\begin{cases}
+        x_1=a  &  \\
+        x_{N_x}=b  \\
+        x_i<x_{i+1} \ \forall i < N_x \\
+\end{cases}
+\end{equation*} 
+De même on discrétise $[0,T]$ en utilisant la suite $(t_i)_{i=1}^{N_t}$ vérifiant : 
+\begin{equation*}
+\begin{cases}
+        t_1=0  &  \\
+        t_{N_t}=T  \\
+        t_i<t_{i+1} \ \forall i < N_t \\
+\end{cases}
+\end{equation*} 
+\subsubsection{Schéma numérique}
+On pose pou la suite pour $1 \leq i \leq N_x$ et $1 \leq j \leq N_t$:
+\begin{align*}
+c_i(t_j) &=\frac{1}{x_{i+1}-x_i}\int_{x_i}^{x_{i+1}} c(t_j,x) dx,\\ 
+f_i(t_j) &=\frac{1}{x_{i+1}-x_i}\int_{x_i}^{x_{i+1}} f(t_j,x) dx,\\
+u_i(t_j) &=\frac{1}{x_{i+1}-x_i}\int_{x_i}^{x_{i+1}} u(t_j,x) dx.
+\end{align*}
+ainsi :
+\begin{align*}
+(\ref{2}) &\Rightarrow \frac{1}{x_{i+1}-x_i}\int_{x_i}^{x_{i+1}} \left( \frac{\partial c}{\partial t} + u  \frac{\partial c}{\partial x} \right) dx = \frac{1}{x_{i+1}-x_i}\int_{x_i}^{x_{i+1}} f dx\\
+&\Rightarrow \frac{\partial c_i}{\partial t}(t_j) + \frac{1}{x_{i+1}-x_i}\int_{x_i}^{x_{i+1}}  u  \frac{\partial c}{\partial x}  dx  = f_i(t_j)
+\end{align*}
+on peut approcher $u$ sur $[x_i,x_{i+1}]$ par sa valeur moyenne sur cet intervalle : $u(t_j,x) \simeq u_i(t_j)$
+et donc l'équation devient :
+\begin{align*}
+&\frac{\partial c_i}{\partial t}(t_j) + \frac{u_i(t_j)}{x_{i+1}-x_i}\int_{x_i}^{x_{i+1}}    \frac{\partial c}{\partial x}  dx  = f_i(t_j) \\
+\Rightarrow \ \ & \frac{\partial c_i}{\partial t}(t_j) + \frac{u_i(t_j)}{x_{i+1}-x_i} (c(t_j,x_{i+1}) - c(t_j,x_i))  = f_i (t_j)
+\end{align*}
+on peut aussi approcher $c(t_j,x_i)\simeq c_{i-1}(t_j)$ et $c(t_j,x_{i+1}) \simeq c_{i+1}(t_j)$, on obtient :
+\[
+\frac{\partial c_i}{\partial t}(t_j) + \frac{u_i(t_j)}{x_{i+1}-x_i} (c_{i+1}(t_j)-c_{i-1}(t_j))  = f_i(t_j) 
+\]
+ 
+en utilisant le schéma d'Euler explicite $\frac{\partial c_i}{\partial t} (t_{j}) \simeq \frac{c_i(t_{j+1}) - c_i(t_j) }{t_{j+1}-t_j}$
+on obtient finalement:
+\[
+\frac{c_i(t_{j+1}) - c_i(t_j) }{t_{j+1}-t_j} + \frac{u_i(t_j)}{x_{i+1}-x_i} (c_{i+1}(t_j)-c_{i-1}(t_j))  = f_i(t_j)
+\]
+ou encore 
+
+\[
+c_i(t_{j+1}) = c_i(t_{j}) + \left( \frac{t_{j+1}-t_j}{x_{i+1}-x_i}u_i(t_j) \right) c_{i-1}(t_j) - \left( \frac{t_{j+1}-t_j}{x_{i+1}-x_i}u_i(t_j) \right) c_{i+1}(t_j)+(t_{j+1}-t_j)f_i(t_j)
+\]
+
+\subsection{En 2D}
+en 2D l'équation (\ref{1}) devient :
+\begin{equation}
+\frac{\partial c}{\partial t} + u_x  \frac{\partial c}{\partial x} + u_y \frac{\partial c}{\partial y} = f
+\label{3}
+\end{equation}
+\subsubsection{Maillage}
+On discrétise $[a,b]^2$ en utilisant deux suites suite $(x_i)_{i=1}^{N_x}$ et $(y_i)_{i=1}^{N_y}$ vérifiant : 
+\begin{equation*}
+\begin{cases}
+       y_1 = x_1=a    \\
+       y_{N_y} = x_{N_x}=b  \\
+       x_i<x_{i+1} \ \forall i < N_x \\
+       y_i<y_{i+1} \ \forall i < N_y \\ 
+\end{cases}
+\end{equation*} 
+On obtient une grille de $(N_x-1)(N_y-1)$ zone, on appelle donc $K_{i,j}  = [x_i,x_{i+1}]\times [y_j,y_{j+1}]$\\ 
+
+De même on discrétise $[0,T]$ en utilisant la suite $(t_i)_{i=1}^{N_t}$ vérifiant : 
+\begin{equation*}
+\begin{cases}
+        t_1=0  &  \\
+        t_{N_t}=T  \\
+        t_i<t_{i+1} \ \forall i < N_t \\
+\end{cases}
+\end{equation*} 
+\subsubsection{Schéma numérique}
+On pose pour la suite pour $1 \leq i \leq N_x$, $1 \leq j \leq N_y$ et $1 \leq n \leq N_t$:
+\begin{align*}
+X &= (x,y), \ dX = dxdy \\
+\vert K_{i,j} \vert &= (x_{i+1}-x_i)(y_{j+1}-y_j)\\
+c_{i,j}(t_n) &=\frac{1}{\vert K_{i,j} \vert}\int_{K_{i,j}} c(t_n,X) dX,\\ 
+f_{i,j}(t_n) &=\frac{1}{\vert K_{i,j} \vert}\int_{K_{i,j}} f(t_n,X) dX,\\
+u_{i,j}(t_n) &=\frac{1}{\vert K_{i,j} \vert}\int_{K_{i,j}} u(t_n,X) dX.
+\end{align*}
+ainsi :
+\begin{align*}
+(\ref{3}) &\Rightarrow \frac{1}{\vert K_{i,j} \vert}\int_{K_{i,j}} \left( \frac{\partial c}{\partial t} + u_x  \frac{\partial c}{\partial x} + u_y \frac{\partial c}{\partial y} \right) dX = \frac{1}{\vert K_{i,j} \vert}\int_{K_{i,j}} f dX \\
+&\Rightarrow \frac{\partial c_{i,j}}{\partial t}(t_n) + \frac{1}{\vert K_{i,j} \vert}\int_{K_{i,j}}  \left( u_x  \frac{\partial c}{\partial x} + u_y \frac{\partial c}{\partial y} \right)  dX  = f_{i,j}(t_n)
+\end{align*}
+sur $K_{i,j}$ on peut approcher $u_x$ et $u_y$  par leurs valeurs moyennes : $u_x(t_n,X) \simeq (u_{i,j})_x(t_n)$ et $u_y(t_n,X) \simeq (u_{i,j})_y(t_n)$
+et donc l'équation devient :
+\[
+\frac{\partial c_{i,j}}{\partial t}(t_n) + \frac{(u_{i,j})_x(t_n)}{\vert K_{i,j} \vert}\int_{ K_{i,j}}    \frac{\partial c}{\partial x}  dX + \frac{(u_{i,j})_y(t_n)}{\vert K_{i,j} \vert}\int_{ K_{i,j}}    \frac{\partial c}{\partial y}  dX  = f_{i,j}(t_n)
+\]
+maintenant essayons d'approcher $\int_{ K_{i,j}}    \frac{\partial c}{\partial x}  dX$ et $\int_{ K_{i,j}}    \frac{\partial c}{\partial y}  dX$ à l'instant $t_n$ en effet :
+\begin{align*}
+\int_{ K_{i,j}}    \frac{\partial c}{\partial x}  dX = \int_{y_j}^{y_{j+1}}  \int_{x_i}^{x_{i+1}} \frac{\partial c}{\partial x}  dxdy &= \int_{y_j}^{y_{j+1}} (c(t_n,x_{i+1},y)-c(t_n,x_{i},y) ) dy\\
+&\simeq (c_{i+1,j}(t_n) - c_{i-1,j}(t_n) ) (y_{j+1} - y_j)
+\end{align*}
+de même :
+\[
+\int_{ K_{i,j}}    \frac{\partial c}{\partial y}  dX \simeq (c_{i,j+1}(t_n) - c_{i,j-1}(t_n) ) (x_{i+1} - x_i)
+\]
+on ces expressions dans notre équation : 
+\[
+\frac{\partial c_{i,j}}{\partial t}(t_n) + \frac{(u_{i,j})_x(t_n)}{x_{i+1} - x_i} (c_{i+1,j}(t_n) - c_{i-1,j}(t_n) ) + \frac{(u_{i,j})_y(t_n)}{y_{j+1} - y_j}(c_{i,j+1}(t_n) - c_{i,j-1}(t_n) )  = f_{i,j}(t_n)
+\]
+on applique le schéma d'Euler explicite, on obtient finalement : 
+\[
+\frac{c_{i,j}(t_{n+1})-c_{i,j}(t_n)}{t_{n+1}-t_n} + \frac{(u_{i,j})_x(t_n)}{x_{i+1} - x_i} (c_{i+1,j}(t_n) - c_{i-1,j}(t_n) ) + \frac{(u_{i,j})_y(t_n)}{y_{j+1} - y_j}(c_{i,j+1}(t_n) - c_{i,j-1}(t_n) )  = f_{i,j}(t_n)
+\]
+ou encore :
+\begin{align*}
+c_{i,j}(t_{n+1}) &= c_{i,j}(t_n) + (t_{n+1}-t_n) f_{i,j}(t_n)\\
+&+ \left( \frac{t_{n+1}-t_n}{x_{i+1}-x_i}(u_{i,j})_x(t_n) \right)(c_{i-1,j}(t_n) - c_{i+1,j}(t_n) ) \\
+&+ \left( \frac{t_{n+1}-t_n}{y_{j+1}-y_j}(u_{i,j})_y(t_n) \right)(c_{i,j-1}(t_n) - c_{i,j+1}(t_n) ) \\
+\end{align*}
+
+\end{document}
