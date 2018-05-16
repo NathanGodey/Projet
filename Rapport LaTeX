@@ -68,7 +68,7 @@
 \begin{minipage}{16cm}
   {\normalsize
    \parindent=0pt
-    {{\bf KEYWORDS} : 5 to 10 (in english)}
+    {{\bf KEYWORDS} : Mathematical Models, Numerical Simulations, Computational Complexity, Model Order Reduction, Proper Orthogonal Decomposition, Proper Generalized Decomposition, Reduced Basis Method}
 \par}
 \end{minipage}
 
@@ -80,7 +80,18 @@
 
 \section{Introduction}
 
+	Le but de ce projet d'initiation à la recherche est d'observer numériquement l'évolution d'une concentration de polluants dans un liquide (rejets dans une rivière) ou dans un gaz (nuage radioactif). Ce projet est associé au cours intitulé "Méthodes numériques pour les problèmes en grandes dimensions" ~\cite{Cours1} tenu en première année à l'École nationale des ponts et chaussées par Damiano Lombardi (INRIA) et Sébastien Boyaval (INRIA). Nous allons donc chercher à utiliser des outils de réductions de modèles afin de pouvoir prédire, étant donné une concentration initiale de polluant en un lieu donné, l'évolution de la concentration.
+
+
 \section{Matériels et méthodes}
+
+	Tout notre projet repose sur l'équation dite d'\emph{advection}, ou de \emph{transport de matière} :
+	
+	$$\partial_tu+\nabla(c \cdot u)=0$$
+	
+	où $u$ est la concentration de polluant et $c$ est le champs de vitesse du liquide ou du gaz.
+	
+	Nous avions à notre disposition un code d'éléments finis 2D sous Scilab faisant tourner le schéma Lax-Friedrichs
 
 \section{Résultats}
 
@@ -97,7 +108,7 @@
 \section{Exemples de figures, tableau, équations...}
 
 Ce court texte illustre la façon de citer les
-références~\cite{Livre1, Livre2, Livre3, Livre4, Cours1, Cours2,
+références~\cite{Cours1, Cours2,
 Article1, Article2, Rapport, Thèse}, de faire une note de bas de
 page~\footnote{Exemple de note de bas de page.}, de faire
 référence à une partie du document (Sec.~\ref{section}), à une
@@ -114,30 +125,11 @@ H \psi = i\hbar \frac{\partial \psi}{\partial t}.
 
 \begin{thebibliography}{99}
 
-\bibitem{Livre1}
-R. A. Day et B. Gastel
-\newblock {\em How to Write and Publish a Scientific Paper}.
-\newblock Greenwood Press, 2011.
-
-\bibitem{Livre2}
-A. Picon
-\newblock {\em L'invention de l'ingénieur moderne. L'Ecole des Ponts et Chaussées 1747-1851}.
-\newblock Presses de l'Ecole nationale des ponts et chaussées, Paris, 1992.
-
-\bibitem{Livre3}
-W-H. Press, S-A. Teukolsky, W-T. Vetterling et B-P Flannery
-\newblock {\em Numerical recipes}.
-\newblock Cambridge University Press, 1992.
-
-\bibitem{Livre4}
-F. Chevoir
-\newblock {\em Ecoulements granulaires}.
-\newblock Presses du Laboratoire Central des Ponts et Chaussées, 2008.
 
 \bibitem{Cours1}
-L. Dormieux
-\newblock {\em Mécanique des milieux continus}.
-\newblock Cours de l'Ecole nationale des ponts et chaussées, 2017.
+V. Ehrlacher, S.Boyaval
+\newblock {\em Méthodes numériques pour les problèmes en grande dimension}.
+\newblock Cours de l'École nationale des ponts et chaussées, 2018.
 
 \bibitem{Cours2}
 F. Chevoir
