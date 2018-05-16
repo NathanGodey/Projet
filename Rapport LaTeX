@@ -1,176 +1,170 @@
-\documentclass[12pt,a4paper]{article}
-\usepackage[utf8]{inputenc}
+\documentclass[12pt]{article}
 \usepackage[francais]{babel}
+\usepackage[latin1]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage{amsmath}
-\usepackage{amsfonts,dsfont}
-\usepackage{amssymb}
+\usepackage{times}
+\usepackage[dvips]{graphicx}
 \usepackage{graphicx}
-\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{float}
+\usepackage{makeidx}
+\usepackage{amsfonts}
 \usepackage{listings}
-\usepackage{multicol}
-\title{\textbf{Méthodes de réduction du modèle appliquées à l'équation du transport} }
+\usepackage{textcomp}
+\usepackage{lmodern} 
+\usepackage{makeidx}
+\usepackage{color}
 
-\author{}
+\textwidth=18cm \textheight=23cm \oddsidemargin=-1.00cm
+\evensidemargin=-1.00cm
+\parindent=1cm
+\topmargin=-2cm
 
 \begin{document}
-\maketitle
+
+
+\begin{center}
+
+{\large{\bf ECOLE NATIONALE DES PONTS ET CHAUSSEES}}
+
+\medskip
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=4cm]{logoenpc}
+\end{figure}
+
+
+
+{\large{\bf PROJET D'INITIATION A LA RECHERCHE 2018}}
+
+\vspace{2cm}
+
+{\Large{\bf Réduction de modèles appliquée à la modélisation du transport de polluants}}
+
+\vspace{1cm}
+
+{\large{Léo Baty, Clément Lasuen, Chiheb Eddine Najjar,\\ Nathan Godey, Régis Santet, Song Phuc Duong \\ sous la direction de \\ Damiano Lombardi, Sébastien Boyaval \\ Laboratoire INRIA}}
+
+\vspace{2cm}
+
+\newpage
+
 \tableofcontents
+
+\newpage
+
+\begin{minipage}{16cm}
+  {\normalsize
+   \parindent=0pt
+    {{\bf ABSTRACT} : This \emph{miniversion of the paper}~\cite{Livre1} (1000 to 2000 characters) must be written in english.
+    You may ask the help of an English advisor from the \emph{Département des Langues et Cultures}.}
+\par}
+\end{minipage}
+
+\vspace{1cm}
+
+\begin{minipage}{16cm}
+  {\normalsize
+   \parindent=0pt
+    {{\bf KEYWORDS} : 5 to 10 (in english)}
+\par}
+\end{minipage}
+
+\end{center}
+
+\newpage
+
+\bibliographystyle{unsrt}
+
 \section{Introduction}
 
-\section{Méthode des volumes finis}
-Considérons l'équation de transport suivante en dimension $d>0$ :
-\begin{equation}
-\frac{\partial c}{\partial t} + u \cdot \nabla c = f
-\label{1}
-\end{equation}
-où pour $T \in \mathbb{R}^*_+$ et $a<b$ dans $\mathbb{R}$, les différentes notations sont :
-\begin{multicols}{3}
-La concentration : 
-\begin{align*}
-  c : [0,T]\times [a,b]^d &\longrightarrow [0,1] \\
-   (t,x) &\longmapsto c(t,x)
-\end{align*}
+\section{Matériels et méthodes}
 
-La vitesse de transport :
-\begin{align*}
-  u : [0,T]\times [a,b]^d &\longrightarrow \mathbb{R}^d \\
-   (t,x) &\longmapsto u(t,x)
-\end{align*}
+\section{Résultats}
 
-Le terme source :
-\begin{align*}
-  f : [0,T]\times [a,b]^d &\longrightarrow \mathbb{R} \\
-   (t,x) &\longmapsto f(t,x)
-\end{align*}
+\section{Discussion} \label{section}
 
-\end{multicols}
-\subsection{En 1D}
-En 1D l'équation (\ref{1}) devient :
-\begin{equation}
-\frac{\partial c}{\partial t} + u  \frac{\partial c}{\partial x} = f
-\label{2}
+\section{Conclusions}
+
+\section{Annexes}
+
+\section{Remerciements}
+
+\section{Références}
+
+\section{Exemples de figures, tableau, équations...}
+
+Ce court texte illustre la façon de citer les
+références~\cite{Livre1, Livre2, Livre3, Livre4, Cours1, Cours2,
+Article1, Article2, Rapport, Thèse}, de faire une note de bas de
+page~\footnote{Exemple de note de bas de page.}, de faire
+référence à une partie du document (Sec.~\ref{section}), à une
+figure (Figure~\ref{figure1}), à un tableau
+(Tableau~\ref{tableau}) ou à une équation
+(Equation~\ref{equation}).
+
+\begin{equation} \label{equation}
+H \psi = i\hbar \frac{\partial \psi}{\partial t}.
 \end{equation}
 
-\subsubsection{Maillage}
-On discrétise $[a,b]$ en utilisant la suite $(x_i)_{i=1}^{N_x}$ vérifiant : 
-\begin{equation*}
-\begin{cases}
-        x_1=a  &  \\
-        x_{N_x}=b  \\
-        x_i<x_{i+1} \ \forall i < N_x \\
-\end{cases}
-\end{equation*} 
-De même on discrétise $[0,T]$ en utilisant la suite $(t_i)_{i=1}^{N_t}$ vérifiant : 
-\begin{equation*}
-\begin{cases}
-        t_1=0  &  \\
-        t_{N_t}=T  \\
-        t_i<t_{i+1} \ \forall i < N_t \\
-\end{cases}
-\end{equation*} 
-\subsubsection{Schéma numérique}
-On pose pour la suite, avec $1 \leq i \leq N_x$ et $1 \leq j \leq N_t$:
-\begin{align*}
-c_i(t_j) &=\frac{1}{x_{i+1}-x_i}\int_{x_i}^{x_{i+1}} c(t_j,x) dx,\\ 
-f_i(t_j) &=\frac{1}{x_{i+1}-x_i}\int_{x_i}^{x_{i+1}} f(t_j,x) dx,\\
-u_i(t_j) &=\frac{1}{x_{i+1}-x_i}\int_{x_i}^{x_{i+1}} u(t_j,x) dx.
-\end{align*}
-ainsi :
-\begin{align*}
-(\ref{2}) &\Rightarrow \frac{1}{x_{i+1}-x_i}\int_{x_i}^{x_{i+1}} \left( \frac{\partial c}{\partial t} + u  \frac{\partial c}{\partial x} \right) dx = \frac{1}{x_{i+1}-x_i}\int_{x_i}^{x_{i+1}} f dx\\
-&\Rightarrow \frac{\partial c_i}{\partial t}(t_j) + \frac{1}{x_{i+1}-x_i}\int_{x_i}^{x_{i+1}}  u  \frac{\partial c}{\partial x}  dx  = f_i(t_j)
-\end{align*}
-on peut approcher $u$ sur $[x_i,x_{i+1}]$ par sa valeur moyenne sur cet intervalle : $u(t_j,x) \simeq u_i(t_j)$
-et donc l'équation devient :
-\begin{align*}
-&\frac{\partial c_i}{\partial t}(t_j) + \frac{u_i(t_j)}{x_{i+1}-x_i}\int_{x_i}^{x_{i+1}}    \frac{\partial c}{\partial x}  dx  = f_i(t_j) \\
-\Rightarrow \ \ & \frac{\partial c_i}{\partial t}(t_j) + \frac{u_i(t_j)}{x_{i+1}-x_i} (c(t_j,x_{i+1}) - c(t_j,x_i))  = f_i (t_j)
-\end{align*}
-on peut aussi approcher $c(t_j,x_i)\simeq c_{i-1}(t_j)$ et $c(t_j,x_{i+1}) \simeq c_{i+1}(t_j)$, on obtient :
-\[
-\frac{\partial c_i}{\partial t}(t_j) + \frac{u_i(t_j)}{x_{i+1}-x_i} (c_{i+1}(t_j)-c_{i-1}(t_j))  = f_i(t_j) 
-\]
- 
-en utilisant le schéma d'Euler explicite $\frac{\partial c_i}{\partial t} (t_{j}) \simeq \frac{c_i(t_{j+1}) - c_i(t_j) }{t_{j+1}-t_j}$
-on obtient finalement:
-\[
-\frac{c_i(t_{j+1}) - c_i(t_j) }{t_{j+1}-t_j} + \frac{u_i(t_j)}{x_{i+1}-x_i} (c_{i+1}(t_j)-c_{i-1}(t_j))  = f_i(t_j)
-\]
-ou encore 
 
-\[
-c_i(t_{j+1}) = c_i(t_{j}) + \left( \frac{t_{j+1}-t_j}{x_{i+1}-x_i}u_i(t_j) \right) c_{i-1}(t_j) - \left( \frac{t_{j+1}-t_j}{x_{i+1}-x_i}u_i(t_j) \right) c_{i+1}(t_j)+(t_{j+1}-t_j)f_i(t_j)
-\]
+\newpage
 
-\subsection{En 2D}
-en 2D l'équation (\ref{1}) devient :
-\begin{equation}
-\frac{\partial c}{\partial t} + u_x  \frac{\partial c}{\partial x} + u_y \frac{\partial c}{\partial y} = f
-\label{3}
-\end{equation}
-\subsubsection{Maillage}
-On discrétise $[a,b]^2$ en utilisant deux suites suite $(x_i)_{i=1}^{N_x}$ et $(y_i)_{i=1}^{N_y}$ vérifiant : 
-\begin{equation*}
-\begin{cases}
-       y_1 = x_1=a    \\
-       y_{N_y} = x_{N_x}=b  \\
-       x_i<x_{i+1} \ \forall i < N_x \\
-       y_i<y_{i+1} \ \forall i < N_y \\ 
-\end{cases}
-\end{equation*} 
-On obtient une grille de $(N_x-1)(N_y-1)$ zone, on appelle donc $K_{i,j}  = [x_i,x_{i+1}]\times [y_j,y_{j+1}]$\\ 
+\begin{thebibliography}{99}
 
-De même on discrétise $[0,T]$ en utilisant la suite $(t_i)_{i=1}^{N_t}$ vérifiant : 
-\begin{equation*}
-\begin{cases}
-        t_1=0  &  \\
-        t_{N_t}=T  \\
-        t_i<t_{i+1} \ \forall i < N_t \\
-\end{cases}
-\end{equation*} 
-\subsubsection{Schéma numérique}
-On pose pour la suite, avec $1 \leq i \leq N_x$, $1 \leq j \leq N_y$ et $1 \leq n \leq N_t$:
-\begin{align*}
-X &= (x,y), \ dX = dxdy \\
-\vert K_{i,j} \vert &= (x_{i+1}-x_i)(y_{j+1}-y_j)\\
-c_{i,j}(t_n) &=\frac{1}{\vert K_{i,j} \vert}\int_{K_{i,j}} c(t_n,X) dX,\\ 
-f_{i,j}(t_n) &=\frac{1}{\vert K_{i,j} \vert}\int_{K_{i,j}} f(t_n,X) dX,\\
-u_{i,j}(t_n) &=\frac{1}{\vert K_{i,j} \vert}\int_{K_{i,j}} u(t_n,X) dX.
-\end{align*}
-ainsi :
-\begin{align*}
-(\ref{3}) &\Rightarrow \frac{1}{\vert K_{i,j} \vert}\int_{K_{i,j}} \left( \frac{\partial c}{\partial t} + u_x  \frac{\partial c}{\partial x} + u_y \frac{\partial c}{\partial y} \right) dX = \frac{1}{\vert K_{i,j} \vert}\int_{K_{i,j}} f dX \\
-&\Rightarrow \frac{\partial c_{i,j}}{\partial t}(t_n) + \frac{1}{\vert K_{i,j} \vert}\int_{K_{i,j}}  \left( u_x  \frac{\partial c}{\partial x} + u_y \frac{\partial c}{\partial y} \right)  dX  = f_{i,j}(t_n)
-\end{align*}
-sur $K_{i,j}$ on peut approcher $u_x$ et $u_y$  par leurs valeurs moyennes : $u_x(t_n,X) \simeq (u_{i,j})_x(t_n)$ et $u_y(t_n,X) \simeq (u_{i,j})_y(t_n)$
-et donc l'équation devient :
-\[
-\frac{\partial c_{i,j}}{\partial t}(t_n) + \frac{(u_{i,j})_x(t_n)}{\vert K_{i,j} \vert}\int_{ K_{i,j}}    \frac{\partial c}{\partial x}  dX + \frac{(u_{i,j})_y(t_n)}{\vert K_{i,j} \vert}\int_{ K_{i,j}}    \frac{\partial c}{\partial y}  dX  = f_{i,j}(t_n)
-\]
-maintenant essayons d'approcher $\int_{ K_{i,j}}    \frac{\partial c}{\partial x}  dX$ et $\int_{ K_{i,j}}    \frac{\partial c}{\partial y}  dX$ à l'instant $t_n$ en effet :
-\begin{align*}
-\int_{ K_{i,j}}    \frac{\partial c}{\partial x}  dX = \int_{y_j}^{y_{j+1}}  \int_{x_i}^{x_{i+1}} \frac{\partial c}{\partial x}  dxdy &= \int_{y_j}^{y_{j+1}} (c(t_n,x_{i+1},y)-c(t_n,x_{i},y) ) dy\\
-&\simeq (c_{i+1,j}(t_n) - c_{i-1,j}(t_n) ) (y_{j+1} - y_j)
-\end{align*}
-de même :
-\[
-\int_{ K_{i,j}}    \frac{\partial c}{\partial y}  dX \simeq (c_{i,j+1}(t_n) - c_{i,j-1}(t_n) ) (x_{i+1} - x_i)
-\]
-on ces expressions dans notre équation : 
-\[
-\frac{\partial c_{i,j}}{\partial t}(t_n) + \frac{(u_{i,j})_x(t_n)}{x_{i+1} - x_i} (c_{i+1,j}(t_n) - c_{i-1,j}(t_n) ) + \frac{(u_{i,j})_y(t_n)}{y_{j+1} - y_j}(c_{i,j+1}(t_n) - c_{i,j-1}(t_n) )  = f_{i,j}(t_n)
-\]
-on applique le schéma d'Euler explicite, on obtient finalement : 
-\[
-\frac{c_{i,j}(t_{n+1})-c_{i,j}(t_n)}{t_{n+1}-t_n} + \frac{(u_{i,j})_x(t_n)}{x_{i+1} - x_i} (c_{i+1,j}(t_n) - c_{i-1,j}(t_n) ) + \frac{(u_{i,j})_y(t_n)}{y_{j+1} - y_j}(c_{i,j+1}(t_n) - c_{i,j-1}(t_n) )  = f_{i,j}(t_n)
-\]
-ou encore :
-\begin{align*}
-c_{i,j}(t_{n+1}) &= c_{i,j}(t_n) + (t_{n+1}-t_n) f_{i,j}(t_n)\\
-&+ \left( \frac{t_{n+1}-t_n}{x_{i+1}-x_i}(u_{i,j})_x(t_n) \right)(c_{i-1,j}(t_n) - c_{i+1,j}(t_n) ) \\
-&+ \left( \frac{t_{n+1}-t_n}{y_{j+1}-y_j}(u_{i,j})_y(t_n) \right)(c_{i,j-1}(t_n) - c_{i,j+1}(t_n) ) \\
-\end{align*}
+\bibitem{Livre1}
+R. A. Day et B. Gastel
+\newblock {\em How to Write and Publish a Scientific Paper}.
+\newblock Greenwood Press, 2011.
+
+\bibitem{Livre2}
+A. Picon
+\newblock {\em L'invention de l'ingénieur moderne. L'Ecole des Ponts et Chaussées 1747-1851}.
+\newblock Presses de l'Ecole nationale des ponts et chaussées, Paris, 1992.
+
+\bibitem{Livre3}
+W-H. Press, S-A. Teukolsky, W-T. Vetterling et B-P Flannery
+\newblock {\em Numerical recipes}.
+\newblock Cambridge University Press, 1992.
+
+\bibitem{Livre4}
+F. Chevoir
+\newblock {\em Ecoulements granulaires}.
+\newblock Presses du Laboratoire Central des Ponts et Chaussées, 2008.
+
+\bibitem{Cours1}
+L. Dormieux
+\newblock {\em Mécanique des milieux continus}.
+\newblock Cours de l'Ecole nationale des ponts et chaussées, 2017.
+
+\bibitem{Cours2}
+F. Chevoir
+\newblock {\em Physique statistique}.
+\newblock Cours de l'Ecole nationale des ponts et chaussées, 2017.
+
+\bibitem{Article1}
+B.P. Abbott et al.
+\newblock Observation of gravitational waves from a binary black hole merger.
+\newblock {\em Phys. Rev. Lett.}, 116, 061102, 2016.
+
+\bibitem{Article2}
+C-E. Shannon
+\newblock A mathematical theory of communication.
+\newblock {\em Bell Syst. Tech. J.}, 27,379-423, 1948.
+
+\bibitem{Rapport}
+M. Ouedraogo, J. Bacaer, G. Buresi et B. Lafoux
+\newblock {\em Endommagement des roches par cristallisation saline}.
+\newblock Rapport de projet d'intiation à la recherche, Ecole nationale des ponts et chaussées, 2016.
+
+\bibitem{Thèse}
+J. Guyon
+\newblock {\em Probabilistic modeling in finance and biology - Limit theorems and applications}.
+\newblock PhD thesis, Ecole nationale des ponts et chaussées, 2006.
+\newblock https://pastel.archives-ouvertes.fr/pastel-00001995.
+
+\end{thebibliography}
 
 \end{document}
