@@ -109,7 +109,64 @@
 	
 	\subsection{Approche Lagrangienne}
 
-	L'approche Lagrangienne consiste à suivre une particule de polluant le long de sa trajectoire.
+	\subsubsection{Descritption}
+	L'approche lagrangienne consiste à suivre les particules le long de leur trajectoires.
+	Cela revient à résoudre : 
+	$$
+	\left\{
+	\begin{array}{c c c}
+	\partial_tX  =  v(X(\xi,t),t)\\
+	X(\xi,0)  =  \xi
+	\end{array}
+	\right.
+	$$ 
+
+	Où $X(\xi,t) \in \mathbb{R}^{n\times2}$, n étant le nombre de particules, $t\in [0,T]$ et $\xi$ étant les positions initiales des particules.
+
+	\subsubsection{Résolution numérique}
+	Nous avons utilisé le schéma de Crank-Nicholson :
+	$$X^{(k+1)} = X^{(k)} + \frac{\Delta t}{2}(v(X^{(k)},t^k) + v(X^{(k+1)},t^{k+1}))$$
+
+	Nous avons utilisé une méthode du point fixe pour évaluer $X^{(k+1)}$ en connaissant $X^{(k)}$.
+	Initialisation (r=0) : $$ X^{(k+1)}_0 = X^{(k)}$$
+	$$X^{(k+1)}_1 = X^{(k)} + \Delta tv(X^{(k)},t^k) $$
+	$$X^{(k+1)}_{r+1} = X^{(k)} + \frac{\Delta t}{2}(v(X^{(k)},t^k) + v(X^{(k+1)}_r,t^{k+1}))$$
+	Et on arrête lorsque : $$||X^{(k+1)}_{r+1} - X^{(k+1)}_r||<\epsilon$$
+
+	\subsubsection{Interpolation}
+
+	La résolution numérique du problème nécessite de connaître le champ de vitesse des particules, noté $v$.
+	Nous supposons que l'ensemble $\Omega=[-1,1]^2 $ soit muni d'un maillage carré régulier de pas noté $\Delta x$ en abscisse et $\Delta y$ en ordonnée. Nous supposons également que le champ de vitesse est connu en tout point du maillage. Nous présentons ici la méthode d’interpolation que nous avons utilisé pour approximer le champ de vitesse dans l'ensemble du domaine $\Omega$.
+
+	Considérons une maille dont les coordonnées du coin inférieur gauche sont notées $(x^{LL},y^{LL}$.
+	Soit un point $(x,y)$ appartenant à cette maille. On pose :
+
+	$$
+	\left\{
+	\begin{array}{c c c}
+	\tilde{x}= \frac{x-x^{LL}}{\Delta x}\\
+	\tilde{y}= \frac{y-y^{LL}}{\Delta y}
+	\end{array}
+	\right.
+	$$ 
+
+	On définit :
+
+	$$
+	\left\{
+	\begin{array}{c c c}
+	\varphi_1(\tilde{x}, \tilde{y}) = (1-\tilde{x})(1-\tilde{y})\\
+	\varphi_2(\tilde{x}, \tilde{y}) = \tilde{x}(1-\tilde{y})\\
+	\varphi_3(\tilde{x}, \tilde{y}) = \tilde{x}\tilde{y}\\
+	\varphi_4(\tilde{x}, \tilde{y}) = (1-\tilde{x})\tilde{y}
+	\end{array}
+	\right.
+	$$ 
+
+	La vitesse au point $(x,y)$ à l'instant $t$ est alors donnée par :
+	$$v(x,y,t) = v(x^{LL}, y^{LL},t) \varphi_1(\tilde{x}, \tilde{y}) + v(x^{LL} +\Delta x, y^{LL},t) \varphi_2(\tilde{x}, \tilde{y}) $$
+	$$ + v(x^{LL}+\Delta x, y^{LL}+\Delta y,t) \varphi_3(\tilde{x}, \tilde{y}) $$
+	$$ + v(x^{LL}, y^{LL}+\Delta y,t) \varphi_4(\tilde{x}, \tilde{y}) $$
 
 
 
