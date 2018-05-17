@@ -99,15 +99,17 @@
 	
 	L'approche Eulérienne consiste à déterminer en chaque point de notre maillage les valeurs de la concentration en polluant. On va donc, à chaque itération de l'algorithme, mettre à jour l'ensemble du maillage.\\
 	
-	Il se trouve qu'une simple approche par la méthode des différences finies n'est pas un schéma stable pour notre étude : le schéma est soit instable (concentration en polluant devenant négative) soit non fiable (phénomène de diffusion trop important). On va lui préférer la méthode des volumes finis avec un schéma de Lax-Friedrichs.\\
+	Il se trouve qu'une simple approche par la méthode des différences finies n'est pas un schéma stable pour notre étude : le schéma est soit instable (concentration en polluant devenant négative, voire divergente) soit pas assez fiable (phénomène de diffusion trop important). On va lui préférer la méthode des volumes finis avec un schéma de Lax-Friedrichs.\\
 	
-	Nous avions à notre disposition un code d'éléments finis 2D sous Scilab faisant tourner le schéma de Lax-Friedrichs sur des cas très compliqués et un maillage uniforme sur $(0,1)^2$. En déchiffrant une partie de ce code, et en s'y inspirant, nous avons codé ce schéma en Python, de façon simplifiée et en retenant seulement ce qui allait nous servir pour notre étude. La zone étudiée est toujours $(0,1)^2$, et notre condition initiale est normalisée : si le polluant est relâché en un seul point, alors la condition initiale vaudra $1~(100\%)$ en ce point, et $0$ ailleurs sur le maillage. Ce code Python est donné en annexe (Annexe 1).
+	Nous avions à notre disposition un code d'éléments finis 2D sous Scilab faisant tourner le schéma de Lax-Friedrichs sur des cas très compliqués et un maillage uniforme sur $(0,1)^2$. En déchiffrant une partie de ce code, et en s'y inspirant, nous avons codé ce schéma en Python, de façon simplifiée et en retenant seulement ce qui allait nous servir pour notre étude. La zone étudiée est toujours $(0,1)^2$, et notre condition initiale est normalisée : si le polluant est relâché en un seul point, alors la condition initiale vaudra $1~(100\%)$ en ce point, et $0$ ailleurs sur le maillage. De plus, les conditions aux bords sont périodiques : nous nous plaçons sur une sphère afin de rendre le code plus simple. Ce code Python est donné en annexe (Annexe 1).\\
+	
+	Une fois ce code mis en place, nous utilisons des outils de réduction de modèles afin de rendre le temps de calcul moindre.
 	
 	
 	
 	\subsection{Approche Lagrangienne}
 
-
+	L'approche Lagrangienne consiste à suivre une particule de polluant le long de sa trajectoire.
 
 
 
