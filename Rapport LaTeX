@@ -80,18 +80,36 @@
 
 \section{Introduction}
 
-	Le but de ce projet d'initiation à la recherche est d'observer numériquement l'évolution d'une concentration de polluants dans un liquide (rejets dans une rivière) ou dans un gaz (nuage radioactif). Ce projet est associé au cours intitulé "Méthodes numériques pour les problèmes en grandes dimensions" ~\cite{Cours1} tenu en première année à l'École nationale des ponts et chaussées par Damiano Lombardi (INRIA) et Sébastien Boyaval (INRIA). Nous allons donc chercher à utiliser des outils de réductions de modèles afin de pouvoir prédire, étant donné une concentration initiale de polluant en un lieu donné, l'évolution de la concentration.
+	Le but de ce projet d'initiation à la recherche est d'observer numériquement l'évolution d'une concentration de polluants dans un liquide (rejets dans une rivière) ou dans un gaz (nuage radioactif). Ce projet est associé au cours intitulé "Méthodes numériques pour les problèmes en grandes dimensions" ~\cite{Cours1} tenu en première année à l'École nationale des ponts et chaussées par Damiano Lombardi (INRIA) et Sébastien Boyaval (INRIA). Nous allons donc chercher à utiliser des outils de réductions de modèles afin de pouvoir prédire, étant donné une concentration initiale de polluant en un lieu donné, l'évolution de la concentration de façon fiable.
 
 
 \section{Matériels et méthodes}
 
 	Tout notre projet repose sur l'équation dite d'\emph{advection}, ou de \emph{transport de matière} :
 	
-	$$\partial_tu+\nabla(c \cdot u)=0$$
+	\begin{equation}
+	\partial_tu+\nabla(c \cdot u)=0.
+	\label{equation1}
+	\end{equation}
 	
-	où $u$ est la concentration de polluant et $c$ est le champs de vitesse du liquide ou du gaz.
+	où $u$ est la concentration de polluant et $c$ est le champs de vitesse présent dans le liquide ou le gaz. Pour une simulation numérique, nous devons nous munir d'un maillage de la zone que nous voulons étudier, d'un schéma de discrétisation en temps et en espace de l'équation \ref{equation1}, et d'une condition initiale. 
 	
-	Nous avions à notre disposition un code d'éléments finis 2D sous Scilab faisant tourner le schéma Lax-Friedrichs
+	
+	\subsection{Approche Eulérienne}
+	
+	L'approche Eulérienne consiste à déterminer en chaque point de notre maillage les valeurs de la concentration en polluant. On va donc, à chaque itération de l'algorithme, mettre à jour l'ensemble du maillage.\\
+	
+	Il se trouve qu'une simple approche par la méthode des différences finies n'est pas un schéma stable pour notre étude : le schéma est soit instable (concentration en polluant devenant négative) soit non fiable (phénomène de diffusion trop important). On va lui préférer la méthode des volumes finis avec un schéma de Lax-Friedrichs.\\
+	
+	Nous avions à notre disposition un code d'éléments finis 2D sous Scilab faisant tourner le schéma de Lax-Friedrichs sur des cas très compliqués et un maillage uniforme sur $(0,1)^2$. En déchiffrant une partie de ce code, et en s'y inspirant, nous avons codé ce schéma en Python, de façon simplifiée et en retenant seulement ce qui allait nous servir pour notre étude. La zone étudiée est toujours $(0,1)^2$, et notre condition initiale est normalisée : si le polluant est relâché en un seul point, alors la condition initiale vaudra $1~(100\%)$ en ce point, et $0$ ailleurs sur le maillage. Ce code Python est donné en annexe (Annexe 1).
+	
+	
+	
+	\subsection{Approche Lagrangienne}
+
+
+
+
 
 \section{Résultats}
 
@@ -100,6 +118,11 @@
 \section{Conclusions}
 
 \section{Annexes}
+
+\begin{lstlisting}
+
+code python schema lax friedrichs
+\end{lstlisting}
 
 \section{Remerciements}
 
