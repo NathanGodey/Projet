@@ -22,69 +22,69 @@
 \topmargin=-2cm
 
 \begin{document}
-
-
-\begin{center}
-
-{\large{\bf ECOLE NATIONALE DES PONTS ET CHAUSSEES}}
-
-\medskip
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=4cm]{logoenpc}
-\end{figure}
-
-
-
-{\large{\bf PROJET D'INITIATION A LA RECHERCHE 2018}}
-
-\vspace{2cm}
-
-{\Large{\bf Réduction de modèles appliquée à la modélisation du transport de polluants}}
-
-\vspace{1cm}
-
-{\large{Léo Baty, Clément Lasuen, Chiheb Eddine Najjar,\\ Nathan Godey, Régis Santet, Song Phuc Duong \\ sous la direction de \\ Damiano Lombardi, Sébastien Boyaval \\ Laboratoire INRIA}}
-
-\vspace{2cm}
-
-\newpage
-
-\tableofcontents
-
-\newpage
-
-\begin{minipage}{16cm}
-  {\normalsize
-   \parindent=0pt
-    {{\bf ABSTRACT} : This \emph{miniversion of the paper}~\cite{Livre1} (1000 to 2000 characters) must be written in english.
-    You may ask the help of an English advisor from the \emph{Département des Langues et Cultures}.}
-\par}
-\end{minipage}
-
-\vspace{1cm}
-
-\begin{minipage}{16cm}
-  {\normalsize
-   \parindent=0pt
-    {{\bf KEYWORDS} : Mathematical Models, Numerical Simulations, Computational Complexity, Model Order Reduction, Proper Orthogonal Decomposition, Proper Generalized Decomposition, Reduced Basis Method}
-\par}
-\end{minipage}
-
-\end{center}
-
-\newpage
-
-\bibliographystyle{unsrt}
-
-\section{Introduction}
-
+	
+	
+	\begin{center}
+		
+		{\large{\bf ECOLE NATIONALE DES PONTS ET CHAUSSEES}}
+		
+		\medskip
+		
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=4cm]{logoenpc}
+		\end{figure}
+		
+		
+		
+		{\large{\bf PROJET D'INITIATION A LA RECHERCHE 2018}}
+		
+		\vspace{2cm}
+		
+		{\Large{\bf Réduction de modèles appliquée à la modélisation du transport de polluants}}
+		
+		\vspace{1cm}
+		
+		{\large{Léo Baty, Clément Lasuen, Chiheb Eddine Najjar,\\ Nathan Godey, Régis Santet, Song Phuc Duong \\ sous la direction de \\ Damiano Lombardi, Sébastien Boyaval \\ Laboratoire INRIA}}
+		
+		\vspace{2cm}
+		
+		\newpage
+		
+		\tableofcontents
+		
+		\newpage
+		
+		\begin{minipage}{16cm}
+			{\normalsize
+				\parindent=0pt
+				{{\bf ABSTRACT} : This \emph{miniversion of the paper}~\cite{Livre1} (1000 to 2000 characters) must be written in english.
+					You may ask the help of an English advisor from the \emph{Département des Langues et Cultures}.}
+				\par}
+		\end{minipage}
+		
+		\vspace{1cm}
+		
+		\begin{minipage}{16cm}
+			{\normalsize
+				\parindent=0pt
+				{{\bf KEYWORDS} : Mathematical Models, Numerical Simulations, Computational Complexity, Model Order Reduction, Proper Orthogonal Decomposition, Proper Generalized Decomposition, Reduced Basis Method}
+				\par}
+		\end{minipage}
+		
+	\end{center}
+	
+	\newpage
+	
+	\bibliographystyle{unsrt}
+	
+	\section{Introduction}
+	
 	Le but de ce projet d'initiation à la recherche est d'observer numériquement l'évolution d'une concentration de polluants dans un liquide (rejets dans une rivière) ou dans un gaz (nuage radioactif). Ce projet est associé au cours intitulé "Méthodes numériques pour les problèmes en grandes dimensions" ~\cite{Cours1} tenu en première année à l'École nationale des ponts et chaussées par Damiano Lombardi (INRIA) et Sébastien Boyaval (INRIA). Nous allons donc chercher à utiliser des outils de réductions de modèles afin de pouvoir prédire, étant donné une concentration initiale de polluant en un lieu donné, l'évolution de la concentration de façon fiable.
-
-
-\section{Matériels et méthodes}
-
+	
+	
+	\section{Matériels et méthodes}
+	
 	Tout notre projet repose sur l'équation dite d'\emph{advection}, ou de \emph{transport de matière} :
 	
 	\begin{equation}
@@ -92,24 +92,43 @@
 	\label{equation1}
 	\end{equation}
 	
-	où $u$ est la concentration de polluant et $c$ est le champs de vitesse présent dans le liquide ou le gaz. Pour une simulation numérique, nous devons nous munir d'un maillage de la zone que nous voulons étudier, d'un schéma de discrétisation en temps et en espace de l'équation \ref{equation1}, et d'une condition initiale. 
+	où $u$ est la concentration de polluant et $c$ est le champs de vitesse présent dans le liquide ou le gaz. Pour une simulation numérique, nous devons nous munir d'un code donnant un maillage de la zone que nous voulons étudier, d'un schéma de discrétisation en temps et en espace de l'équation \ref{equation1}, et d'une condition initiale. 
+	
+	Une fois ce code mis en place, nous utilisons l'algorithme POD (Proper Orthogonal Decomposition) pour réduire notre solution. Nous nous posons alors trois questions :
+	\begin{itemize}
+		\item L'algorithme POD est-il adapté à l'équation d'advection ? 
+		\item Quelle approche, lagrangienne ou eulérienne, convient-il de prendre ?
+		\item Peut-on trouver un moyen d'augmenter la compression de données ?
+	\end{itemize}
+	
+	Nous allons explorer ces questions à travers deux exemples : un écoulement à vitesse constant (où juste l'angle d'incidence change) et un écoulement cellulaire (des tourbillons).
 	
 	
 	\subsection{Approche Eulérienne}
 	
+		\subsubsection{Description}
+	
 	L'approche Eulérienne consiste à déterminer en chaque point de notre maillage les valeurs de la concentration en polluant. On va donc, à chaque itération de l'algorithme, mettre à jour l'ensemble du maillage.\\
 	
-	Il se trouve qu'une simple approche par la méthode des différences finies n'est pas un schéma stable pour notre étude : le schéma est soit instable (concentration en polluant devenant négative, voire divergente) soit pas assez fiable (phénomène de diffusion trop important). On va lui préférer la méthode des volumes finis avec un schéma de Lax-Friedrichs.\\
+	Il se trouve qu'une simple approche par la méthode des différences finies n'est pas un schéma stable pour notre étude : le schéma est un peu trop instable (concentration pouvant devenir négative). On va lui préférer la méthode des volumes finis avec un schéma de Lax-Friedrichs, qui est un schéma qui amène un peu plus de phénomène de diffusion, mais qui assure la positivité de la concentration.\\
 	
-	Nous avions à notre disposition un code d'éléments finis 2D sous Scilab faisant tourner le schéma de Lax-Friedrichs sur des cas très compliqués et un maillage uniforme sur $(0,1)^2$. En déchiffrant une partie de ce code, et en s'y inspirant, nous avons codé ce schéma en Python, de façon simplifiée et en retenant seulement ce qui allait nous servir pour notre étude. La zone étudiée est toujours $(0,1)^2$, et notre condition initiale est normalisée : si le polluant est relâché en un seul point, alors la condition initiale vaudra $1~(100\%)$ en ce point, et $0$ ailleurs sur le maillage. De plus, les conditions aux bords sont périodiques : nous nous plaçons sur une sphère afin de rendre le code plus simple. Ce code Python est donné en annexe (Annexe 1).\\
+	Nous avions à notre disposition un code d'éléments finis 2D sous Scilab faisant tourner le schéma de Lax-Friedrichs sur des cas très compliqués et un maillage uniforme sur $(0,1)^2$. En déchiffrant une partie de ce code, et en s'y inspirant, nous avons codé ce schéma en Python, de façon simplifiée et en retenant seulement ce qui allait nous servir pour notre étude (maillage, fonction permettant l'actualisation, affichage de la solution). La zone étudiée est toujours $(0,1)^2$, et notre condition initiale est représentée par une gaussienne étroite (équivalente à un pic de polluant). De plus, les conditions aux bords sont périodiques : nous nous plaçons sur une sphère afin de rendre le code plus simple, même si nous ferons en sorte de ne jamais atteindre les bords. Ce code Python est donné en annexe (Annexe 1).\\
 	
-	Une fois ce code mis en place, nous utilisons des outils de réduction de modèles afin de rendre le temps de calcul moindre.
+
 	
+		\subsubsection{Résolution numérique}
+	
+		
+	Notre condition initiale est donnée par une gaussienne :
+	$$gaussienne(x,y)=\exp(-\frac{(x-x_0)^2+(y-y_0)^2}{2\sigma ^2})$$
+	
+	avec $(x_0,y_0)=(0.25,0.25)~,~\sigma =\frac{1}{50}$.
+	Le nombre de cases sur le maillage est $(2\times10^{8}+1)^2$.
 	
 	
 	\subsection{Approche Lagrangienne}
-
-	\subsubsection{Descritption}
+	
+	\subsubsection{Description}
 	L'approche lagrangienne consiste à suivre les particules le long de leur trajectoires.
 	Cela revient à résoudre : 
 	$$
@@ -120,27 +139,27 @@
 	\end{array}
 	\right.
 	$$ 
-
+	
 	Où $X(\xi,t) \in \mathbb{R}^{n\times2}$, n étant le nombre de particules, $t\in [0,T]$ et $\xi$ étant les positions initiales des particules.
-
+	
 	\subsubsection{Résolution numérique}
 	Nous avons utilisé le schéma de Crank-Nicholson :
 	$$X^{(k+1)} = X^{(k)} + \frac{\Delta t}{2}(v(X^{(k)},t^k) + v(X^{(k+1)},t^{k+1}))$$
-
+	
 	Nous avons utilisé une méthode du point fixe pour évaluer $X^{(k+1)}$ en connaissant $X^{(k)}$.
 	Initialisation (r=0) : $$ X^{(k+1)}_0 = X^{(k)}$$
 	$$X^{(k+1)}_1 = X^{(k)} + \Delta tv(X^{(k)},t^k) $$
 	$$X^{(k+1)}_{r+1} = X^{(k)} + \frac{\Delta t}{2}(v(X^{(k)},t^k) + v(X^{(k+1)}_r,t^{k+1}))$$
 	Et on arrête lorsque : $$||X^{(k+1)}_{r+1} - X^{(k+1)}_r||<\epsilon$$
-
+	
 	\subsubsection{Interpolation}
-
+	
 	La résolution numérique du problème nécessite de connaître le champ de vitesse des particules, noté $v$.
-	Nous supposons que l'ensemble $\Omega=[-1,1]^2 $ soit muni d'un maillage carré régulier de pas noté $\Delta x$ en abscisse et $\Delta y$ en ordonnée. Nous supposons également que le champ de vitesse est connu en tout point du maillage. Nous présentons ici la méthode d’interpolation que nous avons utilisé pour approximer le champ de vitesse dans l'ensemble du domaine $\Omega$.
-
+	Nous supposons que l'ensemble $\Omega=[-1,1]^2 $ soit muni d'un maillage carré régulier de pas noté $\Delta x$ en abscisse et $\Delta y$ en ordonnée. Nous supposons également que le champ de vitesse est connu en tout point du maillage. Nous présentons ici la méthode d?interpolation que nous avons utilisé pour approximer le champ de vitesse dans l'ensemble du domaine $\Omega$.
+	
 	Considérons une maille dont les coordonnées du coin inférieur gauche sont notées $(x^{LL},y^{LL}$.
 	Soit un point $(x,y)$ appartenant à cette maille. On pose :
-
+	
 	$$
 	\left\{
 	\begin{array}{c c c}
@@ -149,9 +168,9 @@
 	\end{array}
 	\right.
 	$$ 
-
+	
 	On définit :
-
+	
 	$$
 	\left\{
 	\begin{array}{c c c}
@@ -162,83 +181,83 @@
 	\end{array}
 	\right.
 	$$ 
-
+	
 	La vitesse au point $(x,y)$ à l'instant $t$ est alors donnée par :
 	$$v(x,y,t) = v(x^{LL}, y^{LL},t) \varphi_1(\tilde{x}, \tilde{y}) + v(x^{LL} +\Delta x, y^{LL},t) \varphi_2(\tilde{x}, \tilde{y}) $$
 	$$ + v(x^{LL}+\Delta x, y^{LL}+\Delta y,t) \varphi_3(\tilde{x}, \tilde{y}) $$
 	$$ + v(x^{LL}, y^{LL}+\Delta y,t) \varphi_4(\tilde{x}, \tilde{y}) $$
-
-
-
-\section{Résultats}
-
-\section{Discussion} \label{section}
-
-\section{Conclusions}
-
-\section{Annexes}
-
-\begin{lstlisting}
-
-code python schema lax friedrichs
-\end{lstlisting}
-
-\section{Remerciements}
-
-\section{Références}
-
-\section{Exemples de figures, tableau, équations...}
-
-Ce court texte illustre la façon de citer les
-références~\cite{Cours1, Cours2,
-Article1, Article2, Rapport, Thèse}, de faire une note de bas de
-page~\footnote{Exemple de note de bas de page.}, de faire
-référence à une partie du document (Sec.~\ref{section}), à une
-figure (Figure~\ref{figure1}), à un tableau
-(Tableau~\ref{tableau}) ou à une équation
-(Equation~\ref{equation}).
-
-\begin{equation} \label{equation}
-H \psi = i\hbar \frac{\partial \psi}{\partial t}.
-\end{equation}
-
-
-\newpage
-
-\begin{thebibliography}{99}
-
-
-\bibitem{Cours1}
-V. Ehrlacher, S.Boyaval
-\newblock {\em Méthodes numériques pour les problèmes en grande dimension}.
-\newblock Cours de l'École nationale des ponts et chaussées, 2018.
-
-\bibitem{Cours2}
-F. Chevoir
-\newblock {\em Physique statistique}.
-\newblock Cours de l'Ecole nationale des ponts et chaussées, 2017.
-
-\bibitem{Article1}
-B.P. Abbott et al.
-\newblock Observation of gravitational waves from a binary black hole merger.
-\newblock {\em Phys. Rev. Lett.}, 116, 061102, 2016.
-
-\bibitem{Article2}
-C-E. Shannon
-\newblock A mathematical theory of communication.
-\newblock {\em Bell Syst. Tech. J.}, 27,379-423, 1948.
-
-\bibitem{Rapport}
-M. Ouedraogo, J. Bacaer, G. Buresi et B. Lafoux
-\newblock {\em Endommagement des roches par cristallisation saline}.
-\newblock Rapport de projet d'intiation à la recherche, Ecole nationale des ponts et chaussées, 2016.
-
-\bibitem{Thèse}
-J. Guyon
-\newblock {\em Probabilistic modeling in finance and biology - Limit theorems and applications}.
-\newblock PhD thesis, Ecole nationale des ponts et chaussées, 2006.
-\newblock https://pastel.archives-ouvertes.fr/pastel-00001995.
-
-\end{thebibliography}
-
+	
+	
+	
+	\section{Résultats}
+	
+	\section{Discussion} \label{section}
+	
+	\section{Conclusions}
+	
+	\section{Annexes}
+	
+	\begin{lstlisting}
+	
+	code python schema lax friedrichs
+	\end{lstlisting}
+	
+	\section{Remerciements}
+	
+	\section{Références}
+	
+	\section{Exemples de figures, tableau, équations...}
+	
+	Ce court texte illustre la façon de citer les
+	références~\cite{Cours1, Cours2,
+		Article1, Article2, Rapport, Thèse}, de faire une note de bas de
+	page~\footnote{Exemple de note de bas de page.}, de faire
+	référence à une partie du document (Sec.~\ref{section}), à une
+	figure (Figure~\ref{figure1}), à un tableau
+	(Tableau~\ref{tableau}) ou à une équation
+	(Equation~\ref{equation}).
+	
+	\begin{equation} \label{equation}
+	H \psi = i\hbar \frac{\partial \psi}{\partial t}.
+	\end{equation}
+	
+	
+	\newpage
+	
+	\begin{thebibliography}{99}
+		
+		
+		\bibitem{Cours1}
+		V. Ehrlacher, S.Boyaval
+		\newblock {\em Méthodes numériques pour les problèmes en grande dimension}.
+		\newblock Cours de l'École nationale des ponts et chaussées, 2018.
+		
+		\bibitem{Cours2}
+		F. Chevoir
+		\newblock {\em Physique statistique}.
+		\newblock Cours de l'Ecole nationale des ponts et chaussées, 2017.
+		
+		\bibitem{Article1}
+		B.P. Abbott et al.
+		\newblock Observation of gravitational waves from a binary black hole merger.
+		\newblock {\em Phys. Rev. Lett.}, 116, 061102, 2016.
+		
+		\bibitem{Article2}
+		C-E. Shannon
+		\newblock A mathematical theory of communication.
+		\newblock {\em Bell Syst. Tech. J.}, 27,379-423, 1948.
+		
+		\bibitem{Rapport}
+		M. Ouedraogo, J. Bacaer, G. Buresi et B. Lafoux
+		\newblock {\em Endommagement des roches par cristallisation saline}.
+		\newblock Rapport de projet d'intiation à la recherche, Ecole nationale des ponts et chaussées, 2016.
+		
+		\bibitem{Thèse}
+		J. Guyon
+		\newblock {\em Probabilistic modeling in finance and biology - Limit theorems and applications}.
+		\newblock PhD thesis, Ecole nationale des ponts et chaussées, 2006.
+		\newblock https://pastel.archives-ouvertes.fr/pastel-00001995.
+		
+	\end{thebibliography}
+	
 \end{document}
