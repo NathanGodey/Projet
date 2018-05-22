@@ -436,31 +436,6 @@
 		\newblock {\em Méthodes numériques pour les problèmes en grande dimension}.
 		\newblock Cours de l'École nationale des ponts et chaussées, 2018.
 		
-		\bibitem{Cours2}
-		F. Chevoir
-		\newblock {\em Physique statistique}.
-		\newblock Cours de l'Ecole nationale des ponts et chaussées, 2017.
-		
-		\bibitem{Article1}
-		B.P. Abbott et al.
-		\newblock Observation of gravitational waves from a binary black hole merger.
-		\newblock {\em Phys. Rev. Lett.}, 116, 061102, 2016.
-		
-		\bibitem{Article2}
-		C-E. Shannon
-		\newblock A mathematical theory of communication.
-		\newblock {\em Bell Syst. Tech. J.}, 27,379-423, 1948.
-		
-		\bibitem{Rapport}
-		M. Ouedraogo, J. Bacaer, G. Buresi et B. Lafoux
-		\newblock {\em Endommagement des roches par cristallisation saline}.
-		\newblock Rapport de projet d'intiation à la recherche, Ecole nationale des ponts et chaussées, 2016.
-		
-		\bibitem{Thèse}
-		J. Guyon
-		\newblock {\em Probabilistic modeling in finance and biology - Limit theorems and applications}.
-		\newblock PhD thesis, Ecole nationale des ponts et chaussées, 2006.
-		\newblock https://pastel.archives-ouvertes.fr/pastel-00001995.
 		
 	\end{thebibliography}
 	
