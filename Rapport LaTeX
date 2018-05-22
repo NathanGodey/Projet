@@ -224,7 +224,38 @@
 	$$ + v(x^{LL}+\Delta x, y^{LL}+\Delta y,t) \varphi_3(\tilde{x}, \tilde{y}) $$
 	$$ + v(x^{LL}, y^{LL}+\Delta y,t) \varphi_4(\tilde{x}, \tilde{y}) $$
 	
-	
+	\subsection{Champ de vitesse de LambOseen}
+
+	Nous prenons dans ce cas une vitesse analytique donnée par : 
+	$$ \textbf{V}(r,\theta,t) = \frac{\Gamma}{2\pi r}(1 - exp( \frac{-r^2}{4\nu t}))$$
+
+	\begin{figure}[H]
+	\begin{center}
+	\includegraphics[scale=0.5]{lagrange_lamboseen.png}
+	\caption{}
+	\end{center}
+	\end{figure}
+
+
+	\subsection{Autre situation}
+
+	Cette fois, les particules sont distribuées selon une gaussienne centrée en (0.25 ; 0.25) de variance 1/50. Leurs vitesses sont identiques, constante et orientées avec un angle $\theta$ compris entre $0$ et $\frac{\pi}{2}$. 
+	Les positions des différentes particules sont ensuite stockées dans une matrice M de taille $2nb_particules\times nb_steps$. Nous avons ensuite effectué la décomposition SVD de la matrice $M$ : $M = USV^T$
+	Dans ce cas particulier, la projection suivant le premier mode propre (première colonne de $U$) permet d'obtenir une approximation satisfaisante.Comme on peut le voir sur la figure suivante, la décroissance des valeurs singulières est très rapide. 
+	\\
+	\begin{figure}[H]
+	\begin{center}
+	\includegraphics[scale=0.5]{valeurs_singulieres.png}
+	\caption{Projection suivant le premier mode}
+	\end{center}
+	\end{figure}
+	\\
+	\begin{figure}[H]
+	\begin{center}
+	\includegraphics[scale=0.5]{lagrange_gauss_1er_mode.png}
+	\caption{Projection suivant le premier mode}
+	\end{center}
+	\end{figure}
 	
 	\section{Résultats}
 	
