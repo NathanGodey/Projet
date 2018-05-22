@@ -9,12 +9,13 @@
 \usepackage{amssymb}
 \usepackage{float}
 \usepackage{makeidx}
-\usepackage{amsfonts}
+\usepackage{amsfonts,dsfont}
 \usepackage{listings}
 \usepackage{textcomp}
 \usepackage{lmodern} 
 \usepackage{makeidx}
 \usepackage{color}
+\usepackage{multicol}
 
 \textwidth=18cm \textheight=23cm \oddsidemargin=-1.00cm
 \evensidemargin=-1.00cm
@@ -80,19 +81,20 @@
 	
 	\section{Introduction}
 	
-	Le but de ce projet d'initiation à la recherche est d'observer numériquement l'évolution d'une concentration de polluants dans un liquide (rejets dans une rivière) ou dans un gaz (nuage radioactif). Ce projet est associé au cours intitulé "Méthodes numériques pour les problèmes en grandes dimensions" ~\cite{Cours1} tenu en première année à l'École nationale des ponts et chaussées par Damiano Lombardi (INRIA) et Sébastien Boyaval (INRIA). Nous allons donc chercher à utiliser des outils de réductions de modèles afin de pouvoir prédire, étant donné une concentration initiale de polluant en un lieu donné, l'évolution de la concentration de façon fiable.
+	Le but de ce projet d'initiation à la recherche est d'observer numériquement l'évolution d'une concentration de polluants (fluide que l'on considère incompressible) dans un liquide (rejets dans une rivière) ou dans un gaz (nuage radioactif). Ce projet est associé au cours intitulé "Méthodes numériques pour les problèmes en grandes dimensions" ~\cite{Cours1} tenu en première année à l'École nationale des ponts et chaussées par Damiano Lombardi (INRIA) et Sébastien Boyaval (INRIA). Nous allons donc chercher à utiliser des outils de réductions de modèles afin de pouvoir prédire, étant donné une concentration initiale de polluant en un lieu donné, l'évolution de la concentration de façon fiable.
 	
+	%Indiquer les raisons du projet : pourquoi faisons-nous ça ? En quoi est-ce utile ? Qu'est-ce qui est difficile ?
 	
 	\section{Matériels et méthodes}
 	
 	Tout notre projet repose sur l'équation dite d'\emph{advection}, ou de \emph{transport de matière} :
 	
 	\begin{equation}
-	\partial_tu+\nabla(c \cdot u)=0.
+	\partial_tc+u\nabla(c)=0.
 	\label{equation1}
 	\end{equation}
 	
-	où $u$ est la concentration de polluant et $c$ est le champs de vitesse présent dans le liquide ou le gaz. Pour une simulation numérique, nous devons nous munir d'un code donnant un maillage de la zone que nous voulons étudier, d'un schéma de discrétisation en temps et en espace de l'équation \ref{equation1}, et d'une condition initiale. 
+	où $c$ est la concentration de polluant et $u$ est le champs de vitesse présent dans le liquide ou le gaz. Pour une simulation numérique, nous devons nous munir d'un code donnant un maillage de la zone que nous voulons étudier, d'un schéma de discrétisation en temps et en espace de l'équation \ref{equation1}, et d'une condition initiale. 
 	
 	Une fois ce code mis en place, nous utilisons l'algorithme POD (Proper Orthogonal Decomposition) pour réduire notre solution. Nous nous posons alors trois questions :
 	\begin{itemize}
@@ -117,31 +119,32 @@
 	Dans le cas où la vitesse est constante, seule sa direction varie et est donnée par un angle $\theta\in[0,\frac{\pi}{2}]$ (on prend ces angles pour éviter que la gaussienne n'atteigne le bord). On a donc
 	
 	$$\left\{\begin{array}{c c c}
-		c_x = ||c||\cos(\theta)\\
-		c_y = ||c||\sin(\theta)
-		\end{array}\right.$$
-		
+	u_x = ||u||\cos(\theta)\\
+	u_y = ||u||\sin(\theta)
+	\end{array}\right.$$
+	
 	\paragraph{Cas d'un écoulement cellulaire}
 	
+	% Donner la formue du potentielle, écrire la vitesse dans ce cas
 	
 	
 	\subsection{Approche Eulérienne}
 	
-		\subsubsection{Description}
+	\subsubsection{Description}
 	
 	L'approche Eulérienne consiste à déterminer en chaque point de notre maillage les valeurs de la concentration en polluant. On va donc, à chaque itération de l'algorithme, mettre à jour l'ensemble du maillage.\\
 	
-	Il se trouve qu'une simple approche par la méthode des différences finies n'est pas un schéma stable pour notre étude : le schéma est un peu trop instable (concentration pouvant devenir négative). On va lui préférer la méthode des volumes finis avec un schéma de Lax-Friedrichs, qui est un schéma qui amène un peu plus de phénomène de diffusion, mais qui assure la positivité de la concentration.\\
+	Il se trouve qu'une simple approche par la méthode des différences finies n'est pas un schéma stable pour notre étude : le schéma est un peu trop instable (concentration pouvant devenir négative). On va lui préférer la méthode des volumes finis avec un schéma de Lax-Friedrichs, qui est un schéma qui amène un peu plus de phénomène de diffusion, mais qui assure la positivité de la concentration. Pour plus de détails, voir la section \ref{volumesfinis}.\\
 	
 	Nous avions à notre disposition un code d'éléments finis 2D sous Scilab faisant tourner le schéma de Lax-Friedrichs sur des cas très compliqués et un maillage uniforme sur $(0,1)^2$. En déchiffrant une partie de ce code, et en s'y inspirant, nous avons codé ce schéma en Python, de façon simplifiée et en retenant seulement ce qui allait nous servir pour notre étude (maillage, fonction permettant l'actualisation, affichage de la solution). La zone étudiée est toujours $(0,1)^2$, et notre condition initiale est représentée par une gaussienne étroite (équivalente à un pic de polluant). De plus, les conditions aux bords sont périodiques : nous nous plaçons sur une sphère afin de rendre le code plus simple, même si nous ferons en sorte de ne jamais atteindre les bords. Ce code Python est donné en annexe (Annexe 1).\\
 	
-
 	
-		\subsubsection{Résolution numérique}
 	
-		
+	\subsubsection{Résolution numérique}
+	
+	
 	Notre condition initiale est donnée par une gaussienne :
-	$$u_0(x,y)=\exp(-\frac{(x-x_0)^2+(y-y_0)^2}{2\sigma ^2})$$
+	$$c_0(x,y)=\exp(-\frac{(x-x_0)^2+(y-y_0)^2}{2\sigma ^2})$$
 	
 	avec $(x_0,y_0)=(0.25,0.25)~,~\sigma =\frac{1}{50}$.
 	L'approche eulérienne consiste donc à transporter cette gaussienne le long du maillage. 
@@ -152,13 +155,142 @@
 	
 	On stocke les valeurs de la solution au cours du temps sur tout le maillage dans une matrice à laquelle on va appliquer l'algorithme POD.
 	
-		\subsubsection{Réduction}
+	\subsubsection{Réduction}
 	
 	On obtient une matrice $M$ contenant les solutions des $n_s$ simulations. En appliquant l'algorithme SVD/POD, on obtient deux matrices $U$ et $V$, contenant les vecteurs propres (modes propres) choisis par l'algorithme POD ainsi qu'un vecteur $S$ contenant les valeurs singulières de la matrice $M$ triée par ordre décroissant. En regardant la décroissance des valeurs singulières en fonction du rang, on en déduit le nombre de modes que l'on va utiliser pour simuler de façon approchée notre dynamique.\\
 	
 	Ainsi, étant donnée une condition initiale $C_0$ fixée, on pourra voir l'évolution approchée de celle-ci en discrétisant l'équation d'advection en temps et en espace :
 	
-	$$\frac{C^{n+1}-C^n}{dt}+$$
+	% Donner la discrétisation
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	\subsection{Méthode des volumes finis}\label{volumesfinis}
+	Dans le cas de l'approche eulérienne, on utilise un schéma qui est différent de ceux utilisés jusqu'à présent dans nos cours. Détaillons un peu comment cette méthode fonctionne.\\
+	
+	
+	Considérons l'équation de transport dans le cas général en dimension $d>0$ sur un compact en temps et en espace $[0,T]\times [a,b]^d$ pour $T \in \mathbb{R}^*_+$ et $a<b$ dans $\mathbb{R}$
+	
+	\begin{equation}
+	\frac{\partial c}{\partial t} + u \cdot \nabla c = f.
+	\label{dimd}
+	\end{equation}
+	
+	où $c : [0,T] \times [a,b]^d \longrightarrow [0,1]$ la concentration du polluant, $u : [0,T]\times [a,b]^d \longrightarrow \mathbb{R}^d$ le champs des vitesses imposé dans le milieu et $f : [0,T]\times [a,b]^d \longrightarrow \mathbb{R}$ la source de pollution.\\
+	
+	Pour la suite nous prenons $f=0$, pas de source. 
+	
+		\subsubsection{Maillage}
+	Nous posons $[a,b] = [0,L]$ avec $L>0$ afin de simplifier. Maintenant, pour discrétiser l'équation (\ref{dimd}) en espace, nous utilisons deux suites arithmétiques : $(x_i)_{i=1}^{n_x}$ sur l'axe des abscisses et $(y_i)_{i=1}^{n_y}$ sur l'axe des ordonnées, vérifiant : 
+	
+	\begin{equation*}
+	\begin{cases}
+	x_i = i \Delta x = i \frac{L}{n_x}   \\
+	y_i = i \Delta y = i \frac{L}{n_y}   \\
+	\end{cases}
+	\end{equation*}
+	
+	On obtient une grille de $(n_x-1)(n_y-1)$ cellules, on appelle donc $K_{i,j}  = [x_i,x_{i+1}] \times [y_j,y_{j+1}]$, et $\Gamma_{i,j}^{k,l} = K_{i,j} \cap K_{k,l}$.\\
+	
+	On discrétise $[0,T]$ en utilisant une suite $(t_i)_{i=1}^{n_t}$, qui n'est pas nécessairement arithmétique, vérifiant : 
+	\begin{equation*}
+	\begin{cases}
+	t_1=0  &  \\
+	t_{n_t}=T  \\
+	t_i<t_{i+1} \ \forall i < n_t \\
+	\end{cases}
+	\end{equation*} 
+	Ainsi, nous posons pour $1 \leq i \leq n_x$, $1 \leq j \leq n_y$ et $1 \leq n \leq n_t$:: 
+	\begin{align*}
+	X &= (x,y), \ dX = dxdy \\
+	\vert K_{i,j} \vert &= (x_{i+1}-x_i)(y_{j+1}-y_j) = \Delta x \Delta y = \frac{L^2}{n_x n_y}  \\
+	c_{i,j}(t_n) &=\frac{1}{\vert K_{i,j} \vert}\int_{K_{i,j}} c(t_n,X) dX,\\ 
+	u_{i,j}(t_n) &=\frac{1}{\vert K_{i,j} \vert}\int_{K_{i,j}} u(t_n,X) dX.
+	\end{align*}
+	
+		\subsubsection{Schéma numérique}
+	Nous considérons l'équation (\ref{dimd}) dans sa forme faible, c'est à dire au sens des distributions, en utilisons le fait que $\mathrm{div}(c \ u) = u \nabla c + c \ \mathrm{div}(u)$, nous pouvons la réécrire sous la forme suivante : 
+	
+	\begin{equation*}
+	\frac{\partial c}{\partial t} + \mathrm{div}(c \ u) -  c \ \mathrm{div}(u) = 0
+	\end{equation*}
+	
+	Dans notre projet on considère des vitesse des fluides incompressibles, donc $\mathrm{div}(u)=0$. L'équation devient:
+	
+	\begin{equation}
+	\frac{\partial c}{\partial t} + \mathrm{div}(c \ u) = 0 
+	\label{faible}
+	\end{equation}
+	
+	Maintenant, en fixant $t_n \in [0,T]$, nous intégrons sur chaque cellule $K_{i,j}$,:
+	\[
+	\frac{1}{\vert K_{i,j} \vert}\int_{K_{i,j}} \left( \frac{\partial c}{\partial t} + \mathrm{div}(c \ u) \right) dX = 0 
+	\]
+	On peut permuter l'intégrale et la dérivation par rapport au temps puisque les cellules $K_{i,j}$ sont indépendantes de temps, et on utilise le théorème de Green pour des fonctions suffisamment régulières $\int_{\Omega} \mathrm{div} (a) \ d \Omega = \int_{\partial \Omega} a\cdot n \ dL $ ,où $n$ est le vecteur normal sortant, ainsi:
+	
+	\[
+	\frac{\partial c_{i,j}}{\partial t}(t_n) +  \frac{1}{\vert K_{i,j} \vert} \int_{\partial K_{i,j} } c \ u \cdot n \ dL = 0\\
+	\]
+	
+	Chaque cellule est un rectangle, ces bords sont des segments. Nous posons dans chaque segment $\Gamma$ la quantité $\frac{1}{\vert \Gamma \vert }\int_{\Gamma} c \ u \ dL:= F_{\Gamma}(c)$ et alors :
+	\[
+	\int_{\partial K_{i,j} } c \ u \cdot n \ dL = \sum_{k,l} \vert \Gamma_{i,j}^{k,l} \vert F_{\Gamma_{i,j}^{k,l}}(c) \cdot n_{i,j \rightarrow k,l}
+	\]  
+	
+	Cette somme contient bien sûr quatre termes puisque les cellules sont des rectangles.\\
+	
+	$F_{\Gamma} \cdot n$ est le flux sortant de la cellule $K_{i,j}$ à partir de la face $\Gamma$. On cherche maintenant à l'approcher numériquement de manière stable (voir la section \ref{stabilité}) et on choisit pour cela un schéma de flux en 2-points, c'est à dire
+	 
+	\[
+	F_{ \Gamma_{i,j}^{k,l}}(c) \cdot n_{i,j \rightarrow k,l} = g(c_{i,j},c_{k,l})
+	\]
+	
+	Le flux sortant de $\Gamma$ dépend de la valeur de $c$ dans les deux cellules voisines qui contiennent $\Gamma$.
+	
+	La méthode de Godunov permet de donner une fonction $g$ qui assure la stabilité du schéma. En effet, il propose pour des scalaires $a$ et $b$, $$g(a,b)=F_{ \Gamma_{i,j}^{k,l}} (c_R(t_n,0))$$ où $c_R$ est la solution du problème du Riemann définit par :
+	\begin{equation}
+	\begin{cases}
+	\mathrm{trouver \ c(t,x) \ telle \ que }\\
+	\frac{\partial c}{\partial t} + \mathrm{div}(c \ u) = 0 \\
+	c(0,x) = a\mathds{1}_{x<0} + b\mathds{1}_{x>0}
+	\end{cases}
+	\label{R}
+	\end{equation}
+	mais vu la difficulté de la résolution du problème exacte (\ref{R}) nous  utilisons le schéma de Lax-Friedrichs qui peut être considéré comme une méthode approcher de la méthode de Godunov, plus simple à implémenter et rapide :
+	\begin{equation}
+	\begin{cases}
+	
+	\lambda = \mathrm{max}\lbrace u_{i,j}, u_{k,l} \rbrace \\
+	g(c_{i,j},c_{k,l}) = \frac{1}{2} (c_{i,j}u_{i,j} + c_{k,l}u_{k,l})\cdot n_{i,j \rightarrow k,l} + \frac{1}{2\lambda}(c_{i,j} - c_{k,l})
+	\end{cases}
+	\label{LF}
+	\end{equation}
+	
+		\subsubsection{Critères de stabilité}
+	\label{stabilité}
+	
+	Entropie pour la vraie solution \\
+	Entropie discrétisé\\
+	consistance g(u,u) = F(u)\\
+	condition CFL\\
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	\subsection{Approche Lagrangienne}
@@ -225,36 +357,40 @@
 	$$ + v(x^{LL}, y^{LL}+\Delta y,t) \varphi_4(\tilde{x}, \tilde{y}) $$
 	
 	\subsection{Champ de vitesse de LambOseen}
-
+	
 	Nous prenons dans ce cas une vitesse analytique donnée par : 
 	$$ \textbf{V}(r,\theta,t) = \frac{\Gamma}{2\pi r}(1 - exp( \frac{-r^2}{4\nu t}))$$
-
+	
+	%gamma,nu?
+	
 	\begin{figure}[H]
-	\begin{center}
-	\includegraphics[scale=0.5]{lagrange_lamboseen.png}
-	\caption{}
-	\end{center}
+		\begin{center}
+			\includegraphics[scale=0.5]{lagrange_lamboseen.png}
+			\caption{}
+		\end{center}
 	\end{figure}
-
-
+	
+	
 	\subsection{Autre situation}
-
+	
 	Cette fois, les particules sont distribuées selon une gaussienne centrée en (0.25 ; 0.25) de variance 1/50. Leurs vitesses sont identiques, constante et orientées avec un angle $\theta$ compris entre $0$ et $\frac{\pi}{2}$. 
 	Les positions des différentes particules sont ensuite stockées dans une matrice M de taille $2nb_particules\times nb_steps$. Nous avons ensuite effectué la décomposition SVD de la matrice $M$ : $M = USV^T$
-	Dans ce cas particulier, la projection suivant le premier mode propre (première colonne de $U$) permet d'obtenir une approximation satisfaisante.Comme on peut le voir sur la figure suivante, la décroissance des valeurs singulières est très rapide. 
+	
+	% Ceci est plutôt à mettre dans la partie résultats
+	Dans ce cas particulier, la projection suivant le premier mode propre (première colonne de $U$) permet d'obtenir une approximation satisfaisante. Comme on peut le voir sur la figure suivante, la décroissance des valeurs singulières est très rapide. 
 	\\
 	\begin{figure}[H]
-	\begin{center}
-	\includegraphics[scale=0.5]{valeurs_singulieres.png}
-	\caption{Projection suivant le premier mode}
-	\end{center}
+		\begin{center}
+			\includegraphics[scale=0.5]{valeurs_singulieres.png}
+			\caption{Tracé du $\log$ des valeurs singulières en fonction de leur rang}
+		\end{center}
 	\end{figure}
-	\\
+	
 	\begin{figure}[H]
-	\begin{center}
-	\includegraphics[scale=0.5]{lagrange_gauss_1er_mode.png}
-	\caption{Projection suivant le premier mode}
-	\end{center}
+		\begin{center}
+			\includegraphics[scale=0.5]{lagrange_gauss_1er_mode.png}
+			\caption{Projection suivant le premier mode}
+		\end{center}
 	\end{figure}
 	
 	\section{Résultats}
