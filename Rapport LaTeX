@@ -101,7 +101,25 @@
 		\item Peut-on trouver un moyen d'augmenter la compression de données ?
 	\end{itemize}
 	
-	Nous allons explorer ces questions à travers deux exemples : un écoulement à vitesse constant (où juste l'angle d'incidence change) et un écoulement cellulaire (des tourbillons).
+	Nous allons explorer ces questions à travers deux exemples : un écoulement à vitesse constant (où juste l'angle d'incidence change) et un écoulement cellulaire (des tourbillons).\\
+	
+	
+	\subsection{Paramétrage}
+	
+	Dans tout ce qui suit, nous avons opté comme maillage un quadrillage de la zone $(0,1)^2$, et le nombre de cases sur le maillage est égal à $(2\times10^{8}+1)^2$ : c'est un cas où le maillage est plutôt fin et le temps de calcul, bien qu'un peu long, reste raisonnable.\\
+	
+	On effectue un nombre $n_s=16$ de simulations différentes dans chaque cas afin de pouvoir remplir la matrice qui va nous servir pour faire l'algorithme POD (matrice contenant quelques solutions fines du problème).\\
+	On prend un temps maximal de simulation égal $T_max=1$.
+	
+	\paragraph{Cas d'une vitesse constante}
+	
+	Dans le cas où la vitesse est constante, seule sa direction varie et est donnée par un angle $\theta\in[0,\frac{\pi}{2}]$ (on prend ces angles pour éviter que la gaussienne n'atteigne le bord). On a donc
+	
+	$$\left\{\begin{array}{c c c}
+		c_x = ||c||\cos(\theta)\\
+		c_y = ||c||\sin(\theta)
+		\end{array}\right.$$
+	
 	
 	
 	\subsection{Approche Eulérienne}
@@ -120,10 +138,12 @@
 	
 		
 	Notre condition initiale est donnée par une gaussienne :
-	$$gaussienne(x,y)=\exp(-\frac{(x-x_0)^2+(y-y_0)^2}{2\sigma ^2})$$
+	$$u_0(x,y)=\exp(-\frac{(x-x_0)^2+(y-y_0)^2}{2\sigma ^2})$$
 	
 	avec $(x_0,y_0)=(0.25,0.25)~,~\sigma =\frac{1}{50}$.
-	Le nombre de cases sur le maillage est $(2\times10^{8}+1)^2$.
+	L'approche eulérienne consiste donc à transporter cette gaussienne le long du maillage. 
+	
+
 	
 	
 	\subsection{Approche Lagrangienne}
@@ -151,6 +171,8 @@
 	$$X^{(k+1)}_1 = X^{(k)} + \Delta tv(X^{(k)},t^k) $$
 	$$X^{(k+1)}_{r+1} = X^{(k)} + \frac{\Delta t}{2}(v(X^{(k)},t^k) + v(X^{(k+1)}_r,t^{k+1}))$$
 	Et on arrête lorsque : $$||X^{(k+1)}_{r+1} - X^{(k+1)}_r||<\epsilon$$
+	
+	où $\epsilon$ est une erreur donnant un critère d'arrêt : on suppose qu'on est "suffisamment proche de la solution" quand l'algorithme s'arrête.
 	
 	\subsubsection{Interpolation}
 	
