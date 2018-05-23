@@ -176,6 +176,20 @@
 	\right.
 	$$ 
 	
+	\paragraph{Champ de vitesse de LambOseen}
+	
+	Nous prenons dans ce cas une vitesse analytique donnée par : 
+	$$ \textbf{V}(r,\theta,t) = \frac{\Gamma}{2\pi r}(1 - exp( \frac{-r^2}{4\nu t}))u_{\theta}$$
+	
+	%gamma,nu?
+	
+	
+	\begin{figure}[H]
+		\begin{center}
+			\includegraphics[scale=0.5]{lagrange_lamboseen.png}
+			\caption{}
+		\end{center}
+	\end{figure}
 	\subsection{Approche Eulérienne}
 	
 	\subsubsection{Description}
@@ -282,19 +296,6 @@
 	$$ + v(x^{LL}+\Delta x, y^{LL}+\Delta y,t) \varphi_3(\tilde{x}, \tilde{y}) $$
 	$$ + v(x^{LL}, y^{LL}+\Delta y,t) \varphi_4(\tilde{x}, \tilde{y}) $$
 	
-	\subsubsection{Champ de vitesse de LambOseen}
-	
-	Nous prenons dans ce cas une vitesse analytique donnée par : 
-	$$ \textbf{V}(r,\theta,t) = \frac{\Gamma}{2\pi r}(1 - exp( \frac{-r^2}{4\nu t}))$$
-	
-	%gamma,nu?
-	
-	\begin{figure}[H]
-		\begin{center}
-			\includegraphics[scale=0.5]{lagrange_lamboseen.png}
-			\caption{}
-		\end{center}
-	\end{figure}
 	
 	
 	\subsubsection{Champ de vitesse constant}
@@ -302,22 +303,6 @@
 	Cette fois, les particules sont distribuées selon une gaussienne centrée en (0.25 ; 0.25) de variance 1/50. Leurs vitesses sont identiques, constante et orientées avec un angle $\theta$ compris entre $0$ et $\frac{\pi}{2}$. 
 	Les positions des différentes particules sont ensuite stockées dans une matrice M de taille $2nb_particules\times nb_steps$. Nous avons ensuite effectué la décomposition SVD de la matrice $M$ : $M = USV^T$
 	
-	% Ceci est plutôt à mettre dans la partie résultats
-	Dans ce cas particulier, la projection suivant le premier mode propre (première colonne de $U$) permet d'obtenir une approximation satisfaisante. Comme on peut le voir sur la figure suivante, la décroissance des valeurs singulières est très rapide. 
-	\\
-	\begin{figure}[H]
-		\begin{center}
-			\includegraphics[scale=0.5]{valeurs_singulieres.png}
-			\caption{Tracé du $\log$ des valeurs singulières en fonction de leur rang}
-		\end{center}
-	\end{figure}
-	
-	\begin{figure}[H]
-		\begin{center}
-			\includegraphics[scale=0.5]{lagrange_gauss_1er_mode.png}
-			\caption{Projection suivant le premier mode}
-		\end{center}
-	\end{figure}
 	
 	\subsubsection{Ecoulement cellulaire}
 	Dans cette simulation : $\theta_0 = 0.2, \theta_1 = 3.12, \theta_2 = 2.69$.
@@ -362,8 +347,28 @@
 	
 	On récupère donc l'approximation de la matrice de \emph{snapshots} avec $13$ vecteurs propres, et on va pouvoir simuler la dynamique de notre système assez fidèlement.
 
+	\subsection{Approche Lagrangienne}
+
+	\subsubsection{Vitesse constante}
+	Dans ce cas particulier, la projection suivant le premier mode propre (première colonne de $U$) permet d'obtenir une approximation satisfaisante. Comme on peut le voir sur la figure suivante, la décroissance des valeurs singulières est très rapide. 
+	\\
+	\begin{figure}[H]
+		\begin{center}
+			\includegraphics[scale=0.5]{valeurs_singulieres.png}
+			\caption{Tracé du $\log$ des valeurs singulières en fonction de leur rang}
+		\end{center}
+	\end{figure}
 	
+	\begin{figure}[H]
+		\begin{center}
+			\includegraphics[scale=0.5]{lagrange_gauss_1er_mode.png}
+			\caption{Projection suivant le premier mode}
+		\end{center}
+	\end{figure}
 	
+	\subsubsection{Ecoulement cellulaire}
+	
+	\
 	\section{Discussion} \label{section}
 	
 	\section{Conclusions}
