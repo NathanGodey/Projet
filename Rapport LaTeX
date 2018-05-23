@@ -162,7 +162,19 @@
 	\paragraph{Cas d'un écoulement cellulaire}
 	
 	% Donner la formule du potentiel, écrire la vitesse dans ce cas
-	
+	Dans ce cas, le champ de vitesse dérive du potentiel suivant : 
+	$$\psi(x,y) = sin(2πx) sin(2πy) + \theta_0 cos(2π\theta_1x)cos(2π\theta_2y)$$
+	où $\theta_0 \in [0,0.75]$ et $(\theta_1,\theta_2) \in [0.5,4]^2$.
+	La vitesse s'exprime alors : 
+
+	$$
+	\left\{
+	\begin{array}{c c c}
+	u_x(x,y) = \frac{\partial \psi}{\partial y} = 2\pi sin(2πx) cos(2πy) - \theta_0 2π\theta_2 cos(2π\theta_1x)sin(2π\theta_2y)\\
+	u_y(x,y) = -\frac{\partial \psi}{\partial x} = 2\pi sin(2πy) cos(2πx) - \theta_0 2π\theta_1 cos(2π\theta_2y)sin(2π\theta_1x)
+	\end{array}
+	\right.
+	$$ 
 	
 	\subsection{Approche Eulérienne}
 	
@@ -305,6 +317,30 @@
 			\includegraphics[scale=0.5]{lagrange_gauss_1er_mode.png}
 			\caption{Projection suivant le premier mode}
 		\end{center}
+	\end{figure}
+	
+	\subsubsection{Ecoulement cellulaire}
+	Dans cette simulation : $\theta_0 = 0.2, \theta_1 = 3.12, \theta_2 = 2.69$.
+	\begin{figure}[H]
+	\begin{center}
+	\includegraphics[scale=0.5]{ecoulement_cellulaire_10.png}
+	\caption{}
+	\end{center}
+	\end{figure}
+
+	La décroissance des valeurs singulières est assez lente, comme le montre la figure suivante. Cette méthode n'est pas efficace dans cette situation.
+	\begin{figure}[H]
+	\begin{center}
+	\includegraphics[scale=0.5]{valeurs_singulieres_cell_10_particules.png}
+	\caption{Valeurs singulières pour 10 particules}
+	\end{center}
+	\end{figure}
+
+	\begin{figure}[H]
+	\begin{center}
+	\includegraphics[scale=0.5]{valeurs_singulieres_cell_100_particules.png}
+	\caption{Valeurs singulières pour 100 particules}
+	\end{center}
 	\end{figure}
 	
 	\section{Résultats}
