@@ -114,7 +114,7 @@
 	\section{Introduction}
 	
 	Le but de ce projet d'initiation à la recherche est d'observer numériquement l'évolution d'une concentration de polluants (fluide que l'on considère incompressible) dans un liquide (rejets dans une rivière) ou dans un gaz (nuage radioactif). Ce projet est associé au cours intitulé "Méthodes numériques pour les problèmes en grandes dimensions" ~\cite{Cours1} tenu en première année à l'École nationale des ponts et chaussées par Damiano Lombardi (INRIA) et Sébastien Boyaval (INRIA). Nous allons donc chercher à utiliser des outils de réductions de modèles afin de pouvoir prédire, étant donné une concentration initiale de polluant en un lieu donné, l'évolution de la concentration de façon fiable.
-		La dynamique de la solution réelle dépend d'un nombre de paramètres beaucoup trop grand si l'on souhaite la simuler tout le temps avec des paramètres différents à chaque fois (position initiale, champs de vitesse,...). La discrétisation du problème pose aussi problème, avec un phénomène de diffusion souvent inévitable. Le but de la méthode de réduction de modèles est de pouvoir se ramener à une base de solutions qui contiennent en elle-même la majeure partie de la dynamique de la solution réelle pour un certain nombre de paramètres où on aura la solution fine, afin de pouvoir simuler de façon approchée et surtout plus rapide des nouveaux schémas avec des paramètres différents.\\
+	La dynamique de la solution réelle dépend d'un nombre de paramètres beaucoup trop grand si l'on souhaite la simuler tout le temps avec des paramètres différents à chaque fois (position initiale, champs de vitesse,...). La discrétisation du problème pose aussi problème, avec un phénomène de diffusion souvent inévitable. Le but de la méthode de réduction de modèles est de pouvoir se ramener à une base de solutions qui contiennent en elle-même la majeure partie de la dynamique de la solution réelle pour un certain nombre de paramètres où on aura la solution fine, afin de pouvoir simuler de façon approchée et surtout plus rapide des nouveaux schémas avec des paramètres différents.\\
 	Il faut donc d'abord penser à l'approche que l'on va avoir sur la discrétisation du problème, puis savoir quel outil de la réduction de modèle utiliser afin d'avoir une erreur relativement faible pour un temps relativement court : un compris est donc fait entre temps de calcul et précision.
 	
 	
@@ -146,13 +146,13 @@
 	X(t_0) & | & X(t_1) &| & \cdots & | & X(t_n)
 	\end{pmatrix}
 	$$
-
+	
 	La décomposition SVD (Singular Value Decomposition) de la matrice $M$ s'écrit : $ M = USV^T $ Où $U$ et $V$ sont des matrices orthogonales respectivement de taille $N$ et $n$. La matrice $S$ est diagonale, ses coefficients sont les valeurs singulières de $M$ (les valeurs propres de $M^TM$). Cette décomposition est unique lorsque les coefficients sur la diagonale de $S$, notés $\sigma_1,...,\sigma_p$ avec $p = rang(S) =rang(M)$, sont ordonnés par ordre décroissant.
-
+	
 	Les colonnes de $U$, notées $U^{(1)},..., U^{(N)}$ sont les modes propres de la matrice (ce sont les vecteurs propres de $M^TM$).
 	Soit $r$ un entier compris entre 1 et le rang de $S$. Les vecteurs $U^{(1)},..., U^{(r)}$ forment alors une 
 	base orthonormée d'un sous-espace vectoriel de $\mathbb{R}^N$ dans lequel on projette la dynamique du système. 
-
+	
 	Cette méthode s'applique lorsque la dynamique du système reste proche d'un sous-espace vectoriel de dimension faible. Cela correspond à une décroissance rapide des valeurs singulières de $M$. L'erreur de représentation est donnée par : $\sum_{i=r+1}^p \sigma_i^2$.
 	
 	\subsection{Paramétrage}
@@ -179,7 +179,7 @@
 	$$\psi(x,y) = sin(2πx) sin(2πy) + \theta_0 cos(2π\theta_1x)cos(2π\theta_2y)$$
 	où $\theta_0 \in [0,0.75]$ et $(\theta_1,\theta_2) \in [0.5,4]^2$.
 	La vitesse s'exprime alors : 
-
+	
 	$$
 	\left\{
 	\begin{array}{c c c}
@@ -192,7 +192,7 @@
 	\paragraph{Champ de vitesse de Lamb-Oseen}
 	
 	Nous prenons dans ce cas une vitesse analytique donnée par : 
-	$$ \textbf{V}(r,\theta,t) = \frac{\Gamma}{2\pi r}(1 - exp( \frac{-r^2}{4\nu t + r_c^2}))\textbf{u_{\theta}}$$
+	$$ \mathbf{V}(r,\theta,t) = \frac{\Gamma}{2\pi r}(1 - \exp( \frac{-r^2}{4\nu t + r_c^2}))\mathbf{u_{\theta}}$$
 	
 	où $\nu$ désigne la viscosité cinématique, $\Gamma$ est la circulation de l'écoulement et $r_c$ le rayon moyen.
 	
@@ -216,7 +216,7 @@
 	L'approche eulérienne consiste donc à transporter cette gaussienne le long du maillage. 
 	
 	\begin{tabular}{cc}
-		\includegraphics[width=0.3\linewidth]{euler_condition_initiale} &	\includegraphics[width=0.3\linewidth]{euler_condition_initiale_simulee}\\
+		\includegraphics[width=0.5\linewidth]{euler_condition_initiale} &	\includegraphics[width=0.5\linewidth]{euler_condition_initiale_simulee}\\
 		Condition initiale... & ...et après un certain temps
 	\end{tabular}
 	
@@ -315,50 +315,50 @@
 	\subsubsection{Ecoulement cellulaire}
 	Dans cette simulation : $\theta_0 = 0.2, \theta_1 = 3.12, \theta_2 = 2.69$.
 	\begin{figure}[H]
-	\begin{center}
-	\includegraphics[scale=0.5]{ecoulement_cellulaire_10.png}
-	\caption{}
-	\end{center}
+		\begin{center}
+			\includegraphics[scale=0.5]{ecoulement_cellulaire_10.png}
+			\caption{}
+		\end{center}
 	\end{figure}
-
+	
 	La décroissance des valeurs singulières est assez lente, comme le montre la figure suivante. Cette méthode n'est pas efficace dans cette situation.
-
+	
 	
 	\section{Résultats}
 	
 	\subsection{Approche Eulerienne}
 	
-		\subsubsection{Cas vitesse constante}
+	\subsubsection{Cas vitesse constante}
 	Voici d'abord le tracé du $\log$ des valeurs singulières en fonction de leur rang dans la décomposition SVD.
 	
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.7\linewidth]{valeurs_singulieres_eulerien_constant}
-	\caption{Tracé du $\log$ des valeurs singulières en fonction du rang}
-	\label{fig:valeurssinguliereseulerienconstant}
-\end{figure}
-
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.7\linewidth]{valeurs_singulieres_eulerien_constant}
+		\caption{Tracé du $\log$ des valeurs singulières en fonction du rang}
+		\label{fig:valeurssinguliereseulerienconstant}
+	\end{figure}
+	
 	Ceci nous permet de choisir le nombre de modes qu'on va utiliser, l'erreur étant fixée à $10^{-3}$ : on choisit $nb_{modes}=13$.
 	
 	
 	On récupère donc l'approximation de la matrice de \emph{snapshots} avec $13$ vecteurs propres, et on va pouvoir simuler la dynamique de notre système assez fidèlement.
-
+	
 	\subsection{Approche Lagrangienne}
-
+	
 	\subsubsection{Vitesse constante}
 	
-		\begin{figure}[H]
-	\begin{center}
-	\includegraphics[scale=0.5]{valeurs_singulieres_cell_10_particules.png}
-	\caption{Valeurs singulières pour 10 particules}
-	\end{center}
-	\end{figure}
-
 	\begin{figure}[H]
-	\begin{center}
-	\includegraphics[scale=0.5]{valeurs_singulieres_cell_100_particules.png}
-	\caption{Valeurs singulières pour 100 particules}
-	\end{center}
+		\begin{center}
+			\includegraphics[scale=0.5]{valeurs_singulieres_cell_10_particules.png}
+			\caption{Valeurs singulières pour 10 particules}
+		\end{center}
+	\end{figure}
+	
+	\begin{figure}[H]
+		\begin{center}
+			\includegraphics[scale=0.5]{valeurs_singulieres_cell_100_particules.png}
+			\caption{Valeurs singulières pour 100 particules}
+		\end{center}
 	\end{figure}
 	\begin{figure}[H]
 		\begin{center}
@@ -367,23 +367,31 @@
 		\end{center}
 	\end{figure}
 	
-	\subsubsection{Ecoulement cellulaire}
+	\subsubsection{Écoulement cellulaire}
 	
-	\subsubsection{Champ de Lamb-Oseen}
+	
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\linewidth]{ecoulement_cellulaire_10}
+	\caption{10 particules dans un écoulement cellulaire}
+	\label{fig:ecoulementcellulaire10}
+\end{figure}
+	
+	\subsubsection{Champs de Lamb-Oseen}
 	Dans cette simulation : $\Gamma = 10$, $\nu = 0.5$ et $r_c = 0.7$.
-		\begin{figure}[H]
+	\begin{figure}[H]
 		\begin{center}
 			\includegraphics[scale=0.5]{champ_lamboseen.png}
-			\caption{}
+			\caption{100 particules dans un champs de Lamb-Oseen}
 		\end{center}
 	\end{figure}
 	
-		\begin{figure}[H]
-	\begin{center}
-	\includegraphics[scale=0.5]{valeurs_singulieres_lambo_100_particules.png}
-	\caption{Valeurs singulières pour 100 particules}
-	\end{center}
-\end{figure}
+	\begin{figure}[H]
+		\begin{center}
+			\includegraphics[scale=0.5]{valeurs_singulieres_lambo_100_particules.png}
+			\caption{Valeurs singulières pour 100 particules}
+		\end{center}
+	\end{figure}
 	\section{Discussion} \label{section}
 	
 	\subsection{Approche Lagrangienne}
@@ -394,7 +402,7 @@
 	de l'angle $\theta$ qui caractérise la vitesse des particules. Si ce paramètre est modifié alors le mode propre est également modifié.
 	Il n'est donc pas possible de réduire efficacement ce modèle.
 	
-	\subsubsection{Ecoulement cellulaire}
+	\subsubsection{Écoulement cellulaire}
 	La décroissance des valeurs singulières est assez lente. Un grand nombre de modes propres est donc nécessaire pour donner une 
 	bonne approximation de la solution. 
 	
@@ -473,7 +481,7 @@
 	\begin{equation}
 	\frac{\partial c_{i,j}}{\partial t}(t_n) +  \frac{1}{\vert K_{i,j} \vert} \int_{\partial K_{i,j} } c \ u \cdot n \ dL = 0
 	\end{equation}
-
+	
 	
 	Chaque cellule est un rectangle, ces bords sont des segments. Nous posons dans chaque segment $\Gamma$ la quantité $\frac{1}{\vert \Gamma \vert }\int_{\Gamma} c \ u \ dL:= F_{\Gamma}(c)$ et alors :
 	\[
@@ -523,27 +531,27 @@
 	
 	\subsection{Création du maillage}
 	
-\lstinputlisting{maillage.py}
+	\lstinputlisting{maillage.py}
 	
-		\subsection{Approche Eulerienne}
-		
-			\subsubsection{Calcul du flux : solveur de Lax-Friedrichs Riemann}
+	\subsection{Approche Eulerienne}
 	
-\lstinputlisting{riemann_scal.py}
+	\subsubsection{Calcul du flux : solveur de Lax-Friedrichs Riemann}
 	
-			\subsubsection{Volumes finis - cas constant}
-
-\lstinputlisting{volumesfinis_eulerien_constant.py}
-			
-
-			
-			\subsubsection{Decomposition SVD}
-			
-\lstinputlisting{svd_eulerien_constant.py}
-
-
-			
-			
+	\lstinputlisting{riemann_scal.py}
+	
+	\subsubsection{Volumes finis - cas constant}
+	
+	\lstinputlisting{volumesfinis_eulerien_constant.py}
+	
+	
+	
+	\subsubsection{Decomposition SVD}
+	
+	\lstinputlisting{svd_eulerien_constant.py}
+	
+	
+	
+	
 	\section{Remerciements}
 	
 	\section{Exemples de figures, tableau, équations...}
@@ -567,10 +575,10 @@
 	\begin{thebibliography}{99}
 		
 		
-	\bibitem{Cours1}
-	V. Ehrlacher, S.Boyaval
-	\newblock {\em Méthodes numériques pour les problèmes en grande dimension}.
-	\newblock Cours de l'École nationale des ponts et chaussées, 2018.
+		\bibitem{Cours1}
+		V. Ehrlacher, S.Boyaval
+		\newblock {\em Méthodes numériques pour les problèmes en grande dimension}.
+		\newblock Cours de l'École nationale des ponts et chaussées, 2018.
 		
 		
 	\end{thebibliography}
