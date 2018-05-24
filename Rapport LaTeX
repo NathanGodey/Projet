@@ -216,7 +216,8 @@
 	L'approche eulérienne consiste donc à transporter cette gaussienne le long du maillage. 
 	
 	\begin{tabular}{cc}
-		images condition initiale & après un certain temps
+		\includegraphics[width=0.3\linewidth]{euler_condition_initiale} &	\includegraphics[width=0.3\linewidth]{euler_condition_initiale_simulee}\\
+		Condition initiale... & ...et après un certain temps
 	\end{tabular}
 	
 	On stocke les valeurs de la solution au cours du temps sur tout le maillage dans une matrice à laquelle on va appliquer l'algorithme POD. Après un choix adapté du nombre de modes, on va pouvoir simuler la dynamique de notre système avec un nombre de degré de libertés bien plus faible.	
