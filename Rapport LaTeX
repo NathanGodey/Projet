@@ -139,10 +139,20 @@
 	
 	\subsection{Méthode POD : \emph{Proper Orthogonal Decomposition}}
 	
-	% Expliquer en gros le principe de la POD et l'usage que l'on en fait pour éviter les redites
-	
-	L'inconnue du problème est notée $X \in \mathbb{R}$.
-	Matrice des snapshots M.
+	L'inconnue du problème est notée $X(t) \in \mathbb{R}^N$ pour $t \in [0,T]$. La première étape de cette méthode consiste à calculer des valeurs de la solution $X(t_0), X(t_1), ..., X(t_n)$ à des instants $t_0, t_1, ... t_n$, appelées snapshots. Ces vecteurs sont ensuite classés dans une matrice M : 
+	$$ M =
+	\begin{pmatrix}
+	X(t_0) & | & X(t_1) &| & \cdots & | & X(t_n)
+	\end{pmatrix}
+	$$
+
+	La décomposition SVD (Singular Value Decomposition) de la matrice $M$ s'écrit : $ M = USV^T $ Où $U$ et $V$ sont des matrices orthogonales respectivement de taille $N$ et $n$. La matrice $S$ est diagonale, ses coefficients sont les valeurs singulières de $M$ (les valeurs propres de $M^TM$). Cette décomposition est unique lorsque les coefficients sur la diagonale de $S$, notés $\sigma_1,...,\sigma_p$ avec $p = rang(S) =rang(M)$, sont ordonnés par ordre décroissant.
+
+	Les colonnes de $U$, notées $U^{(1)},..., U^{(N)}$ sont les modes propres de la matrice (ce sont les vecteurs propres de $M^TM$).
+	Soit $r$ un entier compris entre 1 et le rang de $S$. Les vecteurs $U^{(1)},..., U^{(r)}$ forment alors une 
+	base orthonormée d'un sous-espace vectoriel de $\mathbb{R}^N$ dans lequel on projette la dynamique du système. 
+
+	Cette méthode s'applique lorsque la dynamique du système reste proche d'un sous-espace vectoriel de dimension faible. Cela correspond à une décroissance rapide des valeurs singulières de $M$. L'erreur de représentation est donnée par : $\sum_{i=r+1}^p \sigma_i^2$.
 	
 	\subsection{Paramétrage}
 	
@@ -371,7 +381,8 @@
 	
 	\subsubsection{Ecoulement cellulaire}
 	
-	\
+	\subsubsection{Champ de Lamb-Oseen}
+	
 	\section{Discussion} \label{section}
 	
 	\subsection{Approche Lagrangienne}
@@ -379,10 +390,11 @@
 	\subsubsection{Vitesse constante}
 	Nous avons vu qu'un mode propre suffisait à donner une representation correcte de la solution.
 	Cela semble normal puisque les particules possèdent une trajectoire rectiligne uniforme. Cependant, ce mode propre dépend
-	de l'angle theta qui caractérise la vitesse des particules. Si ce paramètre est modifié alors le mode propre est également modifié.
-	IL n'est donc pas possible de réduire ce modèle.
+	de l'angle \theta qui caractérise la vitesse des particules. Si ce paramètre est modifié alors le mode propre est également modifié.
+	Il n'est donc pas possible de réduire efficacement ce modèle.
 	
 	\subsubsection{Ecoulement cellulaire}
+	
 	
 	\subsubsection{Champ de Lamb-Oseen}
 	
