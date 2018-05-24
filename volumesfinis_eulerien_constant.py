@@ -42,10 +42,10 @@ x0,y0=0.25,0.25 # position initiale de la gaussienne
 sigma = 1/50 # largeur de la gaussienne
 
 # Definition de la vitesse
-def ux(i,theta):
+def ux(theta):
     return normev*np.cos(theta)
 
-def uy(i,theta):
+def uy(theta):
     return normev*np.sin(theta)
 
 ## Initialisation
@@ -64,7 +64,7 @@ qini=initialisation(sigma,x0,y0) # Condition initiale
 
 
 compteur=0
-qhist=[] # Liste contenant les vecteurs solutions
+qhist=[]
 
 ## Boucle sur les differents angles de la vitesse
 for theta in THETA : # Cas vitesse constante, pas uniforme sur les angles
@@ -79,6 +79,9 @@ for theta in THETA : # Cas vitesse constante, pas uniforme sur les angles
     print (compteur)    
     t=0
     
+    uxtheta = ux(theta)
+    uytheta = uy(theta)
+    
     ## Boucle temporelle
     while t<Tfinal:
         k = 1000
@@ -90,8 +93,8 @@ for theta in THETA : # Cas vitesse constante, pas uniforme sur les angles
             if i<0 or j<0: # Conditions de bord periodiques
                 continue
             # Vitesse du fluide en i et j projete selon la normale a la face
-            lambdai = ux(i,theta)*codim0to1NX[iface]+uy(i,theta)*codim0to1NY[iface] 
-            lambdaj = ux(j,theta)*codim0to1NX[iface]+uy(j,theta)*codim0to1NY[iface]
+            lambdai = uxtheta*codim0to1NX[iface]+uytheta*codim0to1NY[iface] 
+            lambdaj = uxtheta*codim0to1NX[iface]+uytheta*codim0to1NY[iface]
             statei = q0[i] # Concentration en i
             statej = q0[j] # Concentration en j
             # Schema de Lax-Friedriech: calcul du flux en i et en j a travers la face
