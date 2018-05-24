@@ -196,13 +196,6 @@
 	où $\nu$ désigne la viscosité cinématique, \Gamma est la circulation de l'écoulement.
 	
 	
-	
-	\begin{figure}[H]
-		\begin{center}
-			\includegraphics[scale=0.5]{lagrange_lamboseen.png}
-			\caption{}
-		\end{center}
-	\end{figure}
 	\subsection{Approche Eulérienne}
 	
 	\subsubsection{Description}
@@ -327,19 +320,7 @@
 	\end{figure}
 
 	La décroissance des valeurs singulières est assez lente, comme le montre la figure suivante. Cette méthode n'est pas efficace dans cette situation.
-	\begin{figure}[H]
-	\begin{center}
-	\includegraphics[scale=0.5]{valeurs_singulieres_cell_10_particules.png}
-	\caption{Valeurs singulières pour 10 particules}
-	\end{center}
-	\end{figure}
 
-	\begin{figure}[H]
-	\begin{center}
-	\includegraphics[scale=0.5]{valeurs_singulieres_cell_100_particules.png}
-	\caption{Valeurs singulières pour 100 particules}
-	\end{center}
-	\end{figure}
 	
 	\section{Résultats}
 	
@@ -363,15 +344,22 @@
 	\subsection{Approche Lagrangienne}
 
 	\subsubsection{Vitesse constante}
-	Dans ce cas particulier, la projection suivant le premier mode propre (première colonne de $U$) permet d'obtenir une approximation satisfaisante. Comme on peut le voir sur la figure suivante, la décroissance des valeurs singulières est très rapide. 
-	\\
-	\begin{figure}[H]
-		\begin{center}
-			\includegraphics[scale=0.5]{valeurs_singulieres.png}
-			\caption{Tracé du $\log$ des valeurs singulières en fonction de leur rang}
-		\end{center}
-	\end{figure}
 	
+	\\
+	
+		\begin{figure}[H]
+	\begin{center}
+	\includegraphics[scale=0.5]{valeurs_singulieres_cell_10_particules.png}
+	\caption{Valeurs singulières pour 10 particules}
+	\end{center}
+	\end{figure}
+
+	\begin{figure}[H]
+	\begin{center}
+	\includegraphics[scale=0.5]{valeurs_singulieres_cell_100_particules.png}
+	\caption{Valeurs singulières pour 100 particules}
+	\end{center}
+	\end{figure}
 	\begin{figure}[H]
 		\begin{center}
 			\includegraphics[scale=0.5]{lagrange_gauss_1er_mode.png}
@@ -382,13 +370,18 @@
 	\subsubsection{Ecoulement cellulaire}
 	
 	\subsubsection{Champ de Lamb-Oseen}
-	
+		\begin{figure}[H]
+		\begin{center}
+			\includegraphics[scale=0.5]{champ_lamboseen.png}
+			\caption{}
+		\end{center}
+	\end{figure}
 	\section{Discussion} \label{section}
 	
 	\subsection{Approche Lagrangienne}
 	
 	\subsubsection{Vitesse constante}
-	Nous avons vu qu'un mode propre suffisait à donner une representation correcte de la solution.
+	Dans ce cas particulier, la projection suivant le premier mode propre (première colonne de $U$) permet d'obtenir une approximation satisfaisante. Comme on peut le voir sur les figures, la décroissance des valeurs singulières est très rapide. 
 	Cela semble normal puisque les particules possèdent une trajectoire rectiligne uniforme. Cependant, ce mode propre dépend
 	de l'angle \theta qui caractérise la vitesse des particules. Si ce paramètre est modifié alors le mode propre est également modifié.
 	Il n'est donc pas possible de réduire efficacement ce modèle.
