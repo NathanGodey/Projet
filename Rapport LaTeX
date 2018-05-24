@@ -141,6 +141,8 @@
 	
 	% Expliquer en gros le principe de la POD et l'usage que l'on en fait pour éviter les redites
 	
+	L'inconnue du problème est notée $X \in \mathbb{R}$.
+	Matrice des snapshots M.
 	
 	\subsection{Paramétrage}
 	
