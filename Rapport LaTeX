@@ -375,6 +375,13 @@
 			\caption{}
 		\end{center}
 	\end{figure}
+	
+		\begin{figure}[H]
+	\begin{center}
+	\includegraphics[scale=0.5]{valeurs_singulieres_lambo_100_particules.png}
+	\caption{Valeurs singulières pour 100 particules}
+	\end{center}
+\end{figure}
 	\section{Discussion} \label{section}
 	
 	\subsection{Approche Lagrangienne}
@@ -386,10 +393,12 @@
 	Il n'est donc pas possible de réduire efficacement ce modèle.
 	
 	\subsubsection{Ecoulement cellulaire}
-	
+	La décroissance des valeurs singulières est assez lente. Un grand nombre de modes propres est donc nécessaire pour donner une 
+	bonne approximation de la solution. 
 	
 	\subsubsection{Champ de Lamb-Oseen}
-	
+	La décroissance des valeurs singulières est rapide.Un faible nombre de modes propres est par conséquent nécessaire pour obtenir 
+	une approximation convenable.
 	
 	\section{Conclusions}
 	
