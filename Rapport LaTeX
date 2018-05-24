@@ -171,17 +171,18 @@
 	\left\{
 	\begin{array}{c c c}
 	u_x(x,y) = \frac{\partial \psi}{\partial y} = 2\pi sin(2πx) cos(2πy) - \theta_0 2π\theta_2 cos(2π\theta_1x)sin(2π\theta_2y)\\
-	u_y(x,y) = -\frac{\partial \psi}{\partial x} = 2\pi sin(2πy) cos(2πx) - \theta_0 2π\theta_1 cos(2π\theta_2y)sin(2π\theta_1x)
+	u_y(x,y) = -\frac{\partial \psi}{\partial x} = -2\pi sin(2πy) cos(2πx) + \theta_0 2π\theta_1 cos(2π\theta_2y)sin(2π\theta_1x)
 	\end{array}
 	\right.
 	$$ 
 	
-	\paragraph{Champ de vitesse de LambOseen}
+	\paragraph{Champ de vitesse de Lamb-Oseen}
 	
 	Nous prenons dans ce cas une vitesse analytique donnée par : 
-	$$ \textbf{V}(r,\theta,t) = \frac{\Gamma}{2\pi r}(1 - exp( \frac{-r^2}{4\nu t}))u_{\theta}$$
+	$$ \textbf{V}(r,\theta,t) = \frac{\Gamma}{2\pi r}(1 - exp( \frac{-r^2}{4\nu t}))\textbf{u_{\theta}}$$
 	
-	%gamma,nu?
+	où $\nu$ désigne la viscosité cinématique, \Gamma est la circulation de l'écoulement.
+	
 	
 	
 	\begin{figure}[H]
@@ -370,6 +371,19 @@
 	
 	\
 	\section{Discussion} \label{section}
+	
+	\subsection{Approche Lagrangienne}
+	
+	\subsubsection{Vitesse constante}
+	Nous avons vu qu'un mode propre suffisait à donner une representation correcte de la solution.
+	Cela semble normal puisque les particules possèdent une trajectoire rectiligne uniforme. Cependant, ce mode propre dépend
+	de l'angle theta qui caractérise la vitesse des particules. Si ce paramètre est modifié alors le mode propre est également modifié.
+	IL n'est donc pas possible de réduire ce modèle.
+	
+	\subsubsection{Ecoulement cellulaire}
+	
+	\subsubsection{Champ de Lamb-Oseen}
+	
 	
 	\section{Conclusions}
 	
