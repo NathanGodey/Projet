@@ -114,8 +114,9 @@
 	\section{Introduction}
 	
 	Le but de ce projet d'initiation à la recherche est d'observer numériquement l'évolution d'une concentration de polluants (fluide que l'on considère incompressible) dans un liquide (rejets dans une rivière) ou dans un gaz (nuage radioactif). Ce projet est associé au cours intitulé "Méthodes numériques pour les problèmes en grandes dimensions" ~\cite{Cours1} tenu en première année à l'École nationale des ponts et chaussées par Damiano Lombardi (INRIA) et Sébastien Boyaval (INRIA). Nous allons donc chercher à utiliser des outils de réductions de modèles afin de pouvoir prédire, étant donné une concentration initiale de polluant en un lieu donné, l'évolution de la concentration de façon fiable.
+		La dynamique de la solution réelle dépend d'un nombre de paramètres beaucoup trop grand si l'on souhaite la simuler tout le temps avec des paramètres différents à chaque fois (position initiale, champs de vitesse,...). La discrétisation du problème pose aussi problème, avec un phénomène de diffusion souvent inévitable. Le but de la méthode de réduction de modèles est de pouvoir se ramener à une base de solutions qui contiennent en elle-même la majeure partie de la dynamique de la solution réelle pour un certain nombre de paramètres où on aura la solution fine, afin de pouvoir simuler de façon approchée et surtout plus rapide des nouveaux schémas avec des paramètres différents.\\
+	Il faut donc d'abord penser à l'approche que l'on va avoir sur la discrétisation du problème, puis savoir quel outil de la réduction de modèle utiliser afin d'avoir une erreur relativement faible pour un temps relativement court : un compris est donc fait entre temps de calcul et précision.
 	
-	%Indiquer les raisons du projet : pourquoi faisons-nous ça ? En quoi est-ce utile ? Qu'est-ce qui est difficile ?
 	
 	\section{Matériels et méthodes}
 	
