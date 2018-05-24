@@ -92,8 +92,9 @@
 		\begin{minipage}{16cm}
 			{\normalsize
 				\parindent=0pt
-				{{\bf ABSTRACT} : This \emph{miniversion of the paper}~\cite{Livre1} (1000 to 2000 characters) must be written in english.
-					You may ask the help of an English advisor from the \emph{Département des Langues et Cultures}.}
+				{{\bf ABSTRACT} : Predicting the behavior of a pollutant in a fluid is one of the major problem today, but also very complex to do as there are too much variables to describe the phenomenon and thus have a good precision overtime. We have to use reducing models such as POD (Proper Orthogonal Direct) in order to compute the solution in a reasonable time. It involves keeping the major dynamic of the solution with a few degrees of liberties and accepting an error between the approximation and the real solution.
+We use the advection equation to simulate a pollution peak represented by a Gaussian function in a fluid where the fluid speed varies in a closed region. After computing a couple of real solutions for some parameters to simulate the fundamental dynamic, we use the POD algorithm to compute approximations of solutions for a new set of parameters, this time in a much shorter period. We study two cases: a constant velocity in the fluid and a cell structure within it. We use two approach: an Eulerian one in which we compute the velocity everywhere at any time, and a Lagrangian one in which we follow particles instead and compute their trajectory. We will see which one is better for our cases and discuss why.
+}
 				\par}
 		\end{minipage}
 		
