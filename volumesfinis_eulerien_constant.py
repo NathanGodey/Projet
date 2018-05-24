@@ -57,18 +57,19 @@ def initialisation(sigma,x0,y0):
         qini[i]=np.exp(-((x-x0)**2+(y-y0)**2)/(2*sigma**2))
     return qini
     
-qini=initialisation(sigma,x0,y0)
+qini=initialisation(sigma,x0,y0) # Condition initiale
 
 
 
 
 
-SNAPSHOTMATRIX=np.zeros((codim0.shape[0],1))
 compteur=0
+qhist=[] # Liste contenant les vecteurs solutions
 
 ## Boucle sur les differents angles de la vitesse
 for theta in THETA : # Cas vitesse constante, pas uniforme sur les angles
-    qhist = [qini.copy()] # Recuperation des vecteurs solutions a chaque instant de la simulation
+    print(theta)
+    qhist.append(qini.copy()) # Recuperation des vecteurs solutions a chaque instant de la simulation
     
     q0 = qini.copy()
     
@@ -76,6 +77,7 @@ for theta in THETA : # Cas vitesse constante, pas uniforme sur les angles
     
     compteur+=1
     print (compteur)    
+    t=0
     
     ## Boucle temporelle
     while t<Tfinal:
@@ -105,13 +107,12 @@ for theta in THETA : # Cas vitesse constante, pas uniforme sur les angles
         q0 = q1.copy()
         t+=k
     # Remplissage d'une matrice compose des vecteurs solutions que l'on va rajouter a la matrice de snapshots
-    M=np.zeros((codim0.shape[0],len(qhist)))
-    for ligne in range(codim0.shape[0]):
-        for colonne in range(len(qhist)):
-            M[ligne,colonne]=qhist[colonne][ligne]
-    SNAPSHOTMATRIX=np.concatenate((SNAPSHOTMATRIX,M),axis=1)
+
+SNAPSHOTMATRIX=np.zeros((codim0.shape[0],len(qhist)))
+for ligne in range(codim0.shape[0]):
+    for colonne in range(len(qhist)):
+        SNAPSHOTMATRIX[ligne,colonne]=qhist[colonne][ligne]
         
-SNAPSHOTMATRIX=SNAPSHOTMATRIX[:,1:] # On avait mis une colonne de zeros pour initialiser la matrice
 print (SNAPSHOTMATRIX.shape[0]) # Compte le nombre de snapshots
 np.save('SNAPSHOTMATRIX',SNAPSHOTMATRIX) # Sauvegarde. Attention a changer le nom pour differentes simulations
 
