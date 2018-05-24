@@ -191,9 +191,9 @@
 	\paragraph{Champ de vitesse de Lamb-Oseen}
 	
 	Nous prenons dans ce cas une vitesse analytique donnée par : 
-	$$ \textbf{V}(r,\theta,t) = \frac{\Gamma}{2\pi r}(1 - exp( \frac{-r^2}{4\nu t}))\textbf{u_{\theta}}$$
+	$$ \textbf{V}(r,\theta,t) = \frac{\Gamma}{2\pi r}(1 - exp( \frac{-r^2}{4\nu t + r_c^2}))\textbf{u_{\theta}}$$
 	
-	où $\nu$ désigne la viscosité cinématique, \Gamma est la circulation de l'écoulement.
+	où $\nu$ désigne la viscosité cinématique, $\Gamma$ est la circulation de l'écoulement et $r_c$ le rayon moyen.
 	
 	
 	\subsection{Approche Eulérienne}
@@ -345,8 +345,6 @@
 
 	\subsubsection{Vitesse constante}
 	
-	\\
-	
 		\begin{figure}[H]
 	\begin{center}
 	\includegraphics[scale=0.5]{valeurs_singulieres_cell_10_particules.png}
@@ -370,6 +368,7 @@
 	\subsubsection{Ecoulement cellulaire}
 	
 	\subsubsection{Champ de Lamb-Oseen}
+	Dans cette simulation : $\Gamma = 10$, $\nu = 0.5$ et $r_c = 0.7$.
 		\begin{figure}[H]
 		\begin{center}
 			\includegraphics[scale=0.5]{champ_lamboseen.png}
