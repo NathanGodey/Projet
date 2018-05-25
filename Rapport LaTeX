@@ -194,7 +194,7 @@ We use the advection equation to simulate a pollution peak represented by a Gaus
 	\paragraph{Champ de vitesse de Lamb-Oseen}
 	
 	Nous prenons dans ce cas une vitesse analytique donnée par : 
-	$$ \mathbf{V}(r,\theta,t) = \frac{\Gamma}{2\pi r}(1 - \exp( \frac{-r^2}{4\nu t + r_c^2}))\mathbf{u_{\theta}}$$
+	$$ \mathbf{V}(r,\theta,t) = \frac{\Gamma}{2\pi r}\left(1 - \exp\left( \frac{-r^2}{4\nu t + r_c^2}\right)\right)\mathbf{u_{\theta}}$$
 	
 	où $\nu$ désigne la viscosité cinématique, $\Gamma$ est la circulation de l'écoulement et $r_c$ le rayon moyen.
 	
@@ -212,7 +212,7 @@ We use the advection equation to simulate a pollution peak represented by a Gaus
 	
 	
 	Notre condition initiale est donnée par une gaussienne :
-	$$c_0(x,y)=\exp(-\frac{(x-x_0)^2+(y-y_0)^2}{2\sigma ^2})$$
+	$$c_0(x,y)=\exp \left(-\frac{(x-x_0)^2+(y-y_0)^2}{2\sigma ^2} \right)$$
 	
 	avec $(x_0,y_0)=(0.25,0.25)~,~\sigma =\frac{1}{50}$.
 	L'approche eulérienne consiste donc à transporter cette gaussienne le long du maillage. 
@@ -235,7 +235,7 @@ We use the advection equation to simulate a pollution peak represented by a Gaus
 \frac{\partial c}{\partial t} + \mathrm{div}(c \ u) = 0 
 \label{eq}
 \end{equation}
-de manière à assurer la convergence et la stabilité (voir le paragraphe Critères de stabilité).
+de manière à assurer la convergence et la stabilité (voir le paragraphe Critères de convergence et de stabilité).
 
 Nous regardons cette équation dans un compact en temps et en espace $[0,T] \times [0,L]^2$ Pour cela nous considèrerons un maillage en espace rectangulaire uniforme $K_{i,j}$ de pas $\Delta x$, $\Delta y$, et un maillage en temps de pas $\Delta t_n$ qui dépend \textit{a priori} de l'instant $t_n$. La méthode des volumes finis cherche à exprimer la valeur moyenne de la concentration $c$ sur chaque cellule $K_{i,j}$ en fonction de la valeur moyenne cellulaire la vitesse est des différents paramètres du maillage à savoir le pas et le volumes des cellules en d'autres termes on exprime : 
 \[
@@ -250,6 +250,7 @@ nous approchons la dérivé temporelle par un schéma d'Euler explicite et le fl
 Pour toute cellule $K_{i,j}$
 \begin{equation}
 c_{i,j}(t_n) = c_{i,j}(t_{n-1}) - \frac{t_n-t_{n-1}}{\vert K_{i,j} \vert}  \sum_{k,l} \vert \Gamma_{i,j}^{k,l} \vert g(c_{i,j}(t_{n-1}),c_{k,l}(t_{n-1})) \ \forall n
+\label{schema}
 \end{equation}
 où $\Gamma_{i,j}^{k,l} = K_{i,j} \cap K_{k,l}$ et :
 \begin{equation}
@@ -259,15 +260,15 @@ où $\Gamma_{i,j}^{k,l} = K_{i,j} \cap K_{k,l}$ et :
 \end{cases}
 \end{equation}
 à l'instant $t_n$.
-Pour plus de détails voir la partie (\ref{MVF-A}).
-\paragraph{Critères de stabilité}
-Lorsque on part d'une condition initiale bornée L'équation dans le sens faible (\ref{faible}) admet une unique solution entropique, c'est à dire la solution vérifie : $\forall S \in \mathcal{C}^2$ convexe, on a 
+Pour plus de détails voir la section (\ref{MVF-A}).
+\paragraph{Critères de convergence et de stabilité}
+Lorsque on part d'une condition initiale bornée l'équation dans le sens faible (\ref{eq}) admet une unique solution entropique, c'est à dire la solution vérifie : $\forall S \in \mathcal{C}^2$ convexe, on a 
 \[
 \frac{\partial S(c)}{\partial t} + \mathrm{div}(G(c)) \leq 0
 \]
 où $G$ est un flux d'entropie qui vérifie $G^{'} = S^{'} u$.\\
 
-Le schéma numérique (\ref{SN}) converge vers cette solution (lorsque $\Delta x,\Delta y, \Delta t_n \longrightarrow 0$) dès qu'il vérifie l'inégalité entropique discrétisée : $\forall S \in \mathcal{C}^2$ convexe, $\exists \Phi(c_1,c_2)$ telle que 
+Le schéma numérique (\ref{schema}) converge vers cette solution (lorsque $\Delta x,\Delta y, \Delta t_n \longrightarrow 0$) dès qu'il vérifie l'inégalité entropique discrétisée : $\forall S \in \mathcal{C}^2$ convexe, $\exists \Phi(c_1,c_2)$ telle que 
 \begin{equation}
 \begin{cases}
 \Phi(c,c) = G(c) \\
@@ -276,11 +277,12 @@ Le schéma numérique (\ref{SN}) converge vers cette solution (lorsque $\Delta x
 \end{equation}
 Ainsi l'entropie doit être dissipée ou conservée, sa augmentation est une source d'instabilité du schéma.
 
-Pour que Le schéma des volumes finis (\ref{SN}) soit stable il faut satisfaire la condition CFL (Courant, Friedrichs, Lewy) qui s'écrit :
+Pour que le schéma des volumes finis (\ref{schema}) soit stable il faut satisfaire la condition CFL (Courant, Friedrichs, Lewy) qui s'écrit :
 \[
 t_n - t_{n-1} < \frac{\vert K_{i,j} \vert}{2\vert \Gamma_{i,j}^{k,l} \vert \lambda_{i,j \rightarrow k,l}(t_{n-1})} \ \ \forall i,j,k,l
 \]
-	
+
+Cette condition nous permet de choisir le pas de temps adapté à la vitesse et au maillage à chaque instant pour assurer la stabilité.
 	
 	
 	
@@ -465,7 +467,7 @@ t_n - t_{n-1} < \frac{\vert K_{i,j} \vert}{2\vert \Gamma_{i,j}^{k,l} \vert \lamb
 	
 	\section{Appendice}
 	
-	\subsection{Méthode des volumes finis}
+	\subsection{Méthode des volumes finis ~\cite{Cours2}}
 	\label{MVF-A}
 	Dans le cas de l'approche eulérienne, on utilise un schéma qui est différent de ceux utilisés jusqu'à présent dans nos cours. Détaillons un peu comment cette méthode fonctionne.\\
 	
@@ -629,6 +631,10 @@ c_{i,j}(t_n) = c_{i,j}(t_{n-1}) - \frac{t_n-t_{n-1}}{\vert K_{i,j} \vert}  \sum_
 		\newblock {\em Méthodes numériques pour les problèmes en grande dimension}.
 		\newblock Cours de l'École nationale des ponts et chaussées, 2018.
 		
+		\bibitem{Cours2}
+		S.Boyaval
+		\newblock{\em Numerical Hydrodynamics for the environment Illustrated by river flows}
+		\newblock Cours de l'École nationale des ponts et chaussées, 2018.
 		
 	\end{thebibliography}
 	
