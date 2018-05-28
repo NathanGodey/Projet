@@ -384,7 +384,7 @@ Cette condition nous permet de choisir le pas de temps adapté à la vitesse et 
 	on voit que l'on n'arrive pas à atteindre l'erreur relative que l'on s'était fixée, à savoir $10^{-3}$. On voit donc que l'approche eulerienne dans le cas d'une vitesse constante n'est pas optimale : en effet, pour chaque valeur de la vitesse,
 	la dynamique de la solution est différente (son parcours n'est jamais le même), on ne peut donc pas facilement exhiber un sous-espacer linéaire
 	qui contiendrait la majorité de la dynamique. Il est donc inutile d'essayer de réduire ce modèle sous l'approche eulérienne.\\
-	On note cependant qu'avec 16 simulations, on obtient une matrice de snapshots d'environ $3,7Go$, que l'on arrive à compresser en $6,7Mo$
+	On note cependant qu'avec 16 simulations, on obtient une matrice de snapshots d'environ $3,7Go$ ($257\times 257\times 8 \times 7346$, $7346$ étant le nombre de colonnes), que l'on arrive à compresser en $517ko$
 	en prenant $50$ modes : même si l'erreur reste trop importante, la compression de données est très bonne.
 	
 	\subsubsection{Cas des \'ecoulements cellulaires}
