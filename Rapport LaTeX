@@ -162,9 +162,9 @@ We use the advection equation to simulate a pollution peak represented by a Gaus
 	
 	Dans tout ce qui suit, nous avons opté comme maillage un quadrillage de la zone $(0,1)^2$, et le nombre de cases sur le maillage est égal à $(2\times10^{8}+1)^2$ : c'est un cas où le maillage est plutôt fin et le temps de calcul, bien qu'un peu long, reste raisonnable.\\
 	
-	On effectue un nombre $n_s=16$ de simulations différentes dans chaque cas afin de pouvoir remplir la matrice qui va nous servir pour faire l'algorithme POD (matrice contenant quelques solutions fines du problème).\\
+	On effectue un nombre n_s de simulations différentes dans chaque cas afin de pouvoir remplir la matrice qui va nous servir pour faire l'algorithme POD (matrice contenant quelques solutions fines du problème).\\
 	On prend un temps maximal de simulation égal $T_{max}=1$.\\
-	Lors de l'algorithme POD, on se fixe un nombre $nb_{modes}$ que l'on choisit tel que l'erreur sur la solution soit environ de $10^{-3}$. Cette erreur a été choisie a posteriori, étant un compromis entre le temps de calcul (nombre de modes) et l'erreur que la précision de l'algorithme.
+	Lors de l'algorithme POD, on se fixe un nombre $nb_{modes}$ que l'on choisit tel que l'erreur sur la solution soit satisfaisante. Cette erreur est choisie a posteriori, étant un compromis entre le temps de calcul (nombre de modes) et l'erreur de la précision de l'algorithme.
 	
 	\paragraph{Cas d'une vitesse constante}
 	
@@ -326,7 +326,7 @@ Cette condition nous permet de choisir le pas de temps adapté à la vitesse et 
 	\subsubsection{Interpolation}
 	
 	La résolution numérique du problème nécessite de connaître le champ de vitesse des particules, noté $v$.
-	Nous supposons que l'ensemble $\Omega=[-1,1]^2 $ soit muni d'un maillage carré régulier de pas noté $\Delta x$ en abscisse et $\Delta y$ en ordonnée. Nous supposons également que le champ de vitesse est connu en tout point du maillage. Nous présentons ici la méthode d?interpolation que nous avons utilisé pour approximer le champ de vitesse dans l'ensemble du domaine $\Omega$.
+	Nous supposons que l'ensemble $\Omega=(0,1)^2 $ soit muni d'un maillage carré régulier de pas noté $\Delta x$ en abscisse et $\Delta y$ en ordonnée. Nous supposons également que le champ de vitesse est connu en tout point du maillage. Nous présentons ici la méthode d'interpolation que nous avons utilisé pour approximer le champ de vitesse dans l'ensemble du domaine $\Omega$.
 	
 	Considérons une maille dont les coordonnées du coin inférieur gauche sont notées $(x^{LL},y^{LL}$.
 	Soit un point $(x,y)$ appartenant à cette maille. On pose :
@@ -363,20 +363,7 @@ Cette condition nous permet de choisir le pas de temps adapté à la vitesse et 
 	\subsubsection{Champ de vitesse constant}
 	
 	Cette fois, les particules sont distribuées selon une gaussienne centrée en (0.25 ; 0.25) de variance 1/50. Leurs vitesses sont identiques, constante et orientées avec un angle $\theta$ compris entre $0$ et $\frac{\pi}{2}$. 
-	Les positions des différentes particules sont ensuite stockées dans une matrice M de taille $2nb_particules\times nb_steps$. Nous avons ensuite effectué la décomposition SVD de la matrice $M$ : $M = USV^T$
-	
-	
-	\subsubsection{Ecoulement cellulaire}
-	Dans cette simulation : $\theta_0 = 0.2, \theta_1 = 3.12, \theta_2 = 2.69$.
-	\begin{figure}[H]
-		\begin{center}
-			\includegraphics[scale=0.5]{ecoulement_cellulaire_10.png}
-			\caption{}
-		\end{center}
-	\end{figure}
-	
-	La décroissance des valeurs singulières est assez lente, comme le montre la figure suivante. Cette méthode n'est pas efficace dans cette situation.
-	
+	Les positions des différentes particules sont ensuite stockées dans une matrice M de taille $2nb_{particules}\times nb_{steps}$.
 	
 	\section{Résultats}
 	
@@ -404,22 +391,6 @@ Cette condition nous permet de choisir le pas de temps adapté à la vitesse et 
 	
 	\subsubsection{Cas des \'ecoulements cellulaires}
 	
-	On consid\`ere le champ de vitesse d\'efini par la fonction potentiel suivante:
-	
-	$$\psi(x,y)=\sin(2\pi x)\sin(2\pi y)+\nu_0\cos(2\pi \nu_1 x)\cos(2\pi \nu_2 y)$$
-	
-	Avec $\nu_0\in[0,0.75]$, $(\nu_1,\nu_2)\in[0.5,4]^2$
-	
-	D'o\`u:\\
-	
-	\fbox{$\left\{
-    	\begin{array}{ll}
-        		u_x=\frac{\partial \psi}{\partial y}=2\pi \cos(2\pi y)\sin(2\pi x)-2\pi \nu_y\nu_0\cos(2\pi \nu_1 y)\sin(2\pi \nu_1 x)\\
-		u_y=-\frac{\partial \psi}{\partial x}=-2\pi \cos(2\pi x)\sin(2\pi y)+2\pi \nu_x\nu_0\cos(2\pi \nu_1 x)\sin(2\pi \nu_1 y)
-    	\end{array}
-    	\right.
-	$}\\
-	\newpage
 	\begin{figure}[H]
 	\centering
 	\includegraphics[width=8cm]{ecoulement_cellulaire.png}
