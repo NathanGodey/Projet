@@ -94,7 +94,7 @@
 			{\normalsize
 				\parindent=0pt
 				{{\bf ABSTRACT} : Predicting the behavior of a pollutant in a fluid is one of the major problems today, it is very complex to do, as there are too many variables to describe the phenomenon and achieve good precision overtime. We have to use reduction models such as POD (Proper Orthogonal Direct) in order to compute the solution in a reasonable time. It involves keeping the major dynamic of the solution with a few degrees of liberties and accepting an error between the approximation and the real solution.
-We use the advection equation to simulate a pollution peak represented by a Gaussian function in a fluid where the fluid speed varies in a closed region. After computing a couple of solutions using our initial integration schemes for some parameters like the finite volumes scheme and explicit Euler scheme to simulate the fundamental dynamic, we use the POD algorithm to compute approximate solutions for a new set of parameters, this time in a much shorter period. We decided to approach the problem with two different methods. The Eulerian method, in which we consider the velocity as a function of space and time, and try to compute the concentration of the pollutant as a function of the same variables. Whereas in the Lagrangian method, we follow some particles arraigned initially in a random way according to a probability law adapted to the initial concentration and compute their trajectory as a function of time and the initial location. Thus, we will try to compare both methods to see which one suits the problem better.
+We use the advection equation to simulate a pollution peak represented by a Gaussian function in a fluid where the fluid speed varies in a closed region. After computing a couple of solutions using our initial integration schemes for some parameters like the finite volumes scheme and explicit Euler scheme to simulate the fundamental dynamic, we use the POD algorithm to compute approximate solutions for a new set of parameters, this time in a much shorter period. We decided to approach the problem with two different methods : the Eulerian method, in which we consider the velocity as a function of space and time, and try to compute the concentration of the pollutant as a function of the same variables ; whereas in the Lagrangian method, we follow some particles arraigned initially in a random way according to a probability law adapted to the initial concentration and compute their trajectory as a function of time and the initial location. Thus, we will try to compare both methods to see which one suits the problem better.
 }
 				\par}
 		\end{minipage}
@@ -117,8 +117,8 @@ We use the advection equation to simulate a pollution peak represented by a Gaus
 	\section{Introduction}
 	
 	Le but de ce projet d'initiation à la recherche est d'observer numériquement l'évolution d'une concentration de polluants (fluide que l'on considère incompressible) dans un liquide (rejets dans une rivière) ou dans un gaz (nuage radioactif). Ce projet est associé au cours intitulé "Méthodes numériques pour les problèmes en grandes dimensions" ~\cite{Cours1} tenu en première année à l'École nationale des ponts et chaussées par Damiano Lombardi (INRIA) et Sébastien Boyaval (INRIA). Nous allons donc chercher à utiliser des outils de réductions de modèles afin de pouvoir prédire, étant donné une concentration initiale de polluant en un lieu donné, l'évolution de la concentration de façon fiable.
-	La dynamique de la solution réelle dépend d'un nombre de paramètres beaucoup trop grand si l'on souhaite la simuler tout le temps avec des paramètres différents à chaque fois (position initiale, champs de vitesse,...). La discrétisation du problème pose aussi problème, avec un phénomène de diffusion souvent inévitable. Le but de la méthode de réduction de modèles est de pouvoir se ramener à une base de solutions qui contiennent en elle-même la majeure partie de la dynamique de la solution réelle pour un certain nombre de paramètres où on aura la solution fine, afin de pouvoir simuler de façon approchée et surtout plus rapide des nouveaux schémas avec des paramètres différents.\\
-	Il faut donc d'abord penser à l'approche que l'on va avoir sur la discrétisation du problème, puis savoir quel outil de la réduction de modèle utiliser afin d'avoir une erreur relativement faible pour un temps relativement court : un compris est donc fait entre temps de calcul et précision.
+	La dynamique de la solution réelle dépend d'un nombre de paramètres beaucoup trop grand si l'on souhaite la simuler tout le temps avec des paramètres différents à chaque fois (position initiale, champs de vitesse,...). La discrétisation du problème pose aussi problème, avec un phénomène de diffusion souvent inévitable. Le but de la méthode de réduction de modèles est de pouvoir se ramener à une base de solutions qui contiennent en elle-même la majeure partie de la dynamique de la solution réelle pour un certain nombre de paramètres pour lesquels aura la solution fine, afin de pouvoir simuler de façon approchée et surtout plus rapide des nouveaux schémas avec des paramètres différents.\\
+	Il faut donc d'abord penser à l'approche que l'on va avoir sur la discrétisation du problème, puis savoir quel outil de la réduction de modèle utiliser afin d'avoir une erreur relativement faible pour un temps relativement court : un compromis est donc fait entre temps de calcul et précision.
 	
 	
 	\section{Matériels et méthodes}
@@ -139,17 +139,17 @@ We use the advection equation to simulate a pollution peak represented by a Gaus
 		\item Peut-on trouver un moyen d'augmenter la compression de données ?
 	\end{itemize}
 	
-	Nous allons explorer ces questions à travers deux exemples : un écoulement à vitesse constant (où juste l'angle d'incidence change) et un écoulement cellulaire (des tourbillons).\\
+	Nous allons explorer ces questions à travers deux exemples : un écoulement à vitesse constant (où seul l'angle d'incidence change) et un écoulement cellulaire (des tourbillons).\\
 	
 	\subsection{Méthode POD : \emph{Proper Orthogonal Decomposition}}
 	
-	L'inconnue du problème est notée $C(t) \in \mathbb{R}^N$ pour $(t,x) \in [0,T]$. La première étape de cette méthode consiste à calculer des valeurs de la solution $X(t_0), X(t_1), ..., X(t_n)$ à des instants $t_0, t_1, ... t_n$, appelées snapshots. Ces vecteurs sont ensuite classés dans une matrice M : 
+	L'inconnue du problème est notée $X(t) \in \mathbb{R}^N$ pour $t \in [0,T]$. La première étape de cette méthode consiste à calculer des valeurs de la solution $X(t_0), X(t_1), ..., X(t_n)$ à des instants $t_0, t_1, ... t_n$, appelées snapshots. Ces vecteurs sont ensuite classés dans une matrice M : 
 	$$ M =
 	\begin{pmatrix}
-	C(t_0) & | & C(t_1) &| & \cdots & | & C(t_n)
+	X(t_0) & | & X(t_1) &| & \cdots & | & X(t_n)
 	\end{pmatrix}
 	$$
-	où : $C(t_i)_j = c(x_j,t_i)$. $(x_j)_ {1 \leqslant j \leqslant N}$ sont les points où la solution $c$ du problème de transport est calculée précisement.
+	
 	La décomposition SVD (Singular Value Decomposition) de la matrice $M$ s'écrit : $ M = USV^T $ Où $U$ et $V$ sont des matrices orthogonales respectivement de taille $N$ et $n$. La matrice $S$ est diagonale, ses coefficients sont les valeurs singulières de $M$ (les valeurs propres de $M^TM$). Cette décomposition est unique lorsque les coefficients sur la diagonale de $S$, notés $\sigma_1,...,\sigma_p$ avec $p = rang(S) =rang(M)$, sont ordonnés par ordre décroissant.
 	
 	Les colonnes de $U$, notées $U^{(1)},..., U^{(N)}$ sont les modes propres de la matrice (ce sont les vecteurs propres de $M^TM$).
@@ -157,7 +157,6 @@ We use the advection equation to simulate a pollution peak represented by a Gaus
 	base orthonormée d'un sous-espace vectoriel de $\mathbb{R}^N$ dans lequel on projette la dynamique du système. 
 	
 	Cette méthode s'applique lorsque la dynamique du système reste proche d'un sous-espace vectoriel de dimension faible. Cela correspond à une décroissance rapide des valeurs singulières de $M$. L'erreur de représentation est donnée par : $\sum_{i=r+1}^p \sigma_i^2$.
-	On obtient ainsi une representation simple de la solution. Cela nous permet ensuite de faire varier les paramètres du modèle ainsi que le champs de vitesse.
 	
 	\subsection{Paramétrage}
 	
@@ -209,7 +208,7 @@ We use the advection equation to simulate a pollution peak represented by a Gaus
 	
 	Il se trouve qu'une simple approche par la méthode des différences finies n'est pas un schéma stable pour notre étude : le schéma est un peu trop instable (concentration pouvant devenir négative). On va lui préférer la méthode des volumes finis avec un schéma de Lax-Friedrichs, qui est un schéma qui amène un peu plus de phénomène de diffusion, mais qui assure la positivité de la concentration. Pour plus de détails, voir la section \ref{volumesfinis}.\\
 	
-	Nous avions à notre disposition un code d'éléments finis 2D sous Scilab faisant tourner le schéma de Lax-Friedrichs sur des cas très compliqués et un maillage uniforme sur $(0,1)^2$. En déchiffrant une partie de ce code, et en s'y inspirant, nous avons codé ce schéma en Python, de façon simplifiée et en retenant seulement ce qui allait nous servir pour notre étude (maillage, fonction permettant l'actualisation, affichage de la solution). La zone étudiée est toujours $(0,1)^2$, et notre condition initiale est représentée par une gaussienne étroite (équivalente à un pic de polluant). De plus, les conditions aux bords sont périodiques : nous nous plaçons sur une sphère afin de rendre le code plus simple, même si nous ferons en sorte de ne jamais atteindre les bords. Ce code Python est donné en annexe.\\
+	Nous avions à notre disposition un code d'éléments finis 2D sous Scilab faisant tourner le schéma de Lax-Friedrichs sur des cas très compliqués et un maillage uniforme sur $(0,1)^2$. En déchiffrant une partie de ce code, et en s'en inspirant, nous avons codé ce schéma en Python, de façon simplifiée et en retenant seulement ce qui allait nous servir pour notre étude (maillage, fonction permettant l'actualisation, affichage de la solution). La zone étudiée est toujours $(0,1)^2$, et notre condition initiale est représentée par une gaussienne étroite (équivalente à un pic de polluant). De plus, les conditions aux bords sont périodiques : nous nous plaçons sur une sphère afin de rendre le code plus simple, même si nous ferons en sorte de ne jamais atteindre les bords. Ce code Python est donné en annexe.\\
 	
 	
 	
@@ -277,7 +276,7 @@ Le schéma numérique (\ref{schema}) converge vers cette solution (lorsque $\Del
 \frac{S(c_{i,j}(t_n))-S(c_{i,j}(t_{n-1}))}{t_n-t_{n-1}} + \sum_{k,l} \frac{\vert \Gamma_{i,j}^{k,l} \vert}{\vert K_{i,j} \vert} \Phi(c_{i,j}(t_{n-1}),c_{k,l}(t_{n-1})) \leq 0 \ \ \forall i,j,n
 \end{cases}
 \end{equation}
-Ainsi l'entropie doit être dissipée ou conservée, sa augmentation est une source d'instabilité du schéma.
+Ainsi l'entropie doit être dissipée ou conservée, son augmentation est une source d'instabilité du schéma.
 
 Pour que le schéma des volumes finis (\ref{schema}) soit stable il faut satisfaire la condition CFL (Courant, Friedrichs, Lewy) qui s'écrit :
 \[
@@ -299,7 +298,7 @@ Cette condition nous permet de choisir le pas de temps adapté à la vitesse et 
 	\subsection{Approche Lagrangienne}
 	
 	\subsubsection{Description}
-	L'approche lagrangienne consiste à suivre les particules le long de leur trajectoires.
+	L'approche lagrangienne consiste à suivre les particules le long de leurs trajectoires.
 	Cela revient à résoudre : 
 	$$
 	\left\{
@@ -465,12 +464,12 @@ Cette condition nous permet de choisir le pas de temps adapté à la vitesse et 
 		\end{center}
 	\end{figure}
 	
-	\subsubsection{Champs de Lamb-Oseen}
+	\subsubsection{Champ de Lamb-Oseen}
 	Dans cette simulation : $\Gamma = 10$, $\nu = 0.5$ et $r_c = 0.7$.
 	\begin{figure}[H]
 		\begin{center}
 			\includegraphics[scale=0.5]{champ_lamboseen.png}
-			\caption{100 particules dans un champs de Lamb-Oseen}
+			\caption{100 particules dans un champ de Lamb-Oseen}
 		\end{center}
 	\end{figure}
 	
@@ -524,7 +523,7 @@ Cette condition nous permet de choisir le pas de temps adapté à la vitesse et 
 \label{dimd}
 \end{equation}
 
-    où $c : [0,T] \times [a,b]^d \longrightarrow [0,1]$ la concentration du polluant, $u : [0,T]\times [a,b]^d \longrightarrow \mathbb{R}^d$ le champs des vitesses imposé dans le milieu et $f : [0,T]\times [a,b]^d \longrightarrow \mathbb{R}$ la source de pollution.\\
+    où $c : [0,T] \times [a,b]^d \longrightarrow [0,1]$ la concentration du polluant, $u : [0,T]\times [a,b]^d \longrightarrow \mathbb{R}^d$ le champ des vitesses imposé dans le milieu et $f : [0,T]\times [a,b]^d \longrightarrow \mathbb{R}$ la source de pollution.\\
 
     Dans notre étude nous prenons $f=0$, nous considérons qu'il n'y a pas de source. \\
 
