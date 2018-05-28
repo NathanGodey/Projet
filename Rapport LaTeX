@@ -438,12 +438,7 @@ Cette condition nous permet de choisir le pas de temps adapté à la vitesse et 
 		\end{center}
 	\end{figure}
 	
-	\begin{figure}[H]
-		\begin{center}
-			\includegraphics[scale=0.5]{valeurs_singulieres_cell_100_particules.png}
-			\caption{Valeurs singulières pour 100 particules}
-		\end{center}
-	\end{figure}
+
 	\begin{figure}[H]
 		\begin{center}
 			\includegraphics[scale=0.5]{lagrange_gauss_1er_mode.png}
@@ -460,6 +455,14 @@ Cette condition nous permet de choisir le pas de temps adapté à la vitesse et 
 	\caption{10 particules dans un écoulement cellulaire}
 	\label{fig:ecoulementcellulaire10}
 \end{figure}
+
+	\begin{figure}[H]
+		\begin{center}
+			\includegraphics[scale=0.5]{valeurs_singulieres_cell_100_particules_60_modes.png}
+			\caption{Valeurs singulières pour 100 particules}
+			\label{valeurs_singulieres_cell_100_particules}
+		\end{center}
+	\end{figure}
 	
 	\subsubsection{Champs de Lamb-Oseen}
 	Dans cette simulation : $\Gamma = 10$, $\nu = 0.5$ et $r_c = 0.7$.
@@ -497,7 +500,8 @@ Cette condition nous permet de choisir le pas de temps adapté à la vitesse et 
 	
 	\subsubsection{Écoulement cellulaire}
 	La décroissance des valeurs singulières est assez lente. Un grand nombre de modes propres est donc nécessaire pour donner une 
-	bonne approximation de la solution. 
+	bonne approximation de la solution. D'après la figure \ref{valeurs_singulieres_cell_100_particules}, 60 modes propres sont nécessaires pour obtenir
+	une erreur de l'ordre de $10^{-3}$. 
 	
 	\subsubsection{Champ de Lamb-Oseen}
 	La décroissance des valeurs singulières est rapide.Un faible nombre de modes propres est par conséquent nécessaire pour obtenir 
