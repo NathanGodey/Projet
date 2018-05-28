@@ -370,6 +370,7 @@ Cette condition nous permet de choisir le pas de temps adapté à la vitesse et 
 	\subsection{Approche Eulerienne}
 	
 	\subsubsection{Cas vitesse constante}
+	On effectue $n_s=16$ simulations, avec des valeurs d'angles uniformément réparties dans $[0,\frac{\pi}{2}]$.\\
 	Voici d'abord le tracé du $\log$ des valeurs singulières en fonction de leur rang dans la décomposition SVD.
 	
 	\begin{figure}[H]
@@ -382,13 +383,9 @@ Cette condition nous permet de choisir le pas de temps adapté à la vitesse et 
 	Ceci nous permet de choisir le nombre de modes qu'on va utiliser. Avec un nombre maximal de 50 modes (que nous nous sommes fixés),
 	on voit que l'on n'arrive pas à atteindre l'erreur relative que l'on s'était fixée, à savoir $10^{-3}$. On voit donc que l'approche eulerienne dans le cas d'une vitesse constante n'est pas optimale : en effet, pour chaque valeur de la vitesse,
 	la dynamique de la solution est différente (son parcours n'est jamais le même), on ne peut donc pas facilement exhiber un sous-espacer linéaire
-	qui contiendrait la majorité de la dynamique.
-	On décide cependant de voir ce qu'il se passe avec 50 modes propres, pour mettre en place la réduction même pour ce modèle, afin 
-	d'illustrer la méthode de réduction.\\
-	
-	
-	On récupère donc l'approximation de la matrice de \emph{snapshots} avec $50$ modes propres. On va utiliser la méthode de
-	Galerkine pour obtenir le coefficients d'un vecteur solution ans la base des vecteurs propres.
+	qui contiendrait la majorité de la dynamique. Il est donc inutile d'essayer de réduire ce modèle sous l'approche eulérienne.\\
+	On note cependant qu'avec 16 simulations, on obtient une matrice de snapshots d'environ $3,7Go$, que l'on arrive à compresser en $6,7Mo$
+	en prenant $50$ modes : même si l'erreur reste trop importante, la compression de données est très bonne.
 	
 	\subsubsection{Cas des \'ecoulements cellulaires}
 	
@@ -480,6 +477,15 @@ Cette condition nous permet de choisir le pas de temps adapté à la vitesse et 
 		\end{center}
 	\end{figure}
 	\section{Discussion} \label{section}
+	
+	\subsection{Approche Eulerienne}
+	
+		\subsubsection{Vitesse constante}
+		
+	La dynamique de la solution change pour chaque valeur de $\theta$. Il faudrait donc faire beaucoup plus de simulations
+	et donc avoir plus de solutions fines pour permettre une bonne réduction (couvrir tout l'espace possible de propagation finalement).\\
+	Ceci impliquerait un stockage mémoire encore plus conséquent, et un temps de calcul très grand. On va donc préférer dans ce cas
+	l'approche lagrangienne, et de loin.\\
 	
 	\subsection{Approche Lagrangienne}
 	
