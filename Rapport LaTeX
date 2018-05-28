@@ -420,8 +420,6 @@ Cette condition nous permet de choisir le pas de temps adapté à la vitesse et 
 	
 	On a effectu\'e la SVD (d\'ecomposition en valeurs singuli\`eres) de $M$, puis on a trac\'e les 50 premi\`eres valeurs singuli\`eres:
 	
-	\newpage
-	
 	\begin{figure}[H]
 	\centering
 	\includegraphics[width=8cm]{valeurs_singulieres_eulerien_cellulaires.png}
