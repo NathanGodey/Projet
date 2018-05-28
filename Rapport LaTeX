@@ -641,7 +641,19 @@ c_{i,j}(t_n) = c_{i,j}(t_{n-1}) - \frac{t_n-t_{n-1}}{\vert K_{i,j} \vert}  \sum_
 	\lstinputlisting{svd_eulerien_constant.py}
 	
 	
+	\subsection{Approche Lagrangienne}
 	
+	\subsubsection{Champs de vitesse uniforme}
+	
+	\lstinputlisting{lagrange_v_cste.py}
+	
+	\subsubsection{Champs de vitesse issu d'un écoulement cellulaire}
+	
+	\lstinputlisting{lagrange_ecouleent_cellulaire.py}
+	
+	\subsubsection{Champs de vitesse de Lamb Oseen}
+	
+	\lstinputlisting{lagrange_lambo.py}
 	
 	\section{Remerciements}
 	
