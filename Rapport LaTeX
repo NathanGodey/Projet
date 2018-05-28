@@ -180,15 +180,15 @@ We use the advection equation to simulate a pollution peak represented by a Gaus
 	
 	% Donner la formule du potentiel, écrire la vitesse dans ce cas
 	Dans ce cas, le champ de vitesse dérive du potentiel suivant : 
-	$$\psi(x,y) = sin(2\pi x) sin(2\pi y) + \theta_0 cos(2\pi\theta_1x)cos(2\pi \theta_2y)$$
+	$$\psi(x,y) = \sin(2\pi x) \sin(2\pi y) + \theta_0 \cos(2\pi\theta_1x)\cos(2\pi \theta_2y)$$
 	où $\theta_0 \in [0,0.75]$ et $(\theta_1,\theta_2) \in [0.5,4]^2$.
 	La vitesse s'exprime alors : 
 	
 	$$
 	\left\{
 	\begin{array}{c c c}
-	u_x(x,y) = \frac{\partial \psi}{\partial y} = 2\pi sin(2\pi x) cos(2\pi y) - \theta_0 2\pi \theta_2 cos(2\pi \theta_1x)sin(2\pi \theta_2y)\\
-	u_y(x,y) = -\frac{\partial \psi}{\partial x} = -2\pi sin(2\pi y) cos(2\pi x) + \theta_0 2\pi \theta_1 cos(2\pi \theta_2y)sin(2\pi \theta_1x)
+	u_x(x,y) = \frac{\partial \psi}{\partial y} = 2\pi \sin(2\pi x) \cos(2\pi y) - \theta_0 2\pi \theta_2 \cos(2\pi \theta_1x)\sin(2\pi \theta_2y)\\
+	u_y(x,y) = -\frac{\partial \psi}{\partial x} = -2\pi \sin(2\pi y) \cos(2\pi x) + \theta_0 2\pi \theta_1 \cos(2\pi \theta_2y)\sin(2\pi \theta_1x)
 	\end{array}
 	\right.
 	$$ 
@@ -228,7 +228,7 @@ We use the advection equation to simulate a pollution peak represented by a Gaus
 	
 	
 	
-	\subsection{Méthode des volumes finis}\label{volumesfinis}
+	\subsubsection{Méthode des volumes finis}\label{volumesfinis}
 	
 	% faire un condense de cette méthode, récupérer les équations importantes en négligeant les détails qui seront dans l'appendice
 	
