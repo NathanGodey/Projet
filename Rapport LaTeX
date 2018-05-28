@@ -93,15 +93,8 @@
 		\begin{minipage}{16cm}
 			{\normalsize
 				\parindent=0pt
-				{{\bf ABSTRACT} : Predicting the behavior of a pollutant in a fluid is one of the major problems today, it is very complex to do, as there are too many variables to describe 
-				the phenomenon and achieve good precision overtime. We have to use reduction models such as POD (Proper Orthogonal Direct) in order to compute the solution in a reasonable time. 
-				It involves keeping the major dynamic of the solution with a few degrees of liberties and accepting an error between the approximation and the real solution.
-We use the advection equation to simulate a pollution peak represented by a Gaussian function in a fluid where the fluid speed varies in a closed region. After computing a couple of solutions using our initial 
-integration schemes for some parameters like the finite volumes scheme and explicit Euler scheme to simulate the fundamental dynamic, we use the POD algorithm to compute approximate solutions for a new set of parameters, 
-this time in a much shorter period. We decided to approach the problem with two different methods. 
-The Eulerian method, in which we consider the velocity as a function of space and time, and try to compute the concentration of the pollutant as a function of the same variables. Whereas in the Lagrangian method, 
-we follow some particles arraigned initially in a random way according to a probability law adapted to the initial concentration and compute their trajectory as a function of time and the initial location. 
-Thus, we will try to compare both methods to see which one suits the problem better.
+				{{\bf ABSTRACT} : Predicting the behavior of a pollutant in a fluid is one of the major problems today, it is very complex to do, as there are too many variables to describe the phenomenon and achieve good precision overtime. We have to use reduction models such as POD (Proper Orthogonal Direct) in order to compute the solution in a reasonable time. It involves keeping the major dynamic of the solution with a few degrees of liberties and accepting an error between the approximation and the real solution.
+We use the advection equation to simulate a pollution peak represented by a Gaussian function in a fluid where the fluid speed varies in a closed region. After computing a couple of solutions using our initial integration schemes for some parameters like the finite volumes scheme and explicit Euler scheme to simulate the fundamental dynamic, we use the POD algorithm to compute approximate solutions for a new set of parameters, this time in a much shorter period. We decided to approach the problem with two different methods : the Eulerian method, in which we consider the velocity as a function of space and time, and try to compute the concentration of the pollutant as a function of the same variables ; meanwhile, in the Lagrangian method, we follow some particles arraigned initially in a random way according to a probability law adapted to the initial concentration and compute their trajectory as a function of time and the initial location. Thus, we will try to compare both methods to see which one suits the problem better.
 }
 				\par}
 		\end{minipage}
@@ -123,24 +116,9 @@ Thus, we will try to compare both methods to see which one suits the problem bet
 	
 	\section{Introduction}
 	
-	Le but de ce projet d'initiation à la recherche est d'observer numériquement l'évolution d'une concentration 
-	de polluants (fluide que l'on considère incompressible) dans un liquide (rejets dans une rivière) ou dans un 
-	gaz (nuage radioactif). Ce projet est associé au cours intitulé "Méthodes numériques pour les problèmes en 
-	grandes dimensions" ~\cite{Cours1} 
-	tenu en première année à l'École nationale des ponts et chaussées par Damiano Lombardi (INRIA) et Sébastien 
-	Boyaval (INRIA). Nous allons donc chercher à utiliser des outils de réductions de modèles afin de pouvoir 
-	prédire, étant donné une concentration initiale de polluant en un lieu donné, l'évolution de la concentration 
-	de façon fiable.
-	La dynamique de la solution réelle dépend d'un nombre de paramètres beaucoup trop grand si l'on souhaite la 
-	simuler tout le temps avec des paramètres différents à chaque fois (position initiale, champs de vitesse,...). 
-	La discrétisation du problème pose aussi problème, avec un phénomène de diffusion souvent inévitable. 
-	Le but de la méthode de réduction de 
-	modèles est de pouvoir se ramener à une base de solutions qui contiennent en elle-même la majeure partie de 
-	la dynamique de la solution réelle pour un certain nombre de paramètres où on aura la solution fine, afin 
-	de pouvoir simuler de façon approchée et surtout plus rapide des nouveaux schémas avec des paramètres différents.\\
-	Il faut donc d'abord penser à l'approche que l'on va avoir sur la discrétisation du problème, puis savoir 
-	quel outil de la réduction de modèle utiliser afin d'avoir une erreur relativement faible pour un temps 
-	relativement court : un compris est donc fait entre temps de calcul et précision.
+	Le but de ce projet d'initiation à la recherche est d'observer numériquement l'évolution d'une concentration de polluants (fluide que l'on considère incompressible) dans un liquide (rejets dans une rivière) ou dans un gaz (nuage radioactif). Ce projet est associé au cours intitulé "Méthodes numériques pour les problèmes en grandes dimensions" ~\cite{Cours1} tenu en première année à l'École nationale des ponts et chaussées par Damiano Lombardi (INRIA) et Sébastien Boyaval (INRIA). Nous allons donc chercher à utiliser des outils de réductions de modèles afin de pouvoir prédire, étant donné une concentration initiale de polluant en un lieu donné, l'évolution de la concentration de façon fiable.
+	La dynamique de la solution réelle dépend d'un nombre de paramètres beaucoup trop grand si l'on souhaite la simuler tout le temps avec des paramètres différents à chaque fois (position initiale, champs de vitesse,...). La discrétisation du problème pose aussi problème, avec un phénomène de diffusion souvent inévitable. Le but de la méthode de réduction de modèles est de pouvoir se ramener à une base de solutions qui contienne en elle-même la majeure partie de la dynamique de la solution réelle pour un certain nombre de paramètres pour lesquels on aura la solution fine, afin de pouvoir simuler de façon approchée et surtout plus rapide des nouveaux schémas avec des paramètres différents.\\
+	Il faut donc d'abord penser à l'approche que l'on va avoir sur la discrétisation du problème, puis savoir quel outil de la réduction de modèle utiliser afin d'avoir une erreur relativement faible pour un temps relativement court : un compromis est donc fait entre temps de calcul et précision.
 	
 	
 	\section{Matériels et méthodes}
@@ -152,8 +130,7 @@ Thus, we will try to compare both methods to see which one suits the problem bet
 	\label{equation1}
 	\end{equation}
 	
-	où $c$ est la concentration de polluant et $u$ est le champs de vitesse présent dans le liquide ou le gaz. Pour une simulation numérique, nous devons nous munir d'un code donnant 
-	un maillage de la zone que nous voulons étudier, d'un schéma de discrétisation en temps et en espace de l'équation \ref{equation1}, et d'une condition initiale. 
+	où $c$ est la concentration de polluant et $u$ est le champs de vitesse présent dans le liquide ou le gaz. Pour une simulation numérique, nous devons nous munir d'un code donnant un maillage de la zone que nous voulons étudier, d'un schéma de discrétisation en temps et en espace de l'équation \ref{equation1}, et d'une condition initiale. 
 	
 	Une fois ce code mis en place, nous utilisons l'algorithme POD (Proper Orthogonal Decomposition) pour réduire notre solution. Nous nous posons alors trois questions :
 	\begin{itemize}
@@ -162,7 +139,7 @@ Thus, we will try to compare both methods to see which one suits the problem bet
 		\item Peut-on trouver un moyen d'augmenter la compression de données ?
 	\end{itemize}
 	
-	Nous allons explorer ces questions à travers deux exemples : un écoulement à vitesse constant (où juste l'angle d'incidence change) et un écoulement cellulaire (des tourbillons).\\
+	Nous allons explorer ces questions à travers deux exemples : un écoulement à vitesse constant (où seul l'angle d'incidence change) et un écoulement cellulaire (des tourbillons).\\
 	
 	\subsection{Méthode POD : \emph{Proper Orthogonal Decomposition}}
 	
@@ -173,8 +150,7 @@ Thus, we will try to compare both methods to see which one suits the problem bet
 	\end{pmatrix}
 	$$
 	où : $C(t_i)_j = c(x_j,t_i)$. $(x_j)_ {1 \leqslant j \leqslant N}$ sont les points où la solution $c$ du problème de transport est calculée précisement.
-	La décomposition SVD (Singular Value Decomposition) de la matrice $M$ s'écrit : $ M = USV^T $ Où $U$ et $V$ sont des matrices orthogonales respectivement de taille $N$ et $n$. La matrice $S$ est diagonale, ses coefficients sont les valeurs singulières de $M$ (les valeurs propres de $M^TM$). 
-	Cette décomposition est unique lorsque les coefficients sur la diagonale de $S$, notés $\sigma_1,...,\sigma_p$ avec $p = rang(S) =rang(M)$, sont ordonnés par ordre décroissant.
+	La décomposition SVD (Singular Value Decomposition) de la matrice $M$ s'écrit : $ M = USV^T $ Où $U$ et $V$ sont des matrices orthogonales respectivement de taille $N$ et $n$. La matrice $S$ est diagonale, ses coefficients sont les valeurs singulières de $M$ (les valeurs propres de $M^TM$). Cette décomposition est unique lorsque les coefficients sur la diagonale de $S$, notés $\sigma_1,...,\sigma_p$ avec $p = rang(S) =rang(M)$, sont ordonnés par ordre décroissant.
 	
 	Les colonnes de $U$, notées $U^{(1)},..., U^{(N)}$ sont les modes propres de la matrice (ce sont les vecteurs propres de $M^TM$).
 	Soit $r$ un entier compris entre 1 et le rang de $S$. Les vecteurs $U^{(1)},..., U^{(r)}$ forment alors une 
@@ -193,7 +169,7 @@ Thus, we will try to compare both methods to see which one suits the problem bet
 	
 	\paragraph{Cas d'une vitesse constante}
 	
-	Dans le cas où la vitesse est constante, seule sa direction varie et est donnée par un angle $\theta\in[0,\frac{\pi}{2}]$ (on prend ces angles pour éviter que la gaussienne n'atteigne le bord). On a donc
+	Dans le cas où la vitesse est constante, seule sa direction varie et est donnée par un angle $\theta\in[0,\frac{\pi}{2}]$ (on prend ces angles pour éviter que la gaussienne n'atteigne pas le bord). On a donc
 	
 	$$\left\{\begin{array}{c c c}
 	u_x = ||u||\cos(\theta)\\
@@ -231,15 +207,9 @@ Thus, we will try to compare both methods to see which one suits the problem bet
 	
 	L'approche Eulérienne consiste à déterminer en chaque point de notre maillage les valeurs de la concentration en polluant. On va donc, à chaque itération de l'algorithme, mettre à jour l'ensemble du maillage.\\
 	
-	Il se trouve qu'une simple approche par la méthode des différences finies n'est pas un schéma stable pour notre étude : le schéma est un peu trop instable (concentration pouvant devenir négative). 
-	On va lui préférer la méthode des volumes finis avec un schéma de Lax-Friedrichs, qui est un schéma qui amène un peu plus de phénomène de diffusion, mais qui assure la positivité de la concentration. 
-	Pour plus de détails, voir la section \ref{volumesfinis}.\\
+	Il se trouve qu'une simple approche par la méthode des différences finies n'est pas un schéma stable pour notre étude : le schéma est un peu trop instable (concentration pouvant devenir négative). On va lui préférer la méthode des volumes finis avec un schéma de Lax-Friedrichs, qui est un schéma qui amène un peu plus de phénomène de diffusion, mais qui assure la positivité de la concentration. Pour plus de détails, voir la section \ref{volumesfinis}.\\
 	
-	Nous avions à notre disposition un code d'éléments finis 2D sous Scilab faisant tourner le schéma de Lax-Friedrichs sur des cas très compliqués et un maillage uniforme sur $(0,1)^2$. En déchiffrant 
-	une partie de ce code, et en s'y inspirant, nous avons codé ce schéma en Python, de façon simplifiée et en retenant seulement ce qui allait nous servir pour notre étude (maillage, fonction permettant 
-	l'actualisation, affichage de la solution). 
-	La zone étudiée est toujours $(0,1)^2$, et notre condition initiale est représentée par une gaussienne étroite (équivalente à un pic de polluant). De plus, les conditions aux bords sont périodiques : 
-	nous nous plaçons sur une sphère afin de rendre le code plus simple, même si nous ferons en sorte de ne jamais atteindre les bords. Ce code Python est donné en annexe.\\
+	Nous avions à notre disposition un code d'éléments finis 2D sous Scilab faisant tourner le schéma de Lax-Friedrichs sur des cas très compliqués et un maillage uniforme sur $(0,1)^2$. En déchiffrant une partie de ce code, et en s'y inspirant, nous avons codé ce schéma en Python, de façon simplifiée et en retenant seulement ce qui allait nous servir pour notre étude (maillage, fonction permettant l'actualisation, affichage de la solution). La zone étudiée est toujours $(0,1)^2$, et notre condition initiale est représentée par une gaussienne étroite (équivalente à un pic de polluant). De plus, les conditions aux bords sont périodiques : nous nous plaçons sur une sphère afin de rendre le code plus simple, même si nous ferons en sorte de ne jamais atteindre les bords. Ce code Python est donné en annexe.\\
 	
 	
 	
@@ -269,10 +239,7 @@ Thus, we will try to compare both methods to see which one suits the problem bet
 \end{equation}
 de manière à assurer la convergence et la stabilité (voir le paragraphe Critères de convergence et de stabilité).
 
-Nous regardons cette équation dans un compact en temps et en espace $[0,T] \times [0,L]^2$ Pour cela nous considèrerons un maillage en espace rectangulaire uniforme $K_{i,j}$ 
-de pas $\Delta x$, $\Delta y$, et un maillage en temps de pas $\Delta t_n$ qui dépend \textit{a priori} de l'instant $t_n$. La méthode des volumes finis cherche à exprimer la valeur 
-moyenne de la concentration $c$ sur chaque cellule $K_{i,j}$ en fonction de la valeur moyenne cellulaire la vitesse est des différents paramètres du maillage à savoir le pas et 
-le volume des cellules en d'autres termes on exprime : 
+Nous regardons cette équation dans un compact en temps et en espace $[0,T] \times [0,L]^2$ Pour cela nous considèrerons un maillage en espace rectangulaire uniforme $K_{i,j}$ de pas $\Delta x$, $\Delta y$, et un maillage en temps de pas $\Delta t_n$ qui dépend \textit{a priori} de l'instant $t_n$. La méthode des volumes finis cherche à exprimer la valeur moyenne de la concentration $c$ sur chaque cellule $K_{i,j}$ en fonction de la valeur moyenne cellulaire la vitesse est des différents paramètres du maillage à savoir le pas et le volume des cellules en d'autres termes on exprime : 
 \[
 c_{i,j}(t_n) =\frac{1}{\vert K_{i,j} \vert}\int_{K_{i,j}} c(t_n,X) dX
 \]
@@ -281,7 +248,7 @@ pour cela nous intégrons l'équation (\ref{eq}) sur la cellule $K_{i,j}$ à l'i
 \[
 \frac{\partial c_{i,j}}{\partial t}(t_n) +  \frac{1}{\vert K_{i,j} \vert} \int_{\partial K_{i,j} } c \ u \cdot n \ dL = 0\\
 \]
-nous approchons la dérivé temporelle par un schéma d'Euler explicite et le flux par un schéma de Lax-Friedrichs :
+nous approchons la dérivée temporelle par un schéma d'Euler explicite et le flux par un schéma de Lax-Friedrichs :
 Pour toute cellule $K_{i,j}$
 \begin{equation}
 c_{i,j}(t_n) = c_{i,j}(t_{n-1}) - \frac{t_n-t_{n-1}}{\vert K_{i,j} \vert}  \sum_{k,l} \vert \Gamma_{i,j}^{k,l} \vert g(c_{i,j}(t_{n-1}),c_{k,l}(t_{n-1})) \ \forall n
@@ -297,7 +264,7 @@ où $\Gamma_{i,j}^{k,l} = K_{i,j} \cap K_{k,l}$ et :
 à l'instant $t_n$.
 Pour plus de détails voir la section (\ref{MVF-A}).
 \paragraph{Critères de convergence et de stabilité}
-Lorsque on part d'une condition initiale bornée l'équation dans le sens faible (\ref{eq}) admet une unique solution entropique, c'est à dire la solution vérifie : $\forall S \in \mathcal{C}^2$ convexe, on a 
+Lorsque on part d'une condition initiale bornée l'équation dans le sens faible (\ref{eq}) admet une unique solution entropique, c'est-à-dire que la solution vérifie : $\forall S \in \mathcal{C}^2$ convexe, on a 
 \[
 \frac{\partial S(c)}{\partial t} + \mathrm{div}(G(c)) \leq 0
 \]
@@ -310,7 +277,7 @@ Le schéma numérique (\ref{schema}) converge vers cette solution (lorsque $\Del
 \frac{S(c_{i,j}(t_n))-S(c_{i,j}(t_{n-1}))}{t_n-t_{n-1}} + \sum_{k,l} \frac{\vert \Gamma_{i,j}^{k,l} \vert}{\vert K_{i,j} \vert} \Phi(c_{i,j}(t_{n-1}),c_{k,l}(t_{n-1})) \leq 0 \ \ \forall i,j,n
 \end{cases}
 \end{equation}
-Ainsi l'entropie doit être dissipée ou conservée, sa augmentation est une source d'instabilité du schéma.
+Ainsi l'entropie doit être dissipée ou conservée, son augmentation est une source d'instabilité du schéma.
 
 Pour que le schéma des volumes finis (\ref{schema}) soit stable il faut satisfaire la condition CFL (Courant, Friedrichs, Lewy) qui s'écrit :
 \[
@@ -332,7 +299,7 @@ Cette condition nous permet de choisir le pas de temps adapté à la vitesse et 
 	\subsection{Approche Lagrangienne}
 	
 	\subsubsection{Description}
-	L'approche lagrangienne consiste à suivre les particules le long de leur trajectoires.
+	L'approche lagrangienne consiste à suivre les particules le long de leurs trajectoires.
 	Cela revient à résoudre : 
 	$$
 	\left\{
@@ -360,9 +327,7 @@ Cette condition nous permet de choisir le pas de temps adapté à la vitesse et 
 	\subsubsection{Interpolation}
 	
 	La résolution numérique du problème nécessite de connaître le champ de vitesse des particules, noté $v$.
-	Nous supposons que l'ensemble $\Omega=(0,1)^2 $ soit muni d'un maillage carré régulier de pas noté $\Delta x$ en abscisse et $\Delta y$ en ordonnée. 
-	Nous supposons également que le champ de vitesse est connu en tout point du maillage. Nous présentons ici la méthode d'interpolation que nous avons 
-	utilisé pour approximer le champ de vitesse dans l'ensemble du domaine $\Omega$.
+	Nous supposons que l'ensemble $\Omega=(0,1)^2 $ soit muni d'un maillage carré régulier de pas noté $\Delta x$ en abscisse et $\Delta y$ en ordonnée. Nous supposons également que le champ de vitesse est connu en tout point du maillage. Nous présentons ici la méthode d'interpolation que nous avons utilisé pour approximer le champ de vitesse dans l'ensemble du domaine $\Omega$.
 	
 	Considérons une maille dont les coordonnées du coin inférieur gauche sont notées $(x^{LL},y^{LL}$.
 	Soit un point $(x,y)$ appartenant à cette maille. On pose :
@@ -417,25 +382,11 @@ Cette condition nous permet de choisir le pas de temps adapté à la vitesse et 
 	\end{figure}
 	
 	Ceci nous permet de choisir le nombre de modes qu'on va utiliser. Avec un nombre maximal de 50 modes (que nous nous sommes fixés),
-	on voit que l'on n'arrive pas à atteindre l'erreur relative que l'on s'était fixée, à savoir $10^{-3}$. On voit donc que l'approche eulerienne dans le cas d'une vitesse constante n'est pas optimale : en effet, pour chaque valeur de la vitesse,
-	la dynamique de la solution est différente (son parcours n'est jamais le même), on ne peut donc pas facilement exhiber un sous-espacer linéaire
+	on voit que l'on n'arrive pas à atteindre l'erreur relative que que nous visions, à savoir $10^{-3}$. On voit donc que l'approche eulerienne dans le cas d'une vitesse constante n'est pas optimale : en effet, pour chaque valeur de la vitesse,
+	la dynamique de la solution est différente (son parcours n'est jamais le même), on ne peut donc pas facilement exhiber un sous-espace linéaire
 	qui contiendrait la majorité de la dynamique. Il est donc inutile d'essayer de réduire ce modèle sous l'approche eulérienne.\\
 	On note cependant qu'avec 16 simulations, on obtient une matrice de snapshots d'environ $3,7Go$ ($257\times 257\times 8 \times 7346$, $7346$ étant le nombre de colonnes), que l'on arrive à compresser en $517ko$
 	en prenant $50$ modes : même si l'erreur reste trop importante, la compression de données est très bonne.
-	
-		De plus, cet exemple illustre parfaitement le rôles des modes propres dans la reconstitution de la solution approchée. Voici en effet le tracé des modes propres sur $(0,1)^2$ (en utilisant le module \emph{pcolor} de \emph{matplotlib.pyplot}) :
-	
-	\begin{tabular}{cc}
-		\includegraphics[width=0.5\linewidth]{eulerien_constant_mode_1} &	\includegraphics[width=0.5\linewidth]{eulerien_constant_mode_2}\\
-	\end{tabular}
-
-	\begin{tabular}{cc}
-		\includegraphics[width=0.5\linewidth]{eulerien_constant_mode_10} &	\includegraphics[width=0.5\linewidth]{eulerien_constant_mode_50}\\
-	\end{tabular}
-	
-	Les différentes couleurs montrent les oscillations de la fonction. On voit que le premier mode rassemble la majeure dynamique de ce qu'on a simulé : la condition initiale, qui est restée la même durant toutes nos simulations, est représentée de façon très claire.\\
-	On voit ensuite, dès le deuxième mode, la première oscillation qui va permettre de reconstituer les solutions. L'oscillation se dirige dans le cadrant en haut à droite, lieu de nos simulations car $\theta \in [0,\frac{\pi}{2}]$. Le 10ème mode représente bien les 
-	différentes trajectoires de nos simulations (encore via des oscillations), et enfin, quand on va chercher des modes plus grands, on va essayer de reproduire de plus en plus les détails de la dynamique.
 	
 	\subsubsection{Cas des \'ecoulements cellulaires}
 	
@@ -463,10 +414,7 @@ Cette condition nous permet de choisir le pas de temps adapté à la vitesse et 
     	\right.
 	$\\
 	
-	On r\'esouds l'\'equation de transport pour diff\'erents $\nu_0$, $\nu_x$ et $\nu_y$, ainsi que pour diff\'erents $k$ et $\underline x^{(0)}$ (24 diff\'erents 
-	quintuplets ($\nu_0$, $\nu_x$, $\nu_y$, $k$, $\underline x^{(0)}$) au total), pendant $T=0.1$. On a pris un pas de maillage de $\frac{1}{2^7}$, i.e. deux fois 
-	moins fin que pour un champ de vitesse constant, sans quoi le temps de calcul aurait \'et\'e trop important. Apr\`es deux heures de simulation, on obtient une 
-	matrice $M$ des snapshots de taille ?, et qui p\`ese 1.38 Go. 
+	On r\'esoud l'\'equation de transport pour diff\'erents $\nu_0$, $\nu_x$ et $\nu_y$, ainsi que pour diff\'erents $k$ et $\underline x^{(0)}$ (24 diff\'erents quintuplets ($\nu_0$, $\nu_x$, $\nu_y$, $k$, $\underline x^{(0)}$) au total), pendant $T=0.1$. On a pris un pas de maillage de $\frac{1}{2^7}$, i.e. deux fois moins fin que pour un champ de vitesse constant, sans quoi le temps de calcul aurait \'et\'e trop important. Apr\`es deux heures de simulation, on obtient une matrice $M$ des snapshots de taille ?, et qui p\`ese 1.38 Go. 
 	
 	On a effectu\'e la SVD (d\'ecomposition en valeurs singuli\`eres) de $M$, puis on a trac\'e les 50 premi\`eres valeurs singuli\`eres:
 	
@@ -476,9 +424,7 @@ Cette condition nous permet de choisir le pas de temps adapté à la vitesse et 
 	\caption{Tracé du $\log$ des 50 premi\`eres valeurs singulières}
 	\end{figure}
 
-	On observe une d\'ecroissance exponentielle des valeurs singuli\`eres, ce qui indique que la POD sera efficace dans le cas des \'ecoulements cellulaires. 
-	On peut donc s\'electionner les 50 premiers vecteurs de la base afin de r\'esoudre l'equation pour d'autre jeux de param\`etres avec une dur\'ee de simulation 
-	beaucoup plus rapide, et un espace de stockage beaucoup moins important (6.7 Mo).
+	On observe une d\'ecroissance exponentielle des valeurs singuli\`eres, ce qui indique que la POD sera efficace dans le cas des \'ecoulements cellulaires. On peut donc s\'electionner les 50 premiers vecteurs de la base afin de r\'esoudre l'equation pour d'autres jeux de param\`etres avec une dur\'ee de simulation beaucoup plus rapide, et un espace de stockage beaucoup moins important (6.7 Mo).
 	
 	\todo[inline]{POD}
 	
@@ -519,12 +465,12 @@ Cette condition nous permet de choisir le pas de temps adapté à la vitesse et 
 		\end{center}
 	\end{figure}
 	
-	\subsubsection{Champs de Lamb-Oseen}
+	\subsubsection{Champ de Lamb-Oseen}
 	Dans cette simulation : $\Gamma = 10$, $\nu = 0.5$ et $r_c = 0.7$.
 	\begin{figure}[H]
 		\begin{center}
 			\includegraphics[scale=0.5]{champ_lamboseen.png}
-			\caption{100 particules dans un champs de Lamb-Oseen}
+			\caption{100 particules dans un champ de Lamb-Oseen}
 		\end{center}
 	\end{figure}
 	
@@ -559,7 +505,7 @@ Cette condition nous permet de choisir le pas de temps adapté à la vitesse et 
 	une erreur de l'ordre de $10^{-3}$. 
 	
 	\subsubsection{Champ de Lamb-Oseen}
-	La décroissance des valeurs singulières est rapide.Un faible nombre de modes propres est par conséquent nécessaire pour obtenir 
+	La décroissance des valeurs singulières est rapide. Un faible nombre de modes propres est par conséquent nécessaire pour obtenir 
 	une approximation convenable.
 	
 	\section{Conclusions}
@@ -578,7 +524,7 @@ Cette condition nous permet de choisir le pas de temps adapté à la vitesse et 
 \label{dimd}
 \end{equation}
 
-    où $c : [0,T] \times [a,b]^d \longrightarrow [0,1]$ la concentration du polluant, $u : [0,T]\times [a,b]^d \longrightarrow \mathbb{R}^d$ le champs des vitesses imposé dans le milieu et $f : [0,T]\times [a,b]^d \longrightarrow \mathbb{R}$ la source de pollution.\\
+    où $c : [0,T] \times [a,b]^d \longrightarrow [0,1]$ la concentration du polluant, $u : [0,T]\times [a,b]^d \longrightarrow \mathbb{R}^d$ le champ des vitesses imposé dans le milieu et $f : [0,T]\times [a,b]^d \longrightarrow \mathbb{R}$ la source de pollution.\\
 
     Dans notre étude nous prenons $f=0$, nous considérons qu'il n'y a pas de source. \\
 
@@ -594,7 +540,7 @@ Cette condition nous permet de choisir le pas de temps adapté à la vitesse et 
 
     On obtient une grille de $(n_x-1)(n_y-1)$ cellules, on appelle donc $K_{i,j}  = [x_i,x_{i+1}] \times [y_j,y_{j+1}]$, et $\Gamma_{i,j}^{k,l} = K_{i,j} \cap K_{k,l}$.\\
 
-    On discrétise $[0,T]$ en utilisant la suite $(t_i)_{i=1}^{n_t}$ qui n'est pas nécessairement arithmétique,  vérifiant la condition CFL et : 
+    On discrétise $[0,T]$ en utilisant la suite $(t_i)_{i=1}^{n_t}$ qui n'est pas nécessairement arithmétique, vérifiant la condition CFL et : 
 \begin{equation*}
 \begin{cases}
         t_1=0  &  \\
@@ -624,8 +570,7 @@ u_{i,j}(t_n) &=\frac{1}{\vert K_{i,j} \vert}\int_{K_{i,j}} u(t_n,X) dX.
 \[
 \frac{1}{\vert K_{i,j} \vert}\int_{K_{i,j}} \left( \frac{\partial c}{\partial t} + \mathrm{div}(c \ u) \right) dX = 0 
 \]
-On peut permuter l'intégrale et la dérivation par rapport au temps puisque les cellules $K_{i,j}$ sont indépendantes de temps, et on utilise le théorème de Green pour des fonctions suffisamment régulières $\int_{\Omega} 
-\mathrm{div} (a) \ d \Omega = \int_{\partial \Omega} a\cdot n \ d\L $ ,où $n$ est le vecteur normal sortant, ainsi:
+On peut permuter l'intégrale et la dérivation par rapport au temps puisque les cellules $K_{i,j}$ sont indépendantes de temps, et on utilise le théorème de Green pour des fonctions suffisamment régulières $\int_{\Omega} \mathrm{div} (a) \ d \Omega = \int_{\partial \Omega} a\cdot n \ d\L $ ,où $n$ est le vecteur normal sortant, ainsi:
 \[
 \frac{\partial c_{i,j}}{\partial t}(t_n) +  \frac{1}{\vert K_{i,j} \vert} \int_{\partial K_{i,j} } c \ u \cdot n \ dL = 0\\
 \]
@@ -703,15 +648,15 @@ c_{i,j}(t_n) = c_{i,j}(t_{n-1}) - \frac{t_n-t_{n-1}}{\vert K_{i,j} \vert}  \sum_
 	
 	\subsection{Approche Lagrangienne}
 	
-	\subsubsection{Champs de vitesse uniforme}
+	\subsubsection{Champ de vitesse uniforme}
 	
 	\lstinputlisting{lagrange_v_cste.py}
 	
-	\subsubsection{Champs de vitesse issu d'un écoulement cellulaire}
+	\subsubsection{Champ de vitesse issu d'un écoulement cellulaire}
 	
 	\lstinputlisting{lagrange_ecouleent_cellulaire.py}
 	
-	\subsubsection{Champs de vitesse de Lamb Oseen}
+	\subsubsection{Champ de vitesse de Lamb Oseen}
 	
 	\lstinputlisting{lagrange_lambo.py}
 	
