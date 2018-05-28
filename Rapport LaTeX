@@ -380,8 +380,9 @@ Cette condition nous permet de choisir le pas de temps adapté à la vitesse et 
 	\end{figure}
 	
 	Ceci nous permet de choisir le nombre de modes qu'on va utiliser. Avec un nombre maximal de 50 modes (que nous nous sommes fixés),
-	on voit qu'on arrive pas à atteindre l'erreur relative que l'on s'était fixée, à savoir $10^{-3}$. On observe donc premièrement
-	que l'approche eulerienne dans le cas d'une vitesse constante n'est pas optimale.\\
+	on voit que l'on n'arrive pas à atteindre l'erreur relative que l'on s'était fixée, à savoir $10^{-3}$. On voit donc que l'approche eulerienne dans le cas d'une vitesse constante n'est pas optimale : en effet, pour chaque valeur de la vitesse,
+	la dynamique de la solution est différente (son parcours n'est jamais le même), on ne peut donc pas facilement exhiber un sous-espacer linéaire
+	qui contiendrait la majorité de la dynamique.
 	On décide cependant de voir ce qu'il se passe avec 50 modes propres, pour mettre en place la réduction même pour ce modèle, afin 
 	d'illustrer la méthode de réduction.\\
 	
