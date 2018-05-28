@@ -20,36 +20,36 @@
 \usepackage{multicol}
 \usepackage{todonotes}
 \lstset{language=Python,commentstyle=\color{gray},literate=
-	{≤}{{\textsuperscript{2}}}1
+	{¬≤}{{\textsuperscript{2}}}1
 	{?}{{\textsuperscript{4}}}1
 	{?}{{\textsuperscript{6}}}1
 	{?}{{\textsuperscript{8}}}1
-	{È}{{\'e}}1
-	{Ë}{{\`{e}}}1
-	{Í}{{\^{e}}}1
-	{…}{{\'{E}}}1
-	{ }{{\^{E}}}1
-	{˚}{{\^{u}}}1
-	{˘}{{\`{u}}}1
-	{‚}{{\^{a}}}1
-	{‡}{{\`{a}}}1
-	{·}{{\'{a}}}1
-	{„}{{\~{a}}}1
-	{¡}{{\'{A}}}1
-	{¬}{{\^{A}}}1
-	{√}{{\~{A}}}1
-	{Á}{{\c{c}}}1
-	{«}{{\c{C}}}1
-	{ı}{{\~{o}}}1
-	{Û}{{\'{o}}}1
-	{Ù}{{\^{o}}}1
-	{’}{{\~{O}}}1
-	{”}{{\'{O}}}1
-	{‘}{{\^{O}}}1
-	{Ó}{{\^{i}}}1
-	{Œ}{{\^{I}}}1
-	{Ì}{{\'{i}}}1
-	{Õ}{{\~{Õ}}}1,keywordstyle=\color{red},stringstyle=\color{blue},morekeywords={plt,np},breaklines=true}
+	{√©}{{\'e}}1
+	{√®}{{\`{e}}}1
+	{√™}{{\^{e}}}1
+	{√â}{{\'{E}}}1
+	{√ä}{{\^{E}}}1
+	{√ª}{{\^{u}}}1
+	{√π}{{\`{u}}}1
+	{√¢}{{\^{a}}}1
+	{√†}{{\`{a}}}1
+	{√°}{{\'{a}}}1
+	{√£}{{\~{a}}}1
+	{√Å}{{\'{A}}}1
+	{√Ç}{{\^{A}}}1
+	{√É}{{\~{A}}}1
+	{√ß}{{\c{c}}}1
+	{√á}{{\c{C}}}1
+	{√µ}{{\~{o}}}1
+	{√≥}{{\'{o}}}1
+	{√¥}{{\^{o}}}1
+	{√ï}{{\~{O}}}1
+	{√ì}{{\'{O}}}1
+	{√î}{{\^{O}}}1
+	{√Æ}{{\^{i}}}1
+	{√é}{{\^{I}}}1
+	{√≠}{{\'{i}}}1
+	{√ç}{{\~{√ç}}}1,keywordstyle=\color{red},stringstyle=\color{blue},morekeywords={plt,np},breaklines=true}
 
 \textwidth=18cm \textheight=23cm \oddsidemargin=-1.00cm
 \evensidemargin=-1.00cm
@@ -76,11 +76,11 @@
 		
 		\vspace{2cm}
 		
-		{\Large{\bf RÈduction de modËles appliquÈe ‡ la modÈlisation du transport de polluants}}
+		{\Large{\bf R√©duction de mod√®les appliqu√©e √† la mod√©lisation du transport de polluants}}
 		
 		\vspace{1cm}
 		
-		{\large{LÈo Baty, ClÈment Lasuen, Chiheb Eddine Najjar,\\ Nathan Godey, RÈgis Santet, Song Phuc Duong \\ sous la direction de \\ Damiano Lombardi, SÈbastien Boyaval \\ Laboratoire INRIA}}
+		{\large{L√©o Baty, Cl√©ment Lasuen, Chiheb Eddine Najjar,\\ Nathan Godey, R√©gis Santet, Song Phuc Duong \\ sous la direction de \\ Damiano Lombardi, S√©bastien Boyaval \\ Laboratoire INRIA}}
 		
 		\vspace{2cm}
 		
@@ -116,71 +116,71 @@ We use the advection equation to simulate a pollution peak represented by a Gaus
 	
 	\section{Introduction}
 	
-	Le but de ce projet d'initiation ‡ la recherche est d'observer numÈriquement l'Èvolution d'une concentration de polluants (fluide que l'on considËre incompressible) dans un liquide (rejets dans une riviËre) ou dans un gaz (nuage radioactif). Ce projet est associÈ au cours intitulÈ "MÈthodes numÈriques pour les problËmes en grandes dimensions" ~\cite{Cours1} tenu en premiËre annÈe ‡ l'…cole nationale des ponts et chaussÈes par Damiano Lombardi (INRIA) et SÈbastien Boyaval (INRIA). Nous allons donc chercher ‡ utiliser des outils de rÈductions de modËles afin de pouvoir prÈdire, Ètant donnÈ une concentration initiale de polluant en un lieu donnÈ, l'Èvolution de la concentration de faÁon fiable.
-	La dynamique de la solution rÈelle dÈpend d'un nombre de paramËtres beaucoup trop grand si l'on souhaite la simuler tout le temps avec des paramËtres diffÈrents ‡ chaque fois (position initiale, champs de vitesse,...). La discrÈtisation du problËme pose aussi problËme, avec un phÈnomËne de diffusion souvent inÈvitable. Le but de la mÈthode de rÈduction de modËles est de pouvoir se ramener ‡ une base de solutions qui contiennent en elle-mÍme la majeure partie de la dynamique de la solution rÈelle pour un certain nombre de paramËtres o˘ on aura la solution fine, afin de pouvoir simuler de faÁon approchÈe et surtout plus rapide des nouveaux schÈmas avec des paramËtres diffÈrents.\\
-	Il faut donc d'abord penser ‡ l'approche que l'on va avoir sur la discrÈtisation du problËme, puis savoir quel outil de la rÈduction de modËle utiliser afin d'avoir une erreur relativement faible pour un temps relativement court : un compris est donc fait entre temps de calcul et prÈcision.
+	Le but de ce projet d'initiation √† la recherche est d'observer num√©riquement l'√©volution d'une concentration de polluants (fluide que l'on consid√®re incompressible) dans un liquide (rejets dans une rivi√®re) ou dans un gaz (nuage radioactif). Ce projet est associ√© au cours intitul√© "M√©thodes num√©riques pour les probl√®mes en grandes dimensions" ~\cite{Cours1} tenu en premi√®re ann√©e √† l'√âcole nationale des ponts et chauss√©es par Damiano Lombardi (INRIA) et S√©bastien Boyaval (INRIA). Nous allons donc chercher √† utiliser des outils de r√©ductions de mod√®les afin de pouvoir pr√©dire, √©tant donn√© une concentration initiale de polluant en un lieu donn√©, l'√©volution de la concentration de fa√ßon fiable.
+	La dynamique de la solution r√©elle d√©pend d'un nombre de param√®tres beaucoup trop grand si l'on souhaite la simuler tout le temps avec des param√®tres diff√©rents √† chaque fois (position initiale, champs de vitesse,...). La discr√©tisation du probl√®me pose aussi probl√®me, avec un ph√©nom√®ne de diffusion souvent in√©vitable. Le but de la m√©thode de r√©duction de mod√®les est de pouvoir se ramener √† une base de solutions qui contiennent en elle-m√™me la majeure partie de la dynamique de la solution r√©elle pour un certain nombre de param√®tres o√π on aura la solution fine, afin de pouvoir simuler de fa√ßon approch√©e et surtout plus rapide des nouveaux sch√©mas avec des param√®tres diff√©rents.\\
+	Il faut donc d'abord penser √† l'approche que l'on va avoir sur la discr√©tisation du probl√®me, puis savoir quel outil de la r√©duction de mod√®le utiliser afin d'avoir une erreur relativement faible pour un temps relativement court : un compris est donc fait entre temps de calcul et pr√©cision.
 	
 	
-	\section{MatÈriels et mÈthodes}
+	\section{Mat√©riels et m√©thodes}
 	
-	Tout notre projet repose sur l'Èquation dite d'\emph{advection}, ou de \emph{transport de matiËre} :
+	Tout notre projet repose sur l'√©quation dite d'\emph{advection}, ou de \emph{transport de mati√®re} :
 	
 	\begin{equation}
 	\partial_tc+u\nabla c=0.
 	\label{equation1}
 	\end{equation}
 	
-	o˘ $c$ est la concentration de polluant et $u$ est le champs de vitesse prÈsent dans le liquide ou le gaz. Pour une simulation numÈrique, nous devons nous munir d'un code donnant un maillage de la zone que nous voulons Ètudier, d'un schÈma de discrÈtisation en temps et en espace de l'Èquation \ref{equation1}, et d'une condition initiale. 
+	o√π $c$ est la concentration de polluant et $u$ est le champs de vitesse pr√©sent dans le liquide ou le gaz. Pour une simulation num√©rique, nous devons nous munir d'un code donnant un maillage de la zone que nous voulons √©tudier, d'un sch√©ma de discr√©tisation en temps et en espace de l'√©quation \ref{equation1}, et d'une condition initiale. 
 	
-	Une fois ce code mis en place, nous utilisons l'algorithme POD (Proper Orthogonal Decomposition) pour rÈduire notre solution. Nous nous posons alors trois questions :
+	Une fois ce code mis en place, nous utilisons l'algorithme POD (Proper Orthogonal Decomposition) pour r√©duire notre solution. Nous nous posons alors trois questions :
 	\begin{itemize}
-		\item L'algorithme POD est-il adaptÈ ‡ l'Èquation d'advection ? 
-		\item Quelle approche, lagrangienne ou eulÈrienne, convient-il de prendre ?
-		\item Peut-on trouver un moyen d'augmenter la compression de donnÈes ?
+		\item L'algorithme POD est-il adapt√© √† l'√©quation d'advection ? 
+		\item Quelle approche, lagrangienne ou eul√©rienne, convient-il de prendre ?
+		\item Peut-on trouver un moyen d'augmenter la compression de donn√©es ?
 	\end{itemize}
 	
-	Nous allons explorer ces questions ‡ travers deux exemples : un Ècoulement ‡ vitesse constant (o˘ juste l'angle d'incidence change) et un Ècoulement cellulaire (des tourbillons).\\
+	Nous allons explorer ces questions √† travers deux exemples : un √©coulement √† vitesse constant (o√π juste l'angle d'incidence change) et un √©coulement cellulaire (des tourbillons).\\
 	
-	\subsection{MÈthode POD : \emph{Proper Orthogonal Decomposition}}
+	\subsection{M√©thode POD : \emph{Proper Orthogonal Decomposition}}
 	
-	L'inconnue du problËme est notÈe $X(t) \in \mathbb{R}^N$ pour $t \in [0,T]$. La premiËre Ètape de cette mÈthode consiste ‡ calculer des valeurs de la solution $X(t_0), X(t_1), ..., X(t_n)$ ‡ des instants $t_0, t_1, ... t_n$, appelÈes snapshots. Ces vecteurs sont ensuite classÈs dans une matrice M : 
+	L'inconnue du probl√®me est not√©e $X(t) \in \mathbb{R}^N$ pour $t \in [0,T]$. La premi√®re √©tape de cette m√©thode consiste √† calculer des valeurs de la solution $X(t_0), X(t_1), ..., X(t_n)$ √† des instants $t_0, t_1, ... t_n$, appel√©es snapshots. Ces vecteurs sont ensuite class√©s dans une matrice M : 
 	$$ M =
 	\begin{pmatrix}
 	X(t_0) & | & X(t_1) &| & \cdots & | & X(t_n)
 	\end{pmatrix}
 	$$
 	
-	La dÈcomposition SVD (Singular Value Decomposition) de la matrice $M$ s'Ècrit : $ M = USV^T $ O˘ $U$ et $V$ sont des matrices orthogonales respectivement de taille $N$ et $n$. La matrice $S$ est diagonale, ses coefficients sont les valeurs singuliËres de $M$ (les valeurs propres de $M^TM$). Cette dÈcomposition est unique lorsque les coefficients sur la diagonale de $S$, notÈs $\sigma_1,...,\sigma_p$ avec $p = rang(S) =rang(M)$, sont ordonnÈs par ordre dÈcroissant.
+	La d√©composition SVD (Singular Value Decomposition) de la matrice $M$ s'√©crit : $ M = USV^T $ O√π $U$ et $V$ sont des matrices orthogonales respectivement de taille $N$ et $n$. La matrice $S$ est diagonale, ses coefficients sont les valeurs singuli√®res de $M$ (les valeurs propres de $M^TM$). Cette d√©composition est unique lorsque les coefficients sur la diagonale de $S$, not√©s $\sigma_1,...,\sigma_p$ avec $p = rang(S) =rang(M)$, sont ordonn√©s par ordre d√©croissant.
 	
-	Les colonnes de $U$, notÈes $U^{(1)},..., U^{(N)}$ sont les modes propres de la matrice (ce sont les vecteurs propres de $M^TM$).
+	Les colonnes de $U$, not√©es $U^{(1)},..., U^{(N)}$ sont les modes propres de la matrice (ce sont les vecteurs propres de $M^TM$).
 	Soit $r$ un entier compris entre 1 et le rang de $S$. Les vecteurs $U^{(1)},..., U^{(r)}$ forment alors une 
-	base orthonormÈe d'un sous-espace vectoriel de $\mathbb{R}^N$ dans lequel on projette la dynamique du systËme. 
+	base orthonorm√©e d'un sous-espace vectoriel de $\mathbb{R}^N$ dans lequel on projette la dynamique du syst√®me. 
 	
-	Cette mÈthode s'applique lorsque la dynamique du systËme reste proche d'un sous-espace vectoriel de dimension faible. Cela correspond ‡ une dÈcroissance rapide des valeurs singuliËres de $M$. L'erreur de reprÈsentation est donnÈe par : $\sum_{i=r+1}^p \sigma_i^2$.
+	Cette m√©thode s'applique lorsque la dynamique du syst√®me reste proche d'un sous-espace vectoriel de dimension faible. Cela correspond √† une d√©croissance rapide des valeurs singuli√®res de $M$. L'erreur de repr√©sentation est donn√©e par : $\sum_{i=r+1}^p \sigma_i^2$.
 	
-	\subsection{ParamÈtrage}
+	\subsection{Param√©trage}
 	
-	Dans tout ce qui suit, nous avons optÈ comme maillage un quadrillage de la zone $(0,1)^2$, et le nombre de cases sur le maillage est Ègal ‡ $(2\times10^{8}+1)^2$ : c'est un cas o˘ le maillage est plutÙt fin et le temps de calcul, bien qu'un peu long, reste raisonnable.\\
+	Dans tout ce qui suit, nous avons opt√© comme maillage un quadrillage de la zone $(0,1)^2$, et le nombre de cases sur le maillage est √©gal √† $(2\times10^{8}+1)^2$ : c'est un cas o√π le maillage est plut√¥t fin et le temps de calcul, bien qu'un peu long, reste raisonnable.\\
 	
-	On effectue un nombre $n_s=16$ de simulations diffÈrentes dans chaque cas afin de pouvoir remplir la matrice qui va nous servir pour faire l'algorithme POD (matrice contenant quelques solutions fines du problËme).\\
-	On prend un temps maximal de simulation Ègal $T_{max}=1$.\\
-	Lors de l'algorithme POD, on se fixe un nombre $nb_{modes}$ que l'on choisit tel que l'erreur sur la solution soit environ de $10^{-3}$. Cette erreur a ÈtÈ choisie a posteriori, Ètant un compromis entre le temps de calcul (nombre de modes) et l'erreur que la prÈcision de l'algorithme.
+	On effectue un nombre $n_s=16$ de simulations diff√©rentes dans chaque cas afin de pouvoir remplir la matrice qui va nous servir pour faire l'algorithme POD (matrice contenant quelques solutions fines du probl√®me).\\
+	On prend un temps maximal de simulation √©gal $T_{max}=1$.\\
+	Lors de l'algorithme POD, on se fixe un nombre $nb_{modes}$ que l'on choisit tel que l'erreur sur la solution soit environ de $10^{-3}$. Cette erreur a √©t√© choisie a posteriori, √©tant un compromis entre le temps de calcul (nombre de modes) et l'erreur que la pr√©cision de l'algorithme.
 	
 	\paragraph{Cas d'une vitesse constante}
 	
-	Dans le cas o˘ la vitesse est constante, seule sa direction varie et est donnÈe par un angle $\theta\in[0,\frac{\pi}{2}]$ (on prend ces angles pour Èviter que la gaussienne n'atteigne le bord). On a donc
+	Dans le cas o√π la vitesse est constante, seule sa direction varie et est donn√©e par un angle $\theta\in[0,\frac{\pi}{2}]$ (on prend ces angles pour √©viter que la gaussienne n'atteigne le bord). On a donc
 	
 	$$\left\{\begin{array}{c c c}
 	u_x = ||u||\cos(\theta)\\
 	u_y = ||u||\sin(\theta)
 	\end{array}\right.$$
 	
-	\paragraph{Cas d'un Ècoulement cellulaire}
+	\paragraph{Cas d'un √©coulement cellulaire}
 	
-	% Donner la formule du potentiel, Ècrire la vitesse dans ce cas
-	Dans ce cas, le champ de vitesse dÈrive du potentiel suivant : 
+	% Donner la formule du potentiel, √©crire la vitesse dans ce cas
+	Dans ce cas, le champ de vitesse d√©rive du potentiel suivant : 
 	$$\psi(x,y) = sin(2\pi x) sin(2\pi y) + \theta_0 cos(2\pi\theta_1x)cos(2\pi \theta_2y)$$
-	o˘ $\theta_0 \in [0,0.75]$ et $(\theta_1,\theta_2) \in [0.5,4]^2$.
+	o√π $\theta_0 \in [0,0.75]$ et $(\theta_1,\theta_2) \in [0.5,4]^2$.
 	La vitesse s'exprime alors : 
 	
 	$$
@@ -194,96 +194,96 @@ We use the advection equation to simulate a pollution peak represented by a Gaus
 	
 	\paragraph{Champ de vitesse de Lamb-Oseen}
 	
-	Nous prenons dans ce cas une vitesse analytique donnÈe par : 
+	Nous prenons dans ce cas une vitesse analytique donn√©e par : 
 	$$ \mathbf{V}(r,\theta,t) = \frac{\Gamma}{2\pi r}\left(1 - \exp\left( \frac{-r^2}{4\nu t + r_c^2}\right)\right)\mathbf{u_{\theta}}$$
 	
-	o˘ $\nu$ dÈsigne la viscositÈ cinÈmatique, $\Gamma$ est la circulation de l'Ècoulement et $r_c$ le rayon moyen.
+	o√π $\nu$ d√©signe la viscosit√© cin√©matique, $\Gamma$ est la circulation de l'√©coulement et $r_c$ le rayon moyen.
 	
 	
-	\subsection{Approche EulÈrienne}
+	\subsection{Approche Eul√©rienne}
 	
 	\subsubsection{Description}
 	
-	L'approche EulÈrienne consiste ‡ dÈterminer en chaque point de notre maillage les valeurs de la concentration en polluant. On va donc, ‡ chaque itÈration de l'algorithme, mettre ‡ jour l'ensemble du maillage.\\
+	L'approche Eul√©rienne consiste √† d√©terminer en chaque point de notre maillage les valeurs de la concentration en polluant. On va donc, √† chaque it√©ration de l'algorithme, mettre √† jour l'ensemble du maillage.\\
 	
-	Il se trouve qu'une simple approche par la mÈthode des diffÈrences finies n'est pas un schÈma stable pour notre Ètude : le schÈma est un peu trop instable (concentration pouvant devenir nÈgative). On va lui prÈfÈrer la mÈthode des volumes finis avec un schÈma de Lax-Friedrichs, qui est un schÈma qui amËne un peu plus de phÈnomËne de diffusion, mais qui assure la positivitÈ de la concentration. Pour plus de dÈtails, voir la section \ref{volumesfinis}.\\
+	Il se trouve qu'une simple approche par la m√©thode des diff√©rences finies n'est pas un sch√©ma stable pour notre √©tude : le sch√©ma est un peu trop instable (concentration pouvant devenir n√©gative). On va lui pr√©f√©rer la m√©thode des volumes finis avec un sch√©ma de Lax-Friedrichs, qui est un sch√©ma qui am√®ne un peu plus de ph√©nom√®ne de diffusion, mais qui assure la positivit√© de la concentration. Pour plus de d√©tails, voir la section \ref{volumesfinis}.\\
 	
-	Nous avions ‡ notre disposition un code d'ÈlÈments finis 2D sous Scilab faisant tourner le schÈma de Lax-Friedrichs sur des cas trËs compliquÈs et un maillage uniforme sur $(0,1)^2$. En dÈchiffrant une partie de ce code, et en s'y inspirant, nous avons codÈ ce schÈma en Python, de faÁon simplifiÈe et en retenant seulement ce qui allait nous servir pour notre Ètude (maillage, fonction permettant l'actualisation, affichage de la solution). La zone ÈtudiÈe est toujours $(0,1)^2$, et notre condition initiale est reprÈsentÈe par une gaussienne Ètroite (Èquivalente ‡ un pic de polluant). De plus, les conditions aux bords sont pÈriodiques : nous nous plaÁons sur une sphËre afin de rendre le code plus simple, mÍme si nous ferons en sorte de ne jamais atteindre les bords. Ce code Python est donnÈ en annexe.\\
+	Nous avions √† notre disposition un code d'√©l√©ments finis 2D sous Scilab faisant tourner le sch√©ma de Lax-Friedrichs sur des cas tr√®s compliqu√©s et un maillage uniforme sur $(0,1)^2$. En d√©chiffrant une partie de ce code, et en s'y inspirant, nous avons cod√© ce sch√©ma en Python, de fa√ßon simplifi√©e et en retenant seulement ce qui allait nous servir pour notre √©tude (maillage, fonction permettant l'actualisation, affichage de la solution). La zone √©tudi√©e est toujours $(0,1)^2$, et notre condition initiale est repr√©sent√©e par une gaussienne √©troite (√©quivalente √† un pic de polluant). De plus, les conditions aux bords sont p√©riodiques : nous nous pla√ßons sur une sph√®re afin de rendre le code plus simple, m√™me si nous ferons en sorte de ne jamais atteindre les bords. Ce code Python est donn√© en annexe.\\
 	
 	
 	
-	Notre condition initiale est donnÈe par une gaussienne :
+	Notre condition initiale est donn√©e par une gaussienne :
 	$$c_0(x,y)=\exp \left(-\frac{(x-x_0)^2+(y-y_0)^2}{2\sigma ^2} \right)$$
 	
 	avec $(x_0,y_0)=(0.25,0.25)~,~\sigma =\frac{1}{50}$.
-	L'approche eulÈrienne consiste donc ‡ transporter cette gaussienne le long du maillage. 
+	L'approche eul√©rienne consiste donc √† transporter cette gaussienne le long du maillage. 
 	
 	\begin{tabular}{cc}
 		\includegraphics[width=0.5\linewidth]{euler_condition_initiale} &	\includegraphics[width=0.5\linewidth]{euler_condition_initiale_simulee}\\
-		Condition initiale... & ...et aprËs un certain temps
+		Condition initiale... & ...et apr√®s un certain temps
 	\end{tabular}
 	
-	On stocke les valeurs de la solution au cours du temps sur tout le maillage dans une matrice ‡ laquelle on va appliquer l'algorithme POD. AprËs un choix adaptÈ du nombre de modes, on va pouvoir simuler la dynamique de notre systËme avec un nombre de degrÈ de libertÈs bien plus faible.	
+	On stocke les valeurs de la solution au cours du temps sur tout le maillage dans une matrice √† laquelle on va appliquer l'algorithme POD. Apr√®s un choix adapt√© du nombre de modes, on va pouvoir simuler la dynamique de notre syst√®me avec un nombre de degr√© de libert√©s bien plus faible.	
 	
 	
 	
-	\subsection{MÈthode des volumes finis}\label{volumesfinis}
+	\subsection{M√©thode des volumes finis}\label{volumesfinis}
 	
-	% faire un condense de cette mÈthode, rÈcupÈrer les Èquations importantes en nÈgligeant les dÈtails qui seront dans l'appendice
+	% faire un condense de cette m√©thode, r√©cup√©rer les √©quations importantes en n√©gligeant les d√©tails qui seront dans l'appendice
 	
-	Le but de cette mÈthode est d'implÈmenter un schÈma qui permet d'approcher la solution faible de l'Èquation : 
+	Le but de cette m√©thode est d'impl√©menter un sch√©ma qui permet d'approcher la solution faible de l'√©quation : 
 \begin{equation}
 \frac{\partial c}{\partial t} + \mathrm{div}(c \ u) = 0 
 \label{eq}
 \end{equation}
-de maniËre ‡ assurer la convergence et la stabilitÈ (voir le paragraphe CritËres de convergence et de stabilitÈ).
+de mani√®re √† assurer la convergence et la stabilit√© (voir le paragraphe Crit√®res de convergence et de stabilit√©).
 
-Nous regardons cette Èquation dans un compact en temps et en espace $[0,T] \times [0,L]^2$ Pour cela nous considËrerons un maillage en espace rectangulaire uniforme $K_{i,j}$ de pas $\Delta x$, $\Delta y$, et un maillage en temps de pas $\Delta t_n$ qui dÈpend \textit{a priori} de l'instant $t_n$. La mÈthode des volumes finis cherche ‡ exprimer la valeur moyenne de la concentration $c$ sur chaque cellule $K_{i,j}$ en fonction de la valeur moyenne cellulaire la vitesse est des diffÈrents paramËtres du maillage ‡ savoir le pas et le volumes des cellules en d'autres termes on exprime : 
+Nous regardons cette √©quation dans un compact en temps et en espace $[0,T] \times [0,L]^2$ Pour cela nous consid√®rerons un maillage en espace rectangulaire uniforme $K_{i,j}$ de pas $\Delta x$, $\Delta y$, et un maillage en temps de pas $\Delta t_n$ qui d√©pend \textit{a priori} de l'instant $t_n$. La m√©thode des volumes finis cherche √† exprimer la valeur moyenne de la concentration $c$ sur chaque cellule $K_{i,j}$ en fonction de la valeur moyenne cellulaire la vitesse est des diff√©rents param√®tres du maillage √† savoir le pas et le volumes des cellules en d'autres termes on exprime : 
 \[
 c_{i,j}(t_n) =\frac{1}{\vert K_{i,j} \vert}\int_{K_{i,j}} c(t_n,X) dX
 \]
 en fonction de $u_{i,j}(t_n)$, $\Delta x$, $\Delta y$ et $\Delta t_n$
-pour cela nous intÈgrons l'Èquation (\ref{eq}) sur la cellule $K_{i,j}$ ‡ l'instant $t_n$ nous obtenons :
+pour cela nous int√©grons l'√©quation (\ref{eq}) sur la cellule $K_{i,j}$ √† l'instant $t_n$ nous obtenons :
 \[
 \frac{\partial c_{i,j}}{\partial t}(t_n) +  \frac{1}{\vert K_{i,j} \vert} \int_{\partial K_{i,j} } c \ u \cdot n \ dL = 0\\
 \]
-nous approchons la dÈrivÈ temporelle par un schÈma d'Euler explicite et le flux par un schÈma de Lax-Friedrichs :
+nous approchons la d√©riv√© temporelle par un sch√©ma d'Euler explicite et le flux par un sch√©ma de Lax-Friedrichs :
 Pour toute cellule $K_{i,j}$
 \begin{equation}
 c_{i,j}(t_n) = c_{i,j}(t_{n-1}) - \frac{t_n-t_{n-1}}{\vert K_{i,j} \vert}  \sum_{k,l} \vert \Gamma_{i,j}^{k,l} \vert g(c_{i,j}(t_{n-1}),c_{k,l}(t_{n-1})) \ \forall n
 \label{schema}
 \end{equation}
-o˘ $\Gamma_{i,j}^{k,l} = K_{i,j} \cap K_{k,l}$ et :
+o√π $\Gamma_{i,j}^{k,l} = K_{i,j} \cap K_{k,l}$ et :
 \begin{equation}
 \begin{cases}
 \lambda_{i,j \rightarrow k,l} = \mathrm{max}\lbrace u_{i,j}\cdot n_{i,j \rightarrow k,l} , u_{k,l}\cdot n_{i,j \rightarrow k,l} \rbrace \\
        g(c_{i,j},c_{k,l}) = \frac{1}{2} (c_{i,j}u_{i,j} + c_{k,l}u_{k,l})\cdot n_{i,j \rightarrow k,l} + \frac{1}{2\lambda_{i,j \rightarrow k,l}}(c_{i,j} - c_{k,l})
 \end{cases}
 \end{equation}
-‡ l'instant $t_n$.
-Pour plus de dÈtails voir la section (\ref{MVF-A}).
-\paragraph{CritËres de convergence et de stabilitÈ}
-Lorsque on part d'une condition initiale bornÈe l'Èquation dans le sens faible (\ref{eq}) admet une unique solution entropique, c'est ‡ dire la solution vÈrifie : $\forall S \in \mathcal{C}^2$ convexe, on a 
+√† l'instant $t_n$.
+Pour plus de d√©tails voir la section (\ref{MVF-A}).
+\paragraph{Crit√®res de convergence et de stabilit√©}
+Lorsque on part d'une condition initiale born√©e l'√©quation dans le sens faible (\ref{eq}) admet une unique solution entropique, c'est √† dire la solution v√©rifie : $\forall S \in \mathcal{C}^2$ convexe, on a 
 \[
 \frac{\partial S(c)}{\partial t} + \mathrm{div}(G(c)) \leq 0
 \]
-o˘ $G$ est un flux d'entropie qui vÈrifie $G^{'} = S^{'} u$.\\
+o√π $G$ est un flux d'entropie qui v√©rifie $G^{'} = S^{'} u$.\\
 
-Le schÈma numÈrique (\ref{schema}) converge vers cette solution (lorsque $\Delta x,\Delta y, \Delta t_n \longrightarrow 0$) dËs qu'il vÈrifie l'inÈgalitÈ entropique discrÈtisÈe : $\forall S \in \mathcal{C}^2$ convexe, $\exists \Phi(c_1,c_2)$ telle que 
+Le sch√©ma num√©rique (\ref{schema}) converge vers cette solution (lorsque $\Delta x,\Delta y, \Delta t_n \longrightarrow 0$) d√®s qu'il v√©rifie l'in√©galit√© entropique discr√©tis√©e : $\forall S \in \mathcal{C}^2$ convexe, $\exists \Phi(c_1,c_2)$ telle que 
 \begin{equation}
 \begin{cases}
 \Phi(c,c) = G(c) \\
 \frac{S(c_{i,j}(t_n))-S(c_{i,j}(t_{n-1}))}{t_n-t_{n-1}} + \sum_{k,l} \frac{\vert \Gamma_{i,j}^{k,l} \vert}{\vert K_{i,j} \vert} \Phi(c_{i,j}(t_{n-1}),c_{k,l}(t_{n-1})) \leq 0 \ \ \forall i,j,n
 \end{cases}
 \end{equation}
-Ainsi l'entropie doit Ítre dissipÈe ou conservÈe, sa augmentation est une source d'instabilitÈ du schÈma.
+Ainsi l'entropie doit √™tre dissip√©e ou conserv√©e, sa augmentation est une source d'instabilit√© du sch√©ma.
 
-Pour que le schÈma des volumes finis (\ref{schema}) soit stable il faut satisfaire la condition CFL (Courant, Friedrichs, Lewy) qui s'Ècrit :
+Pour que le sch√©ma des volumes finis (\ref{schema}) soit stable il faut satisfaire la condition CFL (Courant, Friedrichs, Lewy) qui s'√©crit :
 \[
 t_n - t_{n-1} < \frac{\vert K_{i,j} \vert}{2\vert \Gamma_{i,j}^{k,l} \vert \lambda_{i,j \rightarrow k,l}(t_{n-1})} \ \ \forall i,j,k,l
 \]
 
-Cette condition nous permet de choisir le pas de temps adaptÈ ‡ la vitesse et au maillage ‡ chaque instant pour assurer la stabilitÈ.
+Cette condition nous permet de choisir le pas de temps adapt√© √† la vitesse et au maillage √† chaque instant pour assurer la stabilit√©.
 	
 	
 	
@@ -298,8 +298,8 @@ Cette condition nous permet de choisir le pas de temps adaptÈ ‡ la vitesse et au
 	\subsection{Approche Lagrangienne}
 	
 	\subsubsection{Description}
-	L'approche lagrangienne consiste ‡ suivre les particules le long de leur trajectoires.
-	Cela revient ‡ rÈsoudre : 
+	L'approche lagrangienne consiste √† suivre les particules le long de leur trajectoires.
+	Cela revient √† r√©soudre : 
 	$$
 	\left\{
 	\begin{array}{c c c}
@@ -309,27 +309,27 @@ Cette condition nous permet de choisir le pas de temps adaptÈ ‡ la vitesse et au
 	\right.
 	$$ 
 	
-	O˘ $X(\xi,t) \in \mathbb{R}^{n\times2}$, n Ètant le nombre de particules, $t\in [0,T]$ et $\xi$ Ètant les positions initiales des particules.
+	O√π $X(\xi,t) \in \mathbb{R}^{n\times2}$, n √©tant le nombre de particules, $t\in [0,T]$ et $\xi$ √©tant les positions initiales des particules.
 	
-	\subsubsection{RÈsolution numÈrique}
-	Nous avons utilisÈ le schÈma de Crank-Nicholson :
+	\subsubsection{R√©solution num√©rique}
+	Nous avons utilis√© le sch√©ma de Crank-Nicholson :
 	$$X^{(k+1)} = X^{(k)} + \frac{\Delta t}{2}(v(X^{(k)},t^k) + v(X^{(k+1)},t^{k+1}))$$
 	
-	Nous avons utilisÈ une mÈthode du point fixe pour Èvaluer $X^{(k+1)}$ en connaissant $X^{(k)}$.
+	Nous avons utilis√© une m√©thode du point fixe pour √©valuer $X^{(k+1)}$ en connaissant $X^{(k)}$.
 	Initialisation (r=0) : $$ X^{(k+1)}_0 = X^{(k)}$$
 	$$X^{(k+1)}_1 = X^{(k)} + \Delta tv(X^{(k)},t^k) $$
 	$$X^{(k+1)}_{r+1} = X^{(k)} + \frac{\Delta t}{2}(v(X^{(k)},t^k) + v(X^{(k+1)}_r,t^{k+1}))$$
-	Et on arrÍte lorsque : $$||X^{(k+1)}_{r+1} - X^{(k+1)}_r||<\epsilon$$
+	Et on arr√™te lorsque : $$||X^{(k+1)}_{r+1} - X^{(k+1)}_r||<\epsilon$$
 	
-	o˘ $\epsilon$ est une erreur donnant un critËre d'arrÍt : on suppose qu'on est "suffisamment proche de la solution" quand l'algorithme s'arrÍte.
+	o√π $\epsilon$ est une erreur donnant un crit√®re d'arr√™t : on suppose qu'on est "suffisamment proche de la solution" quand l'algorithme s'arr√™te.
 	
 	\subsubsection{Interpolation}
 	
-	La rÈsolution numÈrique du problËme nÈcessite de connaÓtre le champ de vitesse des particules, notÈ $v$.
-	Nous supposons que l'ensemble $\Omega=[-1,1]^2 $ soit muni d'un maillage carrÈ rÈgulier de pas notÈ $\Delta x$ en abscisse et $\Delta y$ en ordonnÈe. Nous supposons Ègalement que le champ de vitesse est connu en tout point du maillage. Nous prÈsentons ici la mÈthode d?interpolation que nous avons utilisÈ pour approximer le champ de vitesse dans l'ensemble du domaine $\Omega$.
+	La r√©solution num√©rique du probl√®me n√©cessite de conna√Ætre le champ de vitesse des particules, not√© $v$.
+	Nous supposons que l'ensemble $\Omega=[-1,1]^2 $ soit muni d'un maillage carr√© r√©gulier de pas not√© $\Delta x$ en abscisse et $\Delta y$ en ordonn√©e. Nous supposons √©galement que le champ de vitesse est connu en tout point du maillage. Nous pr√©sentons ici la m√©thode d?interpolation que nous avons utilis√© pour approximer le champ de vitesse dans l'ensemble du domaine $\Omega$.
 	
-	ConsidÈrons une maille dont les coordonnÈes du coin infÈrieur gauche sont notÈes $(x^{LL},y^{LL}$.
-	Soit un point $(x,y)$ appartenant ‡ cette maille. On pose :
+	Consid√©rons une maille dont les coordonn√©es du coin inf√©rieur gauche sont not√©es $(x^{LL},y^{LL}$.
+	Soit un point $(x,y)$ appartenant √† cette maille. On pose :
 	
 	$$
 	\left\{
@@ -340,7 +340,7 @@ Cette condition nous permet de choisir le pas de temps adaptÈ ‡ la vitesse et au
 	\right.
 	$$ 
 	
-	On dÈfinit :
+	On d√©finit :
 	
 	$$
 	\left\{
@@ -353,7 +353,7 @@ Cette condition nous permet de choisir le pas de temps adaptÈ ‡ la vitesse et au
 	\right.
 	$$ 
 	
-	La vitesse au point $(x,y)$ ‡ l'instant $t$ est alors donnÈe par :
+	La vitesse au point $(x,y)$ √† l'instant $t$ est alors donn√©e par :
 	$$v(x,y,t) = v(x^{LL}, y^{LL},t) \varphi_1(\tilde{x}, \tilde{y}) + v(x^{LL} +\Delta x, y^{LL},t) \varphi_2(\tilde{x}, \tilde{y}) $$
 	$$ + v(x^{LL}+\Delta x, y^{LL}+\Delta y,t) \varphi_3(\tilde{x}, \tilde{y}) $$
 	$$ + v(x^{LL}, y^{LL}+\Delta y,t) \varphi_4(\tilde{x}, \tilde{y}) $$
@@ -362,8 +362,8 @@ Cette condition nous permet de choisir le pas de temps adaptÈ ‡ la vitesse et au
 	
 	\subsubsection{Champ de vitesse constant}
 	
-	Cette fois, les particules sont distribuÈes selon une gaussienne centrÈe en (0.25 ; 0.25) de variance 1/50. Leurs vitesses sont identiques, constante et orientÈes avec un angle $\theta$ compris entre $0$ et $\frac{\pi}{2}$. 
-	Les positions des diffÈrentes particules sont ensuite stockÈes dans une matrice M de taille $2nb_particules\times nb_steps$. Nous avons ensuite effectuÈ la dÈcomposition SVD de la matrice $M$ : $M = USV^T$
+	Cette fois, les particules sont distribu√©es selon une gaussienne centr√©e en (0.25 ; 0.25) de variance 1/50. Leurs vitesses sont identiques, constante et orient√©es avec un angle $\theta$ compris entre $0$ et $\frac{\pi}{2}$. 
+	Les positions des diff√©rentes particules sont ensuite stock√©es dans une matrice M de taille $2nb_particules\times nb_steps$. Nous avons ensuite effectu√© la d√©composition SVD de la matrice $M$ : $M = USV^T$
 	
 	
 	\subsubsection{Ecoulement cellulaire}
@@ -375,27 +375,32 @@ Cette condition nous permet de choisir le pas de temps adaptÈ ‡ la vitesse et au
 		\end{center}
 	\end{figure}
 	
-	La dÈcroissance des valeurs singuliËres est assez lente, comme le montre la figure suivante. Cette mÈthode n'est pas efficace dans cette situation.
+	La d√©croissance des valeurs singuli√®res est assez lente, comme le montre la figure suivante. Cette m√©thode n'est pas efficace dans cette situation.
 	
 	
-	\section{RÈsultats}
+	\section{R√©sultats}
 	
 	\subsection{Approche Eulerienne}
 	
 	\subsubsection{Cas vitesse constante}
-	Voici d'abord le tracÈ du $\log$ des valeurs singuliËres en fonction de leur rang dans la dÈcomposition SVD.
+	Voici d'abord le trac√© du $\log$ des valeurs singuli√®res en fonction de leur rang dans la d√©composition SVD.
 	
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.7\linewidth]{valeurs_singulieres_eulerien_constant}
-		\caption{TracÈ du $\log$ des valeurs singuliËres en fonction du rang}
+		\caption{Trac√© du $\log$ des valeurs singuli√®res en fonction du rang}
 		\label{fig:valeurssinguliereseulerienconstant}
 	\end{figure}
 	
-	Ceci nous permet de choisir le nombre de modes qu'on va utiliser, l'erreur Ètant fixÈe ‡ $10^{-3}$ : on choisit $nb_{modes}=13$.
+	Ceci nous permet de choisir le nombre de modes qu'on va utiliser. Avec un nombre maximal de 50 modes (que nous nous sommes fix√©s),
+	on voit qu'on arrive pas √† atteindre l'erreur relative que l'on s'√©tait fix√©e, √† savoir $10^{-3}$. On observe donc premi√®rement
+	que l'approche eulerienne dans le cas d'une vitesse constante n'est pas optimale.\\
+	On d√©cide cependant de voir ce qu'il se passe avec 50 modes propres, pour mettre en place la r√©duction m√™me pour ce mod√®le, afin 
+	d'illustrer la m√©thode de r√©duction.\\
 	
 	
-	On rÈcupËre donc l'approximation de la matrice de \emph{snapshots} avec $13$ vecteurs propres, et on va pouvoir simuler la dynamique de notre systËme assez fidËlement.
+	On r√©cup√®re donc l'approximation de la matrice de \emph{snapshots} avec $50$ modes propres. On va utiliser la m√©thode de
+	Galerkine pour obtenir le coefficients d'un vecteur solution ans la base des vecteurs propres.
 	
 	\subsubsection{Cas des \'ecoulements cellulaires}
 	
@@ -415,14 +420,14 @@ Cette condition nous permet de choisir le pas de temps adaptÈ ‡ la vitesse et au
     	\right.
 	$}\\
 	\newpage
-	\begin{figure}[h!]
+	\begin{figure}[H]
 	\centering
 	\includegraphics[width=8cm]{ecoulement_cellulaire.png}
 	\caption{}
 	\end{figure}
 	
 	
-	\begin{figure}[h!]
+	\begin{figure}[H]
 	\centering
 	\includegraphics[width=8cm]{uxcellulaire.png}
 	\includegraphics[width=8cm]{uycellulaire.png}
@@ -445,10 +450,10 @@ Cette condition nous permet de choisir le pas de temps adaptÈ ‡ la vitesse et au
 	
 	\newpage
 	
-	\begin{figure}[h!]
+	\begin{figure}[H]
 	\centering
 	\includegraphics[width=8cm]{valeurs_singulieres_eulerien_cellulaires.png}
-	\caption{TracÈ du $\log$ des 50 premi\`eres valeurs singuliËres}
+	\caption{Trac√© du $\log$ des 50 premi\`eres valeurs singuli√®res}
 	\end{figure}
 
 	On observe une d\'ecroissance exponentielle des valeurs singuli\`eres, ce qui indique que la POD sera efficace dans le cas des \'ecoulements cellulaires. On peut donc s\'electionner les 50 premiers vecteurs de la base afin de r\'esoudre l'equation pour d'autre jeux de param\`etres avec une dur\'ee de simulation beaucoup plus rapide, et un espace de stockage beaucoup moins important (6.7 Mo).
@@ -462,14 +467,14 @@ Cette condition nous permet de choisir le pas de temps adaptÈ ‡ la vitesse et au
 	\begin{figure}[H]
 		\begin{center}
 			\includegraphics[scale=0.5]{valeurs_singulieres_cell_10_particules.png}
-			\caption{Valeurs singuliËres pour 10 particules}
+			\caption{Valeurs singuli√®res pour 10 particules}
 		\end{center}
 	\end{figure}
 	
 	\begin{figure}[H]
 		\begin{center}
 			\includegraphics[scale=0.5]{valeurs_singulieres_cell_100_particules.png}
-			\caption{Valeurs singuliËres pour 100 particules}
+			\caption{Valeurs singuli√®res pour 100 particules}
 		\end{center}
 	\end{figure}
 	\begin{figure}[H]
@@ -479,13 +484,13 @@ Cette condition nous permet de choisir le pas de temps adaptÈ ‡ la vitesse et au
 		\end{center}
 	\end{figure}
 	
-	\subsubsection{…coulement cellulaire}
+	\subsubsection{√âcoulement cellulaire}
 	
 	
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.5\linewidth]{ecoulement_cellulaire_10}
-	\caption{10 particules dans un Ècoulement cellulaire}
+	\caption{10 particules dans un √©coulement cellulaire}
 	\label{fig:ecoulementcellulaire10}
 \end{figure}
 	
@@ -501,7 +506,7 @@ Cette condition nous permet de choisir le pas de temps adaptÈ ‡ la vitesse et au
 	\begin{figure}[H]
 		\begin{center}
 			\includegraphics[scale=0.5]{valeurs_singulieres_lambo_100_particules.png}
-			\caption{Valeurs singuliËres pour 100 particules}
+			\caption{Valeurs singuli√®res pour 100 particules}
 		\end{center}
 	\end{figure}
 	\section{Discussion} \label{section}
@@ -509,41 +514,41 @@ Cette condition nous permet de choisir le pas de temps adaptÈ ‡ la vitesse et au
 	\subsection{Approche Lagrangienne}
 	
 	\subsubsection{Vitesse constante}
-	Dans ce cas particulier, la projection suivant le premier mode propre (premiËre colonne de $U$) permet d'obtenir une approximation satisfaisante. Comme on peut le voir sur les figures, la dÈcroissance des valeurs singuliËres est trËs rapide. 
-	Cela semble normal puisque les particules possËdent une trajectoire rectiligne uniforme. Cependant, ce mode propre dÈpend
-	de l'angle $\theta$ qui caractÈrise la vitesse des particules. Si ce paramËtre est modifiÈ alors le mode propre est Ègalement modifiÈ.
-	Il n'est donc pas possible de rÈduire efficacement ce modËle.
+	Dans ce cas particulier, la projection suivant le premier mode propre (premi√®re colonne de $U$) permet d'obtenir une approximation satisfaisante. Comme on peut le voir sur les figures, la d√©croissance des valeurs singuli√®res est tr√®s rapide. 
+	Cela semble normal puisque les particules poss√®dent une trajectoire rectiligne uniforme. Cependant, ce mode propre d√©pend
+	de l'angle $\theta$ qui caract√©rise la vitesse des particules. Si ce param√®tre est modifi√© alors le mode propre est √©galement modifi√©.
+	Il n'est donc pas possible de r√©duire efficacement ce mod√®le.
 	
-	\subsubsection{…coulement cellulaire}
-	La dÈcroissance des valeurs singuliËres est assez lente. Un grand nombre de modes propres est donc nÈcessaire pour donner une 
+	\subsubsection{√âcoulement cellulaire}
+	La d√©croissance des valeurs singuli√®res est assez lente. Un grand nombre de modes propres est donc n√©cessaire pour donner une 
 	bonne approximation de la solution. 
 	
 	\subsubsection{Champ de Lamb-Oseen}
-	La dÈcroissance des valeurs singuliËres est rapide.Un faible nombre de modes propres est par consÈquent nÈcessaire pour obtenir 
+	La d√©croissance des valeurs singuli√®res est rapide.Un faible nombre de modes propres est par cons√©quent n√©cessaire pour obtenir 
 	une approximation convenable.
 	
 	\section{Conclusions}
 	
 	\section{Appendice}
 	
-	\subsection{MÈthode des volumes finis ~\cite{Cours2}}
+	\subsection{M√©thode des volumes finis ~\cite{Cours2}}
 	\label{MVF-A}
-	Dans le cas de l'approche eulÈrienne, on utilise un schÈma qui est diffÈrent de ceux utilisÈs jusqu'‡ prÈsent dans nos cours. DÈtaillons un peu comment cette mÈthode fonctionne.\\
+	Dans le cas de l'approche eul√©rienne, on utilise un sch√©ma qui est diff√©rent de ceux utilis√©s jusqu'√† pr√©sent dans nos cours. D√©taillons un peu comment cette m√©thode fonctionne.\\
 	
 	
-	ConsidÈrons l'Èquation de transport dans le cas gÈnÈral en dimension $d>0$ sur un compact en temps et en espace $[0,T]\times [a,b]^d$ pour $T \in \mathbb{R}^*_+$ et $a<b$ dans $\mathbb{R}$
+	Consid√©rons l'√©quation de transport dans le cas g√©n√©ral en dimension $d>0$ sur un compact en temps et en espace $[0,T]\times [a,b]^d$ pour $T \in \mathbb{R}^*_+$ et $a<b$ dans $\mathbb{R}$
 
 \begin{equation}
 \frac{\partial c}{\partial t} + u \cdot \nabla c = f
 \label{dimd}
 \end{equation}
 
-    o˘ $c : [0,T] \times [a,b]^d \longrightarrow [0,1]$ la concentration du polluant, $u : [0,T]\times [a,b]^d \longrightarrow \mathbb{R}^d$ le champs des vitesses imposÈ dans le milieu et $f : [0,T]\times [a,b]^d \longrightarrow \mathbb{R}$ la source de pollution.\\
+    o√π $c : [0,T] \times [a,b]^d \longrightarrow [0,1]$ la concentration du polluant, $u : [0,T]\times [a,b]^d \longrightarrow \mathbb{R}^d$ le champs des vitesses impos√© dans le milieu et $f : [0,T]\times [a,b]^d \longrightarrow \mathbb{R}$ la source de pollution.\\
 
-    Dans notre Ètude nous prenons $f=0$, nous considÈrons qu'il n'y a pas de source. \\
+    Dans notre √©tude nous prenons $f=0$, nous consid√©rons qu'il n'y a pas de source. \\
 
 \subsubsection{Maillage}
-    Nous posons $[a,b] = [0,L]$ afin de simplifier. Maintenant, pour discrÈtiser l'Èquation (\ref{dimd}) en espace, nous utilisons en utilisant deux suites arithmÈtiques $(x_i)_{i=1}^{n_x}$ sur l'axe des abscisses et $(y_i)_{i=1}^{n_y}$ sur l'axe des ordonnÈes, vÈrifiant : 
+    Nous posons $[a,b] = [0,L]$ afin de simplifier. Maintenant, pour discr√©tiser l'√©quation (\ref{dimd}) en espace, nous utilisons en utilisant deux suites arithm√©tiques $(x_i)_{i=1}^{n_x}$ sur l'axe des abscisses et $(y_i)_{i=1}^{n_y}$ sur l'axe des ordonn√©es, v√©rifiant : 
 
 \begin{equation*}
 \begin{cases}
@@ -554,7 +559,7 @@ Cette condition nous permet de choisir le pas de temps adaptÈ ‡ la vitesse et au
 
     On obtient une grille de $(n_x-1)(n_y-1)$ cellules, on appelle donc $K_{i,j}  = [x_i,x_{i+1}] \times [y_j,y_{j+1}]$, et $\Gamma_{i,j}^{k,l} = K_{i,j} \cap K_{k,l}$.\\
 
-    On discrÈtise $[0,T]$ en utilisant la suite $(t_i)_{i=1}^{n_t}$ qui n'est pas nÈcessairement arithmÈtique,  vÈrifiant la condition CFL et : 
+    On discr√©tise $[0,T]$ en utilisant la suite $(t_i)_{i=1}^{n_t}$ qui n'est pas n√©cessairement arithm√©tique,  v√©rifiant la condition CFL et : 
 \begin{equation*}
 \begin{cases}
         t_1=0  &  \\
@@ -570,40 +575,40 @@ c_{i,j}(t_n) &=\frac{1}{\vert K_{i,j} \vert}\int_{K_{i,j}} c(t_n,X) dX,\\
 u_{i,j}(t_n) &=\frac{1}{\vert K_{i,j} \vert}\int_{K_{i,j}} u(t_n,X) dX.
 \end{align*}
 
-\subsubsection{SchÈma numÈrique}
-    Nous considÈrons l'Èquation (\ref{dimd}) dans sa forme faible, c'est ‡ dire au sens des distributions, en utilisons le fait que $\mathrm{div}(c \ u) = u \nabla c + c \ \mathrm{div}(u)$, nous pouvons la rÈÈcrire sous la forme suivante : 
+\subsubsection{Sch√©ma num√©rique}
+    Nous consid√©rons l'√©quation (\ref{dimd}) dans sa forme faible, c'est √† dire au sens des distributions, en utilisons le fait que $\mathrm{div}(c \ u) = u \nabla c + c \ \mathrm{div}(u)$, nous pouvons la r√©√©crire sous la forme suivante : 
 \begin{equation*}
 \frac{\partial c}{\partial t} + \mathrm{div}(c \ u) -  c \ \mathrm{div}(u) = 0
 \end{equation*}
-    Dans notre projet on considËre des vitesse des fluides incompressibles, $\mathrm{div}u=0$, l'Èquation devient:
+    Dans notre projet on consid√®re des vitesse des fluides incompressibles, $\mathrm{div}u=0$, l'√©quation devient:
 \begin{equation}
 \frac{\partial c}{\partial t} + \mathrm{div}(c \ u) = 0 
 \label{faible}
 \end{equation}
-    Maintenant en fixant $t_n \in [0,T]$ nous intÈgrons sur chaque cellule $K_{i,j}$,
+    Maintenant en fixant $t_n \in [0,T]$ nous int√©grons sur chaque cellule $K_{i,j}$,
 \[
 \frac{1}{\vert K_{i,j} \vert}\int_{K_{i,j}} \left( \frac{\partial c}{\partial t} + \mathrm{div}(c \ u) \right) dX = 0 
 \]
-On peut permuter l'intÈgrale et la dÈrivation par rapport au temps puisque les cellules $K_{i,j}$ sont indÈpendantes de temps, et on utilise le thÈorËme de Green pour des fonctions suffisamment rÈguliËres $\int_{\Omega} \mathrm{div} (a) \ d \Omega = \int_{\partial \Omega} a\cdot n \ d\L $ ,o˘ $n$ est le vecteur normal sortant, ainsi:
+On peut permuter l'int√©grale et la d√©rivation par rapport au temps puisque les cellules $K_{i,j}$ sont ind√©pendantes de temps, et on utilise le th√©or√®me de Green pour des fonctions suffisamment r√©guli√®res $\int_{\Omega} \mathrm{div} (a) \ d \Omega = \int_{\partial \Omega} a\cdot n \ d\L $ ,o√π $n$ est le vecteur normal sortant, ainsi:
 \[
 \frac{\partial c_{i,j}}{\partial t}(t_n) +  \frac{1}{\vert K_{i,j} \vert} \int_{\partial K_{i,j} } c \ u \cdot n \ dL = 0\\
 \]
-    Chaque cellule est un rectangle ces bords sont des segments, nous posons, dans chaque segment $\Gamma$ la quantitÈ $\frac{1}{\vert \Gamma \vert }\int_{\Gamma} c \ u \ dL= F_{\Gamma}(c)$ :
+    Chaque cellule est un rectangle ces bords sont des segments, nous posons, dans chaque segment $\Gamma$ la quantit√© $\frac{1}{\vert \Gamma \vert }\int_{\Gamma} c \ u \ dL= F_{\Gamma}(c)$ :
 \[
 \int_{\partial K_{i,j} } c \ u \cdot n \ dL = \sum_{k,l} \vert \Gamma_{i,j}^{k,l} \vert F_{\Gamma_{i,j}^{k,l}}(c) \cdot n_{i,j \rightarrow k,l}
 \]  
 
-    Cette somme contient bien s˚r quatre termes puisque les cellules sont des rectangles.\\
+    Cette somme contient bien s√ªr quatre termes puisque les cellules sont des rectangles.\\
 
-    $F_{\Gamma} \cdot n$ est le flux sortant de la cellule $K_{i,j}$ ‡ partir de la face $\Gamma$, on cherche maintenant ‡ l'approcher numÈriquement de maniËre stable, on choisit pour cela un schÈma de flux en 2-points, c'est ‡ dire,  
+    $F_{\Gamma} \cdot n$ est le flux sortant de la cellule $K_{i,j}$ √† partir de la face $\Gamma$, on cherche maintenant √† l'approcher num√©riquement de mani√®re stable, on choisit pour cela un sch√©ma de flux en 2-points, c'est √† dire,  
 \[
 F_{ \Gamma_{i,j}^{k,l}}(c) \cdot n_{i,j \rightarrow k,l}  \simeq  g(c_{i,j},c_{k,l})
 \]
-    Le flux sortant de $\Gamma$ dÈpend de la valeur de $c$ dans les deux cellules voisines qui contiennent $\Gamma$.\\
+    Le flux sortant de $\Gamma$ d√©pend de la valeur de $c$ dans les deux cellules voisines qui contiennent $\Gamma$.\\
 
-    La mÈthode de Godunov permet de donner une fonction $g$ qui assure la stabilitÈ du schÈma en effet, il propose pour des scalaires $a$ et $b$  
+    La m√©thode de Godunov permet de donner une fonction $g$ qui assure la stabilit√© du sch√©ma en effet, il propose pour des scalaires $a$ et $b$  
     $$g(a,b)=F_{ \Gamma_{i,j}^{k,l}} (c_R(t_n,0)) \cdot n_{i,j \rightarrow k,l}$$ 
-    o˘ $c_R$ est la solution du problËme du Riemann dÈfinit par :
+    o√π $c_R$ est la solution du probl√®me du Riemann d√©finit par :
 \begin{equation}
 \begin{cases}
        \mathrm{trouver \ c(t,x) \ telle \ que }\\
@@ -612,7 +617,7 @@ F_{ \Gamma_{i,j}^{k,l}}(c) \cdot n_{i,j \rightarrow k,l}  \simeq  g(c_{i,j},c_{k
 \end{cases}
 \label{R}
 \end{equation}
-mais vu la difficultÈ de la rÈsolution du problËme exact (\ref{R}) nous  utilisons le schÈma de Lax-Friedrichs qui peut Ítre considÈrÈ comme une mÈthode approch\'ee de la mÈthode de Godunov, plus simple ‡ implÈmenter et rapide :
+mais vu la difficult√© de la r√©solution du probl√®me exact (\ref{R}) nous  utilisons le sch√©ma de Lax-Friedrichs qui peut √™tre consid√©r√© comme une m√©thode approch\'ee de la m√©thode de Godunov, plus simple √† impl√©menter et rapide :
 \begin{equation}
 \begin{cases}
 \lambda_{i,j \rightarrow k,l} = \mathrm{max}\lbrace u_{i,j}\cdot n_{i,j \rightarrow k,l} , u_{k,l}\cdot n_{i,j \rightarrow k,l} \rbrace \\
@@ -620,15 +625,15 @@ mais vu la difficultÈ de la rÈsolution du problËme exact (\ref{R}) nous  utiliso
 \end{cases}
 \label{LF}
 \end{equation}
-    Il faut noter que le flux que nous avons utilisÈ $g$ est un flux conservatif c'est ‡ dire 
+    Il faut noter que le flux que nous avons utilis√© $g$ est un flux conservatif c'est √† dire 
 $$g(c_{i,j},c_{k,l}) + g(c_{k,l},c_{i,j}) = 0,$$
-ce qui est rassurant vu la nature conservative de l'Èquation (\ref{faible}).
+ce qui est rassurant vu la nature conservative de l'√©quation (\ref{faible}).
 
-    On utilise pour discrÈtiser le terme en $\partial_t$ un schÈma d'Euler explicite :
+    On utilise pour discr√©tiser le terme en $\partial_t$ un sch√©ma d'Euler explicite :
 \[
 \frac{\partial c}{\partial t}(t_n) \simeq \frac{c(t_n)-c(t_{n-1})}{t_n-t_{n-1}}
 \]
-    Enfin le schÈma numÈrique ‡ implÈmenter est :
+    Enfin le sch√©ma num√©rique √† impl√©menter est :
 Pour toute cellule $K_{i,j}$
 \begin{equation}
 c_{i,j}(t_n) = c_{i,j}(t_{n-1}) - \frac{t_n-t_{n-1}}{\vert K_{i,j} \vert}  \sum_{k,l} \vert \Gamma_{i,j}^{k,l} \vert g(c_{i,j}(t_{n-1}),c_{k,l}(t_{n-1})) \ \forall n
@@ -639,7 +644,7 @@ c_{i,j}(t_n) = c_{i,j}(t_{n-1}) - \frac{t_n-t_{n-1}}{\vert K_{i,j} \vert}  \sum_
 	
 	\section{Annexes}
 	
-	\subsection{CrÈation du maillage}
+	\subsection{Cr√©ation du maillage}
 	
 	\lstinputlisting{maillage.py}
 	
@@ -664,15 +669,15 @@ c_{i,j}(t_n) = c_{i,j}(t_{n-1}) - \frac{t_n-t_{n-1}}{\vert K_{i,j} \vert}  \sum_
 	
 	\section{Remerciements}
 	
-	\section{Exemples de figures, tableau, Èquations...}
+	\section{Exemples de figures, tableau, √©quations...}
 	
-	Ce court texte illustre la faÁon de citer les
-	rÈfÈrences~\cite{Cours1, Cours2,
-		Article1, Article2, Rapport, ThËse}, de faire une note de bas de
+	Ce court texte illustre la fa√ßon de citer les
+	r√©f√©rences~\cite{Cours1, Cours2,
+		Article1, Article2, Rapport, Th√®se}, de faire une note de bas de
 	page~\footnote{Exemple de note de bas de page.}, de faire
-	rÈfÈrence ‡ une partie du document (Sec.~\ref{section}), ‡ une
-	figure (Figure~\ref{figure1}), ‡ un tableau
-	(Tableau~\ref{tableau}) ou ‡ une Èquation
+	r√©f√©rence √† une partie du document (Sec.~\ref{section}), √† une
+	figure (Figure~\ref{figure1}), √† un tableau
+	(Tableau~\ref{tableau}) ou √† une √©quation
 	(Equation~\ref{equation}).
 	
 	\begin{equation} \label{equation}
@@ -687,13 +692,13 @@ c_{i,j}(t_n) = c_{i,j}(t_{n-1}) - \frac{t_n-t_{n-1}}{\vert K_{i,j} \vert}  \sum_
 		
 		\bibitem{Cours1}
 		V. Ehrlacher, S.Boyaval
-		\newblock {\em MÈthodes numÈriques pour les problËmes en grande dimension}.
-		\newblock Cours de l'…cole nationale des ponts et chaussÈes, 2018.
+		\newblock {\em M√©thodes num√©riques pour les probl√®mes en grande dimension}.
+		\newblock Cours de l'√âcole nationale des ponts et chauss√©es, 2018.
 		
 		\bibitem{Cours2}
 		S.Boyaval
 		\newblock{\em Numerical Hydrodynamics for the environment Illustrated by river flows}
-		\newblock Cours de l'…cole nationale des ponts et chaussÈes, 2018.
+		\newblock Cours de l'√âcole nationale des ponts et chauss√©es, 2018.
 		
 	\end{thebibliography}
 	
